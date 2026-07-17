@@ -1,0 +1,56 @@
+/* ============================================================
+   CARGOPLACE — Companies / Who it's for
+   ============================================================ */
+@import './variables.css';
+
+.companies__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--sp-4);
+}
+
+.companies__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-7) var(--sp-6);
+}
+
+.companies__icon {
+  font-size: 1.9rem;
+  line-height: 1;
+  margin-bottom: var(--sp-1);
+}
+
+.companies__card h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semi);
+  color: var(--white);
+}
+
+.companies__card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.companies__card ul li {
+  font-size: var(--text-sm);
+  color: rgba(255, 255, 255, 0.48);
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  line-height: var(--leading-snug);
+}
+.companies__card ul li::before {
+  content: '—';
+  color: var(--sky-400);
+  font-size: var(--text-xs);
+  flex-shrink: 0;
+}
+
+.companies__cta {
+  margin-top: var(--sp-2);
+  align-self: flex-start;
+}

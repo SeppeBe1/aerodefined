@@ -1,0 +1,99 @@
+<section class="hero" id="home" aria-label="Hero">
+
+  <!-- Background elements (aria-hidden — purely decorative) -->
+  <div class="hero__bg" aria-hidden="true">
+    <div class="hero__grid"></div>
+    <div class="hero__glow hero__glow--blue"></div>
+    <div class="hero__glow hero__glow--teal"></div>
+    <svg class="hero__lines" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <line x1="-100" y1="220" x2="1540" y2="480" stroke="white" stroke-width="0.8"/>
+      <line x1="-100" y1="400" x2="1540" y2="660" stroke="white" stroke-width="0.6"/>
+      <line x1="-100" y1="580" x2="1540" y2="840" stroke="white" stroke-width="0.4"/>
+      <line x1="280"  y1="0"   x2="280"  y2="800" stroke="white" stroke-width="0.5"/>
+      <line x1="560"  y1="0"   x2="560"  y2="800" stroke="white" stroke-width="0.5"/>
+      <line x1="840"  y1="0"   x2="840"  y2="800" stroke="white" stroke-width="0.5"/>
+      <line x1="1120" y1="0"   x2="1120" y2="800" stroke="white" stroke-width="0.5"/>
+      <!-- Dot clusters -->
+      <circle cx="180"  cy="160" r="1.5" fill="white"/>
+      <circle cx="240"  cy="200" r="1"   fill="white"/>
+      <circle cx="310"  cy="140" r="2"   fill="white"/>
+      <circle cx="1180" cy="580" r="2"   fill="white"/>
+      <circle cx="1260" cy="540" r="1"   fill="white"/>
+      <circle cx="1220" cy="620" r="1.5" fill="white"/>
+    </svg>
+  </div>
+
+  <div class="container hero__content">
+
+    <!-- Badge -->
+    <div class="hero__badge" role="status">
+      <span class="hero__badge-dot" aria-hidden="true"></span>
+      Where airlines meet logistics
+    </div>
+
+    <!-- Headline -->
+    <h1 class="hero__title animate-fade-up">
+      Air cargo, <em>booked</em>.<br>
+      Logistics, <em>connected</em>.
+    </h1>
+
+    <!-- Subline -->
+    <p class="hero__sub animate-fade-up" style="animation-delay:80ms">
+      CargoPlace is the marketplace where freight forwarders, airlines, handlers,
+      and charter operators find each other — and do business without the endless
+      email chains.
+    </p>
+
+    <!-- Actions -->
+    <div class="hero__actions animate-fade-up" style="animation-delay:160ms">
+      <a href="/register" class="btn btn--primary btn--lg">
+        Start for free
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="#how" class="btn btn--outline btn--lg">See how it works</a>
+    </div>
+
+    <!-- Stats bar -->
+    <div class="hero__stats animate-fade-up stagger" style="animation-delay:240ms" role="list">
+      <div class="hero__stat" role="listitem">
+        <span class="hero__stat-num" data-count="480">0</span><span class="hero__stat-suffix">+</span>
+        <span class="hero__stat-label">Active operators</span>
+      </div>
+      <div class="hero__stat-divider" aria-hidden="true"></div>
+      <div class="hero__stat" role="listitem">
+        <span class="hero__stat-num" data-count="62">0</span>
+        <span class="hero__stat-label">Countries covered</span>
+      </div>
+      <div class="hero__stat-divider" aria-hidden="true"></div>
+      <div class="hero__stat" role="listitem">
+        <span class="hero__stat-num" data-count="24">0</span><span class="hero__stat-suffix">h</span>
+        <span class="hero__stat-label">Avg. quote response</span>
+      </div>
+      <div class="hero__stat-divider" aria-hidden="true"></div>
+      <div class="hero__stat" role="listitem">
+        <span class="hero__stat-prefix">€</span><span class="hero__stat-num" data-count="0">0</span>
+        <span class="hero__stat-label">To get started</span>
+      </div>
+    </div>
+
+    <!-- Trust strip -->
+    <div class="hero__trust" aria-label="Trusted by">
+      <span class="hero__trust-label">Trusted by teams at</span>
+      <div class="hero__trust-logos" role="list">
+        <span role="listitem">SwiftForward</span>
+        <span aria-hidden="true">·</span>
+        <span role="listitem">AirBridge Cargo</span>
+        <span aria-hidden="true">·</span>
+        <span role="listitem">BelCargo BV</span>
+        <span aria-hidden="true">·</span>
+        <span role="listitem">NordFreight</span>
+        <span aria-hidden="true">·</span>
+        <span role="listitem">Atlas Handlers</span>
+      </div>
+    </div>
+
+  </div>
+</section>

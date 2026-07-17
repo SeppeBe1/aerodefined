@@ -1,0 +1,119 @@
+<footer class="footer" role="contentinfo">
+  <div class="container">
+
+    <!-- Top grid -->
+    <div class="footer__grid">
+
+      <!-- Brand column -->
+      <div class="footer__brand">
+        <a href="/" class="footer__logo" aria-label="CargoPlace home">
+          <div class="navbar__logo-mark" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+              <path d="M2 14L10 4L18 14" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5 11.5h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="10" cy="17" r="1.8" fill="white"/>
+            </svg>
+          </div>
+          <span class="navbar__logo-text">Cargo<span>Place</span></span>
+        </a>
+        <p class="footer__tagline">
+          The marketplace where airlines meet logistics. Book cargo, arrange
+          charters, find handlers — all in one place.
+          <br>Made in Europe. 🇪🇺
+        </p>
+        <div class="footer__socials" aria-label="Social media links">
+          <a href="#" class="footer__social" aria-label="LinkedIn" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+          </a>
+          <a href="#" class="footer__social" aria-label="X / Twitter" rel="noopener noreferrer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Services column -->
+      <nav class="footer__col" aria-labelledby="footer-services">
+        <h3 class="footer__col-title" id="footer-services">Services</h3>
+        <ul role="list">
+          <li><a href="#">Cargo booking</a></li>
+          <li><a href="#">Cargo brokerage</a></li>
+          <li><a href="#">Charter &amp; ACMI</a></li>
+          <li><a href="#">Road feeder (RFS)</a></li>
+          <li><a href="#">ULD leasing</a></li>
+          <li><a href="#">Warehousing</a></li>
+          <li><a href="#">Cool chain</a></li>
+        </ul>
+      </nav>
+
+      <!-- Company column -->
+      <nav class="footer__col" aria-labelledby="footer-company">
+        <h3 class="footer__col-title" id="footer-company">Company</h3>
+        <ul role="list">
+          <li><a href="#">About us</a></li>
+          <li><a href="#">How it works</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers <span class="footer__badge">Hiring</span></a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Legal & Resources column -->
+      <nav class="footer__col" aria-labelledby="footer-legal">
+        <h3 class="footer__col-title" id="footer-legal">Legal &amp; resources</h3>
+        <ul role="list">
+          <li><a href="#">Terms of service</a></li>
+          <li><a href="#">Privacy policy</a></li>
+          <li><a href="#">Cookie policy</a></li>
+          <li><a href="#">GDPR</a></li>
+          <li><a href="#">API documentation</a></li>
+          <li><a href="#">Status page</a></li>
+        </ul>
+      </nav>
+
+    </div>
+
+    <!-- Newsletter strip -->
+    <div class="footer__newsletter" role="complementary" aria-label="Newsletter signup">
+      <div class="footer__newsletter-text">
+        <p class="footer__newsletter-title">Stay ahead of the market</p>
+        <p class="footer__newsletter-sub">Weekly air cargo rates, industry news, and platform updates.</p>
+      </div>
+      <form class="footer__newsletter-form" action="#" method="POST" novalidate>
+        <label for="footer-email" class="sr-only">Email address</label>
+        <input
+          type="email"
+          id="footer-email"
+          name="email"
+          class="footer__newsletter-input"
+          placeholder="your@company.com"
+          required
+          autocomplete="email"
+        />
+        <button type="submit" class="btn btn--teal btn--sm">Subscribe</button>
+      </form>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer__bottom" role="contentinfo">
+      <p>© <span id="footerYear"></span> CargoPlace BV. All rights reserved.</p>
+      <div class="footer__bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+      <p class="footer__bottom-location">
+        🇧🇪 Antwerp &nbsp;·&nbsp; 🇳🇱 Amsterdam &nbsp;·&nbsp; 🇩🇪 Frankfurt
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+<!-- SR only utility -->
+<style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>

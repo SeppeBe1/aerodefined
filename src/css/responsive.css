@@ -1,0 +1,69 @@
+/* ============================================================
+   CARGOPLACE — Responsive overrides
+   All component-level responsive rules live here.
+   ============================================================ */
+@import './variables.css';
+
+/* ── Large desktop (1280px+) ───────────────────────────────── */
+@media (min-width: 1280px) {
+  :root { --container-max: 1280px; }
+}
+
+/* ── Tablet landscape (max 1024px) ─────────────────────────── */
+@media (max-width: 1024px) {
+  .hero__title { font-size: clamp(2rem, 5vw, 3.2rem); }
+  .sec-title   { font-size: clamp(1.5rem, 3vw, 2rem); }
+}
+
+/* ── Tablet portrait (max 860px) ───────────────────────────── */
+@media (max-width: 860px) {
+  /* Nav */
+  .navbar__links, .navbar__actions { display: none; }
+  .navbar__burger { display: flex; }
+  .navbar__mobile { display: flex; }
+
+  /* Hero stats */
+  .hero__stats   { gap: var(--sp-5); }
+
+  /* Grids → 2 col */
+  .services__grid,
+  .companies__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Mobile (max 640px) ────────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Typography */
+  :root {
+    --container-pad: 1.25rem;
+  }
+  .hero__title { font-size: clamp(1.9rem, 8vw, 2.6rem); }
+  .hero__sub   { font-size: var(--text-base); }
+
+  /* Hero */
+  .hero__actions { flex-direction: column; align-items: center; }
+  .hero__actions .btn { width: 100%; max-width: 320px; justify-content: center; }
+  .hero__stat-divider { display: none; }
+  .hero__trust-logos span[aria-hidden] { display: none; }
+
+  /* Grids → 1 col */
+  .services__grid,
+  .companies__grid { grid-template-columns: 1fr; }
+
+  /* Footer */
+  .footer__grid { grid-template-columns: 1fr; }
+  .footer__brand { grid-column: auto; }
+  .footer__newsletter { flex-direction: column; align-items: flex-start; }
+  .footer__newsletter-form { width: 100%; }
+  .footer__newsletter-input { flex: 1; min-width: 0; }
+  .footer__bottom { flex-direction: column; gap: var(--sp-3); }
+
+  /* Services tabs — scroll horizontally */
+  .services__tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .services__tabs::-webkit-scrollbar { display: none; }
+}
+
+/* ── Very small (max 380px) ────────────────────────────────── */
+@media (max-width: 380px) {
+  .hero__badge { font-size: 9px; }
+  .hero__stat-num { font-size: var(--text-2xl); }
+}

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Services — AeroDefined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{font-family:'DM Sans',sans-serif;background:#071924;color:#dde8f4;-webkit-font-smoothing:antialiased;min-height:100vh;padding:4rem 0}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+
+:root{
+  --navy:#071924;
+  --marine:#0D1F3D;
+  --card:#0f2640;
+  --slate:#475B7C;
+  --gold:#FFB703;
+  --gold-dark:#D4AF37;
+  --text:#dde8f4;
+  --text-2:#7a95b0;
+  --text-3:#3a5065;
+  --mono:'JetBrains Mono',monospace;
+}
+
+.wrap{max-width:1160px;margin-inline:auto;padding-inline:clamp(1.25rem,5vw,3rem)}
+
+/* ── Section header ───────────────────────────── */
+.svc-header{margin-bottom:3.5rem}
+.svc-eyebrow{
+  font-family:var(--mono);
+  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.9rem;display:flex;align-items:center;gap:.75rem;
+}
+.svc-eyebrow::after{
+  content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(255,183,3,.3),transparent);
+}
+.svc-title{
+  font-family:'Sora',sans-serif;
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:800;color:var(--text);
+  letter-spacing:-.035em;line-height:1.05;
+  max-width:560px;
+}
+.svc-title .break{display:block;color:var(--text-2);font-weight:400;font-size:.62em;letter-spacing:-.01em;margin-top:.3em}
+
+/* ══════════════════════════════════════════════════
+   LAYOUT: 1 featured left + board right
+══════════════════════════════════════════════════ */
+.svc-layout{
+  display:grid;
+  grid-template-columns:1fr 1.05fr;
+  gap:3px;  /* tight gap — feel like one unit */
+  align-items:stretch;
+  margin-bottom:3px;
+}
+
+/* ── FEATURED card (left, tall) ──────────────── */
+.svc-featured{
+  background:var(--marine);
+  border:1px solid rgba(255,183,3,.12);
+  border-radius:12px 0 0 12px;
+  padding:2.5rem 2.25rem;
+  display:flex;flex-direction:column;
+  position:relative;
+  overflow:hidden;
+  min-height:340px;
+}
+/* Gold bar left edge */
+.svc-featured::before{
+  content:'';
+  position:absolute;left:0;top:10%;bottom:10%;
+  width:3px;
+  background:linear-gradient(180deg,transparent,var(--gold),var(--gold-dark),transparent);
+  border-radius:0 2px 2px 0;
+}
+/* Subtle glow */
+.svc-featured::after{
+  content:'';
+  position:absolute;top:-60px;left:-60px;
+  width:280px;height:280px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,183,3,.06) 0%,transparent 65%);
+  pointer-events:none;
+}
+.svc-featured-tag{
+  font-family:var(--mono);
+  font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:auto;
+}
+.svc-featured-num{
+  font-family:'Sora',sans-serif;
+  font-size:5rem;font-weight:800;
+  color:rgba(255,183,3,.07);
+  letter-spacing:-.06em;line-height:1;
+  margin:1rem 0 .5rem;
+  position:relative;z-index:1;
+}
+.svc-featured h2{
+  font-family:'Sora',sans-serif;
+  font-size:1.6rem;font-weight:700;
+  color:var(--text);letter-spacing:-.025em;
+  margin-bottom:.75rem;
+  position:relative;z-index:1;
+}
+.svc-featured p{
+  font-size:.9rem;color:var(--text-2);line-height:1.7;
+  max-width:320px;margin-bottom:1.75rem;
+  position:relative;z-index:1;
+}
+.svc-featured-cta{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:var(--gold);color:var(--navy);
+  font-size:.82rem;font-weight:700;
+  padding:9px 18px;border-radius:6px;
+  width:fit-content;
+  transition:background .18s,gap .18s;
+  position:relative;z-index:1;
+}
+.svc-featured-cta:hover{background:#e6a400;gap:.75rem}
+
+/* ── BOARD (right, stacked rows) ─────────────── */
+.svc-board{
+  display:flex;flex-direction:column;gap:3px;
+  border-radius:0 12px 12px 0;
+  overflow:hidden;
+}
+.svc-row{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:1.25rem;
+  padding:1.25rem 1.5rem;
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.05);
+  transition:background .18s,border-color .18s;
+  cursor:default;
+  position:relative;
+}
+.svc-row:hover{
+  background:#132d4a;
+  border-color:rgba(255,183,3,.15);
+}
+.svc-row:hover .svc-row-arrow{opacity:1;transform:translateX(0)}
+
+/* Left: route-code style identifier */
+.svc-row-code{
+  font-family:var(--mono);
+  font-size:.75rem;font-weight:500;
+  color:var(--gold-dark);
+  letter-spacing:.06em;
+  min-width:52px;
+  flex-shrink:0;
+}
+/* Middle: name + desc */
+.svc-row-body{}
+.svc-row-name{
+  font-family:'Sora',sans-serif;
+  font-size:.95rem;font-weight:600;
+  color:var(--text);margin-bottom:2px;
+}
+.svc-row-desc{
+  font-size:.78rem;color:var(--text-2);
+  line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+/* Right: arrow */
+.svc-row-arrow{
+  opacity:0;transform:translateX(-4px);
+  transition:opacity .18s,transform .18s;
+  color:var(--gold-dark);flex-shrink:0;
+}
+.svc-row-arrow svg{width:16px;height:16px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* ══════════════════════════════════════════════════
+   BOTTOM ROW: 3 wide cards side by side
+══════════════════════════════════════════════════ */
+.svc-bottom{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:3px;
+}
+.svc-wide{
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.05);
+  padding:1.5rem 1.5rem 1.25rem;
+  transition:background .18s,border-color .18s;
+  position:relative;
+}
+/* Round corners on ends */
+.svc-wide:first-child{border-radius:0 0 0 12px}
+.svc-wide:last-child{border-radius:0 0 12px 0}
+.svc-wide:hover{background:#132d4a;border-color:rgba(255,183,3,.15)}
+.svc-wide-label{
+  font-family:var(--mono);
+  font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-3);margin-bottom:.75rem;
+}
+.svc-wide h3{
+  font-family:'Sora',sans-serif;
+  font-size:.92rem;font-weight:600;
+  color:var(--text);margin-bottom:.4rem;
+}
+.svc-wide p{font-size:.78rem;color:var(--text-2);line-height:1.55}
+/* Gold underline on hover */
+.svc-wide::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:var(--gold);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .25s ease;
+}
+.svc-wide:hover::after{transform:scaleX(1)}
+
+/* ── "All services" link ──────────────────────── */
+.svc-footer{
+  margin-top:2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:1.25rem;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.svc-count{
+  font-family:var(--mono);font-size:.72rem;
+  color:var(--text-3);letter-spacing:.06em;
+}
+.svc-all{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.82rem;font-weight:500;
+  color:var(--gold-dark);
+  transition:color .18s,gap .18s;
+}
+.svc-all:hover{color:var(--gold);gap:.75rem}
+.svc-all svg{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Responsive ───────────────────────────────── */
+@media(max-width:860px){
+  .svc-layout{grid-template-columns:1fr}
+  .svc-featured{border-radius:12px 12px 0 0;min-height:auto}
+  .svc-board{border-radius:0}
+  .svc-bottom{grid-template-columns:1fr}
+  .svc-wide:first-child{border-radius:0}
+  .svc-wide:last-child{border-radius:0 0 12px 12px}
+  .svc-featured-num{font-size:3.5rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="svc-header">
+    <div class="svc-eyebrow">Services</div>
+    <h1 class="svc-title">
+      From booking to delivery.
+      <span class="break">Every service the air cargo chain needs, on one platform.</span>
+    </h1>
+  </div>
+
+  <!-- Main layout: featured + board -->
+  <div class="svc-layout">
+
+    <!-- Featured: Cargo booking -->
+    <div class="svc-featured">
+      <span class="svc-featured-tag">CB-001 · Most booked</span>
+      <div class="svc-featured-num">01</div>
+      <h2>Cargo space<br>booking</h2>
+      <p>Book belly freight and freighter capacity directly with airlines or via GSSAs. Real-time capacity, instant quotes, e-AWB generation — no phone calls.</p>
+      <a href="#" class="svc-featured-cta">
+        Book capacity
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <!-- Board rows -->
+    <div class="svc-board">
+      <a href="#" class="svc-row">
+        <span class="svc-row-code">BR-002</span>
+        <div class="svc-row-body">
+          <div class="svc-row-name">Cargo brokerage</div>
+          <div class="svc-row-desc">Licensed IATA cargo brokers who consolidate shipments, negotiate rates, and manage the booking on your behalf.</div>
+        </div>
+        <span class="svc-row-arrow"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      </a>
+
+      <a href="#" class="svc-row">
+        <span class="svc-row-code">CH-003</span>
+        <div class="svc-row-body">
+          <div class="svc-row-name">Full charter & ACMI</div>
+          <div class="svc-row-desc">Full freighter charters or wet-lease ACMI arrangements for seasonal peaks, special projects, overflow capacity.</div>
+        </div>
+        <span class="svc-row-arrow"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      </a>
+
+      <a href="#" class="svc-row">
+        <span class="svc-row-code">RF-004</span>
+        <div class="svc-row-body">
+          <div class="svc-row-name">Road feeder services (RFS)</div>
+          <div class="svc-row-desc">XL truck connections from inland origins to hub airports. ADR-certified, temperature-controlled, tracked in real time.</div>
+        </div>
+        <span class="svc-row-arrow"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      </a>
+
+      <a href="#" class="svc-row">
+        <span class="svc-row-code">CC-005</span>
+        <div class="svc-row-body">
+          <div class="svc-row-name">Cool chain logistics</div>
+          <div class="svc-row-desc">End-to-end temperature-controlled freight for pharma, biotech, and perishables. GDP-certified handlers only.</div>
+        </div>
+        <span class="svc-row-arrow"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      </a>
+
+      <a href="#" class="svc-row">
+        <span class="svc-row-code">UL-006</span>
+        <div class="svc-row-body">
+          <div class="svc-row-name">ULD leasing & control</div>
+          <div class="svc-row-desc">Lease pallets and containers across airports. Track movements, avoid detention charges, manage your ULD pool.</div>
+        </div>
+        <span class="svc-row-arrow"><svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Bottom 3 wide -->
+  <div class="svc-bottom">
+    <a href="#" class="svc-wide">
+      <div class="svc-wide-label">WH-007</div>
+      <h3>Cargo warehousing</h3>
+      <p>Bonded storage, cool chain, and DG-certified warehouses near major hub airports.</p>
+    </a>
+    <a href="#" class="svc-wide">
+      <div class="svc-wide-label">CX-008</div>
+      <h3>Customs & compliance</h3>
+      <p>DG documentation, import/export permits, CITES, and trade compliance brokers.</p>
+    </a>
+    <a href="#" class="svc-wide">
+      <div class="svc-wide-label">RD-009</div>
+      <h3>Rates & market data</h3>
+      <p>Live spot rates per lane, contract benchmarking, and alerts for lanes you track.</p>
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <div class="svc-footer">
+    <span class="svc-count">09 services · more coming</span>
+    <a href="/services" class="svc-all">
+      View all services
+      <svg viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+    </a>
+  </div>
+
+</div>
+</body>
+</html>
