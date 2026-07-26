@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dashboard — AeroDefined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{font-family:'DM Sans',sans-serif;background:#071924;color:#dde8f4;-webkit-font-smoothing:antialiased;display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{cursor:pointer;border:none;background:none;font:inherit}
+h1,h2,h3{font-family:'Sora',sans-serif;line-height:1.1;letter-spacing:-.025em}
+:root{
+  --navy:#071924;--marine:#0D1F3D;--marine-mid:#0f2338;--marine-card:#152d4a;
+  --slate:#475B7C;--gold:#FFB703;--gold-dark:#D4AF37;
+  --white:#fff;--text:#dde8f4;--text-2:#7f9ab5;--text-3:#3a5068;
+  --green:#00c060;--red:#ff4040;--amber:#f59e0b;
+  --mono:'JetBrains Mono',monospace;
+  --t:.2s ease;
+}
+
+/* ── SIDEBAR ─────────────────────────────── */
+.sidebar{
+  background:var(--marine);
+  border-right:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;bottom:0;width:240px;
+  z-index:100;overflow-y:auto;
+}
+.sidebar-logo{display:flex;align-items:center;gap:9px;padding:1.25rem 1.25rem 1rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.sidebar-logo img{height:30px;width:auto;border-radius:5px}
+.sidebar-logo-text{font-family:'Sora',sans-serif;font-size:.95rem;font-weight:700;color:var(--white);letter-spacing:-.02em}
+.sidebar-logo-text span{color:var(--gold)}
+
+/* User pill */
+.sidebar-user{display:flex;align-items:center;gap:.65rem;padding:.9rem 1.25rem;margin:.75rem .75rem .5rem;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid rgba(255,255,255,.07)}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:rgba(255,183,3,.15);border:1.5px solid rgba(255,183,3,.25);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-size:.78rem;font-weight:700;color:var(--gold);flex-shrink:0}
+.user-name{font-size:.82rem;font-weight:500;color:var(--white);line-height:1.2}
+.user-role{font-size:.68rem;color:var(--text-3)}
+.user-badge{margin-left:auto;font-size:.58rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:3px;background:rgba(255,183,3,.12);color:var(--gold-dark);flex-shrink:0}
+
+/* Nav */
+.sidebar-nav{padding:.5rem .75rem;flex:1}
+.nav-section-label{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);padding:.6rem .5rem .3rem;margin-top:.25rem}
+.nav-item{display:flex;align-items:center;gap:.65rem;padding:.6rem .75rem;border-radius:7px;font-size:.85rem;color:var(--text-2);transition:var(--t);margin-bottom:2px;position:relative}
+.nav-item:hover{background:rgba(255,255,255,.05);color:var(--white)}
+.nav-item.active{background:rgba(255,183,3,.1);color:var(--white)}
+.nav-item.active::before{content:'';position:absolute;left:0;top:25%;bottom:25%;width:2.5px;background:var(--gold);border-radius:0 2px 2px 0}
+.nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;opacity:.7}
+.nav-item.active svg{opacity:1}
+.nav-badge{margin-left:auto;font-size:.65rem;font-weight:700;background:var(--gold);color:var(--navy);padding:1px 6px;border-radius:9999px}
+
+.sidebar-bottom{padding:.75rem;border-top:1px solid rgba(255,255,255,.06)}
+.nav-item-sm{display:flex;align-items:center;gap:.6rem;padding:.5rem .75rem;border-radius:7px;font-size:.82rem;color:var(--text-3);transition:var(--t)}
+.nav-item-sm:hover{color:var(--text-2)}
+.nav-item-sm svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;opacity:.7}
+
+/* ── MAIN CONTENT ────────────────────────── */
+.main{margin-left:240px;min-height:100vh;display:flex;flex-direction:column}
+
+/* Top bar */
+.topbar{
+  height:60px;background:rgba(7,25,36,.95);border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(12px);
+}
+.topbar-title{font-family:'Sora',sans-serif;font-size:.97rem;font-weight:600;color:var(--white)}
+.topbar-right{display:flex;align-items:center;gap:.75rem}
+.topbar-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:6px;font-size:.8rem;font-weight:500;
+  transition:var(--t);white-space:nowrap;
+}
+.topbar-btn-ghost{color:var(--text-2);border:1px solid rgba(255,255,255,.1)}
+.topbar-btn-ghost:hover{color:var(--white);border-color:rgba(255,255,255,.25)}
+.topbar-btn-gold{background:var(--gold);color:var(--navy);font-weight:700;font-family:'Sora',sans-serif}
+.topbar-btn-gold:hover{background:var(--gold-dark)}
+.topbar-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Notification dot */
+.notif-wrap{position:relative;cursor:pointer;padding:6px;border-radius:6px;transition:var(--t)}
+.notif-wrap:hover{background:rgba(255,255,255,.06)}
+.notif-wrap svg{width:18px;height:18px;stroke:var(--text-2);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.notif-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--gold);border:2px solid var(--navy)}
+
+/* ── PAGE BODY ───────────────────────────── */
+.page-body{padding:2rem;flex:1}
+.page-greeting{margin-bottom:2rem}
+.page-greeting h1{font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:.25rem}
+.page-greeting p{font-size:.875rem;color:var(--text-2)}
+
+/* ── STATS ROW ───────────────────────────── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:2rem}
+.stat-card{background:var(--marine);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.25rem 1.5rem;transition:border-color var(--t)}
+.stat-card:hover{border-color:rgba(255,183,3,.2)}
+.stat-label{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:.5rem}
+.stat-value{font-family:'Sora',sans-serif;font-size:1.8rem;font-weight:800;color:var(--white);letter-spacing:-.03em;line-height:1;margin-bottom:.25rem}
+.stat-value.gold{color:var(--gold)}
+.stat-change{font-size:.72rem;display:flex;align-items:center;gap:4px}
+.stat-change.up{color:var(--green)}
+.stat-change.down{color:var(--red)}
+.stat-change svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── GRID LAYOUT ─────────────────────────── */
+.dash-grid{display:grid;grid-template-columns:1fr 340px;gap:1.25rem;align-items:start}
+
+/* ── SECTION HEADERS ─────────────────────── */
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.section-head h2{font-family:'Sora',sans-serif;font-size:.97rem;font-weight:600;color:var(--white)}
+.section-link{font-size:.78rem;color:var(--gold-dark);transition:var(--t)}
+.section-link:hover{color:var(--gold)}
+
+/* ── BOOKINGS TABLE ──────────────────────── */
+.card{background:var(--marine);border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead th{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);padding:.75rem 1.25rem;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);white-space:nowrap}
+tbody tr{transition:background var(--t)}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+tbody td{padding:.85rem 1.25rem;font-size:.82rem;color:var(--text);border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+.route-cell{display:flex;align-items:center;gap:.5rem}
+.airport{font-family:'Sora',sans-serif;font-size:.95rem;font-weight:700;color:var(--white)}
+.arrow-sm{color:var(--text-3);font-size:.75rem}
+.td-mono{font-family:var(--mono);font-size:.78rem;color:var(--text-2)}
+.status-pill{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:9999px;font-size:.65rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.s-confirmed{background:rgba(0,192,96,.12);color:#4de8a0}
+.s-pending{background:rgba(245,158,11,.12);color:#fbbf24}
+.s-inprogress{background:rgba(59,130,246,.12);color:#7eb3ff}
+.s-cancelled{background:rgba(255,64,64,.12);color:#ff8080}
+.action-link{font-size:.75rem;color:var(--gold-dark);transition:var(--t)}
+.action-link:hover{color:var(--gold)}
+
+/* ── QUICK ACTIONS ───────────────────────── */
+.quick-actions{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.25rem}
+.qa-card{
+  display:flex;align-items:center;gap:.9rem;
+  background:var(--marine);border:1px solid rgba(255,255,255,.07);
+  border-radius:10px;padding:1rem 1.1rem;
+  transition:border-color var(--t),background var(--t);
+  cursor:pointer;
+}
+.qa-card:hover{border-color:rgba(255,183,3,.25);background:var(--marine-card)}
+.qa-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.qa-icon-gold{background:rgba(255,183,3,.1)}
+.qa-icon-slate{background:rgba(71,91,124,.15)}
+.qa-icon-green{background:rgba(0,192,96,.1)}
+.qa-body{flex:1}
+.qa-title{font-size:.875rem;font-weight:600;color:var(--white);margin-bottom:2px}
+.qa-desc{font-size:.72rem;color:var(--text-3)}
+.qa-arrow{color:rgba(255,183,3,.3);transition:var(--t)}
+.qa-card:hover .qa-arrow{color:var(--gold)}
+
+/* ── RFQ LIST ────────────────────────────── */
+.rfq-item{padding:1rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.05);transition:background var(--t)}
+.rfq-item:last-child{border-bottom:none}
+.rfq-item:hover{background:rgba(255,255,255,.03)}
+.rfq-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.3rem}
+.rfq-route{font-family:'Sora',sans-serif;font-size:.9rem;font-weight:600;color:var(--white)}
+.rfq-count{font-size:.72rem;color:var(--gold-dark);background:rgba(255,183,3,.08);padding:2px 7px;border-radius:4px}
+.rfq-meta{font-size:.75rem;color:var(--text-3);display:flex;gap:.75rem}
+.rfq-meta span{display:flex;align-items:center;gap:3px}
+
+/* ── MARKET RATES WIDGET ─────────────────── */
+.rates-list{}
+.rate-row{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.05)}
+.rate-row:last-child{border-bottom:none}
+.rate-lane{font-size:.82rem;font-weight:500;color:var(--text)}
+.rate-lane small{display:block;font-size:.68rem;color:var(--text-3);font-weight:400;margin-top:1px}
+.rate-price{font-family:var(--mono);font-size:.85rem;font-weight:500;color:var(--white);text-align:right}
+.rate-change{font-size:.68rem;margin-top:1px;text-align:right}
+.rate-change.up{color:var(--green)}
+.rate-change.dn{color:var(--red)}
+
+/* ── RESPONSIVE ──────────────────────────── */
+@media(max-width:1100px){.stats-row{grid-template-columns:repeat(2,1fr)}.dash-grid{grid-template-columns:1fr}}
+@media(max-width:760px){
+  body{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- ════ SIDEBAR ════ -->
+<aside class="sidebar">
+  <a href="/index.html" class="sidebar-logo">
+    <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="AeroDefined" onerror="this.style.display='none'"/>
+    <span class="sidebar-logo-text">Aero<span>Defined</span></span>
+  </a>
+
+  <div class="sidebar-user">
+    <div class="user-avatar">S</div>
+    <div>
+      <div class="user-name">Seppe</div>
+      <div class="user-role">Freight forwarder</div>
+    </div>
+    <div class="user-badge">Pro</div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Main</div>
+    <a href="/dashboard.html" class="nav-item active">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a href="/search.html" class="nav-item">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      Search capacity
+    </a>
+    <a href="/marketplace.html" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Marketplace
+    </a>
+    <a href="/rfq.html" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Post RFQ
+      <span class="nav-badge">2</span>
+    </a>
+
+    <div class="nav-section-label">Manage</div>
+    <a href="#" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+      My bookings
+      <span class="nav-badge">3</span>
+    </a>
+    <a href="#" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Providers
+    </a>
+    <a href="#" class="nav-item">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Market rates
+    </a>
+    <a href="#" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Documents
+    </a>
+
+    <div class="nav-section-label">Account</div>
+    <a href="#" class="nav-item">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>
+      Profile &amp; company
+    </a>
+    <a href="/pricing.html" class="nav-item">
+      <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Billing &amp; plan
+    </a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <a href="/contact.html" class="nav-item-sm">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Help &amp; support
+    </a>
+    <a href="/index.html" class="nav-item-sm">
+      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign out
+    </a>
+  </div>
+</aside>
+
+<!-- ════ MAIN ════ -->
+<div class="main">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="topbar-title">Dashboard</div>
+    <div class="topbar-right">
+      <div class="notif-wrap" title="Notifications">
+        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <div class="notif-dot"></div>
+      </div>
+      <a href="/rfq.html" class="topbar-btn topbar-btn-ghost">
+        <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Post RFQ
+      </a>
+      <a href="/search.html" class="topbar-btn topbar-btn-gold">Search capacity →</a>
+    </div>
+  </div>
+
+  <!-- Page body -->
+  <div class="page-body">
+
+    <!-- Greeting -->
+    <div class="page-greeting">
+      <h1>Good morning, Seppe 👋</h1>
+      <p>Here's what's happening with your cargo operations today — <span id="dashDate"></span></p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Active bookings</div>
+        <div class="stat-value">7</div>
+        <div class="stat-change up">
+          <svg viewBox="0 0 10 10"><path d="M5 8V2M2 5l3-3 3 3"/></svg>
+          +2 this week
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Open RFQs</div>
+        <div class="stat-value">3</div>
+        <div class="stat-change up">
+          <svg viewBox="0 0 10 10"><path d="M5 8V2M2 5l3-3 3 3"/></svg>
+          12 quotes received
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total spend (MTD)</div>
+        <div class="stat-value gold">€24,850</div>
+        <div class="stat-change down">
+          <svg viewBox="0 0 10 10"><path d="M5 2v6M2 5l3 3 3-3"/></svg>
+          -8% vs last month
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg. rate (kg)</div>
+        <div class="stat-value">€3.42</div>
+        <div class="stat-change up">
+          <svg viewBox="0 0 10 10"><path d="M5 8V2M2 5l3-3 3 3"/></svg>
+          Market: €3.68
+        </div>
+      </div>
+    </div>
+
+    <!-- Main grid -->
+    <div class="dash-grid">
+
+      <!-- LEFT: bookings table -->
+      <div>
+        <div class="section-head">
+          <h2>Recent bookings</h2>
+          <a href="#" class="section-link">View all →</a>
+        </div>
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Route</th>
+                  <th>AWB</th>
+                  <th>Airline</th>
+                  <th>Date</th>
+                  <th>Weight</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="route-cell"><span class="airport">AMS</span><span class="arrow-sm">→</span><span class="airport">JFK</span></div></td>
+                  <td><span class="td-mono">057-12345678</span></td>
+                  <td>Corendon</td>
+                  <td class="td-mono">12 Jul</td>
+                  <td>1,200 kg</td>
+                  <td><span class="status-pill s-confirmed">Confirmed</span></td>
+                  <td><a href="#" class="action-link">View →</a></td>
+                </tr>
+                <tr>
+                  <td><div class="route-cell"><span class="airport">BRU</span><span class="arrow-sm">→</span><span class="airport">DXB</span></div></td>
+                  <td><span class="td-mono">176-87654321</span></td>
+                  <td>Emirates</td>
+                  <td class="td-mono">15 Jul</td>
+                  <td>850 kg</td>
+                  <td><span class="status-pill s-inprogress">In transit</span></td>
+                  <td><a href="#" class="action-link">Track →</a></td>
+                </tr>
+                <tr>
+                  <td><div class="route-cell"><span class="airport">CDG</span><span class="arrow-sm">→</span><span class="airport">PVG</span></div></td>
+                  <td><span class="td-mono">784-11223344</span></td>
+                  <td>Air France</td>
+                  <td class="td-mono">22 Jul</td>
+                  <td>3,400 kg</td>
+                  <td><span class="status-pill s-pending">Pending docs</span></td>
+                  <td><a href="#" class="action-link">Complete →</a></td>
+                </tr>
+                <tr>
+                  <td><div class="route-cell"><span class="airport">FRA</span><span class="arrow-sm">→</span><span class="airport">ORD</span></div></td>
+                  <td><span class="td-mono">020-55667788</span></td>
+                  <td>Lufthansa</td>
+                  <td class="td-mono">28 Jul</td>
+                  <td>680 kg</td>
+                  <td><span class="status-pill s-confirmed">Confirmed</span></td>
+                  <td><a href="#" class="action-link">View →</a></td>
+                </tr>
+                <tr>
+                  <td><div class="route-cell"><span class="airport">LHR</span><span class="arrow-sm">→</span><span class="airport">SIN</span></div></td>
+                  <td><span class="td-mono">618-99001122</span></td>
+                  <td>Singapore Air</td>
+                  <td class="td-mono">02 Aug</td>
+                  <td>2,100 kg</td>
+                  <td><span class="status-pill s-pending">Awaiting confirm</span></td>
+                  <td><a href="#" class="action-link">View →</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Open RFQs -->
+        <div class="section-head" style="margin-top:1.5rem">
+          <h2>Open RFQs</h2>
+          <a href="/rfq.html" class="section-link">Post new →</a>
+        </div>
+        <div class="card">
+          <div class="rfq-item">
+            <div class="rfq-top">
+              <span class="rfq-route">AMS → LAX</span>
+              <span class="rfq-count">5 quotes</span>
+            </div>
+            <div class="rfq-meta">
+              <span>General cargo</span>
+              <span>2,500 kg</span>
+              <span>Ready 20 Jul</span>
+            </div>
+          </div>
+          <div class="rfq-item">
+            <div class="rfq-top">
+              <span class="rfq-route">BRU → HKG</span>
+              <span class="rfq-count">3 quotes</span>
+            </div>
+            <div class="rfq-meta">
+              <span>Pharma / GDP</span>
+              <span>400 kg</span>
+              <span>Ready 25 Jul</span>
+            </div>
+          </div>
+          <div class="rfq-item">
+            <div class="rfq-top">
+              <span class="rfq-route">AMS → JNB</span>
+              <span class="rfq-count">4 quotes</span>
+            </div>
+            <div class="rfq-meta">
+              <span>Dangerous goods</span>
+              <span>1,800 kg</span>
+              <span>Ready 01 Aug</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: sidebar widgets -->
+      <div>
+
+        <!-- Quick actions -->
+        <div class="section-head">
+          <h2>Quick actions</h2>
+        </div>
+        <div class="quick-actions">
+          <a href="/search.html" class="qa-card">
+            <div class="qa-icon qa-icon-gold">✈️</div>
+            <div class="qa-body">
+              <div class="qa-title">Search cargo capacity</div>
+              <div class="qa-desc">Find routes, airlines &amp; rates</div>
+            </div>
+            <svg class="qa-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="/rfq.html" class="qa-card">
+            <div class="qa-icon qa-icon-slate">📋</div>
+            <div class="qa-body">
+              <div class="qa-title">Post an RFQ</div>
+              <div class="qa-desc">Get quotes from providers</div>
+            </div>
+            <svg class="qa-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="/marketplace.html" class="qa-card">
+            <div class="qa-icon qa-icon-green">🏪</div>
+            <div class="qa-body">
+              <div class="qa-title">Browse marketplace</div>
+              <div class="qa-desc">Services, handlers, brokers</div>
+            </div>
+            <svg class="qa-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <!-- Market rates -->
+        <div class="section-head" style="margin-top:.25rem">
+          <h2>Market rates today</h2>
+          <a href="#" class="section-link">All lanes →</a>
+        </div>
+        <div class="card">
+          <div class="rates-list">
+            <div class="rate-row">
+              <div class="rate-lane">AMS → JFK<small>Transatlantic</small></div>
+              <div><div class="rate-price">€2.40/kg</div><div class="rate-change up">↑ +3% 7d</div></div>
+            </div>
+            <div class="rate-row">
+              <div class="rate-lane">BRU → DXB<small>Middle East</small></div>
+              <div><div class="rate-price">€3.10/kg</div><div class="rate-change dn">↓ -1% 7d</div></div>
+            </div>
+            <div class="rate-row">
+              <div class="rate-lane">FRA → PVG<small>Asia Pacific</small></div>
+              <div><div class="rate-price">€4.80/kg</div><div class="rate-change up">↑ +6% 7d</div></div>
+            </div>
+            <div class="rate-row">
+              <div class="rate-lane">LHR → SIN<small>Southeast Asia</small></div>
+              <div><div class="rate-price">€5.20/kg</div><div class="rate-change dn">↓ -2% 7d</div></div>
+            </div>
+            <div class="rate-row">
+              <div class="rate-lane">CDG → LAX<small>US West Coast</small></div>
+              <div><div class="rate-price">€2.90/kg</div><div class="rate-change up">↑ +1% 7d</div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Set date
+const d = new Date();
+document.getElementById('dashDate').textContent = d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+</script>
+</body>
+</html>

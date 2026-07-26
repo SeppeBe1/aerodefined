@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="About AeroDefined — The marketplace where aviation meets logistics. Our story, mission, and team."/>
+<title>About us — AeroDefined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:#071924;color:#dde8f4;-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{cursor:pointer;border:none;background:none;font:inherit}
+h1,h2,h3,h4{font-family:'Sora',sans-serif;line-height:1.1;letter-spacing:-.025em}
+:root{
+  --navy:#071924;--marine:#0D1F3D;--marine-mid:#0f2338;--marine-card:#152d4a;
+  --slate:#475B7C;--gold:#FFB703;--gold-dark:#D4AF37;
+  --white:#fff;--text:#dde8f4;--text-2:#7f9ab5;--text-3:#3a5068;
+  --green:#00c060;
+  --pad:clamp(1.25rem,5vw,3.5rem);--nav-h:64px;--max-w:1180px;--r:8px;--t:.2s ease;
+}
+.wrap{width:100%;max-width:var(--max-w);margin-inline:auto;padding-inline:var(--pad)}
+
+/* ── NAV ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);background:rgba(7,25,36,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);transition:background .3s,box-shadow .3s}
+.nav.scrolled{background:rgba(7,25,36,.98);box-shadow:0 4px 30px rgba(0,0,0,.5)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:100%}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo img{height:34px;width:auto;border-radius:5px}
+.nav-logo-text{font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:700;color:var(--white);letter-spacing:-.02em}
+.nav-logo-text span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-link{display:inline-flex;align-items:center;gap:4px;padding:7px 13px;border-radius:6px;font-size:.875rem;color:rgba(255,255,255,.65);transition:var(--t)}
+.nav-link:hover,.nav-link.active{color:var(--white);background:rgba(255,255,255,.07)}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.btn-ghost{background:transparent;color:rgba(255,255,255,.7);padding:7px 16px;border-radius:6px;font-size:.875rem;font-weight:500;transition:var(--t)}
+.btn-ghost:hover{color:var(--white);background:rgba(255,255,255,.06)}
+.btn-gold{background:var(--gold);color:var(--navy);padding:8px 18px;border-radius:6px;font-family:'Sora',sans-serif;font-size:.875rem;font-weight:700;transition:var(--t)}
+.btn-gold:hover{background:var(--gold-dark)}
+@media(max-width:860px){.nav-links{display:none}}
+
+/* ── HERO ── */
+.page-hero{
+  padding-top:calc(var(--nav-h) + 5rem);
+  padding-bottom:5rem;
+  background:var(--marine);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  position:relative;overflow:hidden;
+}
+.page-hero::before{
+  content:'';position:absolute;top:-200px;right:-100px;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,183,3,.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:block}
+.hero-h{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:800;color:var(--white);margin-bottom:1.25rem;max-width:700px}
+.hero-h em{font-style:normal;color:var(--gold)}
+.hero-sub{font-size:1.05rem;color:var(--text-2);max-width:560px;line-height:1.75}
+
+/* ── SECTIONS ── */
+.section{padding-block:5rem}
+.section--alt{background:var(--marine-mid)}
+.sec-label{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;display:block}
+.sec-h{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;color:var(--white);margin-bottom:.75rem}
+.sec-p{font-size:1rem;color:var(--text-2);line-height:1.75;max-width:560px}
+
+/* Mission */
+.mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3rem}
+.mission-text p{font-size:1rem;color:var(--text-2);line-height:1.8;margin-bottom:1.25rem}
+.mission-text p strong{color:var(--text)}
+.mission-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.06);border-radius:12px;overflow:hidden}
+.mstat{background:var(--marine);padding:2rem 1.75rem}
+.mstat-n{font-family:'Sora',sans-serif;font-size:2.5rem;font-weight:800;color:var(--gold);letter-spacing:-.04em;line-height:1;margin-bottom:.35rem}
+.mstat-l{font-size:.8rem;color:var(--text-2)}
+
+/* Values */
+.values-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:rgba(255,255,255,.06);border-radius:14px;overflow:hidden;margin-top:3rem}
+.value-card{background:var(--marine);padding:2.25rem 2rem}
+.value-num{font-family:'Sora',sans-serif;font-size:3rem;font-weight:800;color:rgba(255,183,3,.1);letter-spacing:-.05em;line-height:1;margin-bottom:1rem}
+.value-card h3{font-size:1.05rem;font-weight:600;color:var(--white);margin-bottom:.6rem}
+.value-card p{font-size:.875rem;color:var(--text-2);line-height:1.65}
+
+/* Story timeline */
+.timeline{margin-top:3rem;position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--gold),rgba(255,183,3,.1))}
+.timeline-item{position:relative;padding-bottom:2.5rem}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-dot{position:absolute;left:-2rem;top:.25rem;width:9px;height:9px;border-radius:50%;background:var(--gold);border:2px solid var(--navy);transform:translateX(-4px)}
+.timeline-year{font-family:'Sora',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:.35rem}
+.timeline-item h3{font-size:1rem;font-weight:600;color:var(--white);margin-bottom:.4rem}
+.timeline-item p{font-size:.875rem;color:var(--text-2);line-height:1.65;max-width:480px}
+
+/* Team */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:3rem}
+.team-card{background:var(--marine);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.75rem 1.5rem;text-align:center;transition:border-color var(--t),transform var(--t)}
+.team-card:hover{border-color:rgba(255,183,3,.2);transform:translateY(-2px)}
+.team-avatar{width:72px;height:72px;border-radius:50%;background:var(--marine-card);border:2px solid rgba(255,183,3,.2);margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-family:'Sora',sans-serif;font-weight:700;color:var(--gold)}
+.team-name{font-family:'Sora',sans-serif;font-size:1rem;font-weight:600;color:var(--white);margin-bottom:.25rem}
+.team-role{font-size:.78rem;color:var(--gold-dark);margin-bottom:.6rem}
+.team-bio{font-size:.8rem;color:var(--text-2);line-height:1.6}
+
+/* CTA band */
+.cta-band{
+  background:linear-gradient(135deg,var(--marine) 0%,var(--marine-card) 100%);
+  border-top:1px solid rgba(255,183,3,.1);
+  border-bottom:1px solid rgba(255,183,3,.1);
+  padding:4rem 0;text-align:center;
+}
+.cta-band h2{font-size:clamp(1.6rem,3vw,2.2rem);color:var(--white);margin-bottom:.75rem}
+.cta-band p{color:var(--text-2);max-width:440px;margin:0 auto 2rem;font-size:.97rem;line-height:1.7}
+.cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* Footer */
+.footer{background:var(--navy);padding-top:3.5rem;padding-bottom:2rem;border-top:1px solid rgba(255,255,255,.05)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem}
+.footer-brand-text{font-size:.82rem;color:rgba(255,255,255,.35);line-height:1.7;max-width:240px;margin-top:.75rem}
+.footer-col h5{font-family:'Sora',sans-serif;font-size:.65rem;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem}
+.footer-col a{display:block;font-size:.82rem;color:rgba(255,255,255,.35);margin-bottom:.5rem;transition:color var(--t)}
+.footer-col a:hover{color:var(--white)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:1.25rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.footer-bottom p{font-size:.75rem;color:rgba(255,255,255,.22)}
+@media(max-width:760px){.footer-grid{grid-template-columns:1fr 1fr}.mission-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="/index.html" class="nav-logo">
+      <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="AeroDefined" onerror="this.style.display='none'"/>
+      <span class="nav-logo-text">Aero<span>Defined</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="/search.html" class="nav-link">Search</a>
+      <a href="/marketplace.html" class="nav-link">Marketplace</a>
+      <a href="/how-it-works.html" class="nav-link">How it works</a>
+      <a href="/pricing.html" class="nav-link">Pricing</a>
+      <a href="/about.html" class="nav-link active">About</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="/login.html" class="btn-ghost">Log in</a>
+      <a href="/register.html" class="btn-gold">Get started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="wrap">
+    <span class="hero-label">About AeroDefined</span>
+    <h1 class="hero-h">Built by people who know<br>the <em>real cost</em> of fragmented logistics.</h1>
+    <p class="hero-sub">We founded AeroDefined because we saw firsthand how air cargo deals were still being made over phone calls, spreadsheets, and email chains — while every other industry had already moved to digital platforms.</p>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="section">
+  <div class="wrap">
+    <div class="mission-grid">
+      <div class="mission-text">
+        <span class="sec-label">Our mission</span>
+        <h2 class="sec-h">Close the gap between aviation and logistics.</h2>
+        <p>Airlines, freight forwarders, handlers, truckers, and brokers all need each other — but they've never had a single place to connect efficiently. That costs time, money, and capacity that could be used better.</p>
+        <p><strong>AeroDefined is that place.</strong> A marketplace where buyers and sellers in air cargo logistics find each other, transact digitally, and build long-term relationships — without the friction.</p>
+        <p>We focus specifically on the operators that enterprise tools like Aeroxchange ignore: smaller forwarders, regional carriers, independent handlers, and growing logistics companies.</p>
+      </div>
+      <div class="mission-stat-grid">
+        <div class="mstat"><div class="mstat-n">€0</div><div class="mstat-l">To join the platform</div></div>
+        <div class="mstat"><div class="mstat-n">2</div><div class="mstat-l">Industries connected</div></div>
+        <div class="mstat"><div class="mstat-n">7</div><div class="mstat-l">Core services offered</div></div>
+        <div class="mstat"><div class="mstat-n">B2B</div><div class="mstat-l">Enterprise focus</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section section--alt">
+  <div class="wrap">
+    <span class="sec-label">What we stand for</span>
+    <h2 class="sec-h">Our values</h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-num">01</div>
+        <h3>Transparency first</h3>
+        <p>Rates, capacity, and provider credentials are visible to everyone. No hidden fees, no opaque middlemen taking invisible cuts.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-num">02</div>
+        <h3>Built for operators</h3>
+        <p>We design for the people actually moving cargo — not for procurement departments. Speed and simplicity over feature bloat.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-num">03</div>
+        <h3>Small and large, equal access</h3>
+        <p>A one-person forwarder in Antwerp deserves the same tools as a global 3PL. Enterprise pricing and walls are not our model.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-num">04</div>
+        <h3>Digital without losing the human</h3>
+        <p>We automate the paperwork, not the relationships. Every transaction still has real people behind it — we just remove the friction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="section">
+  <div class="wrap">
+    <span class="sec-label">Our story</span>
+    <h2 class="sec-h">How we got here</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2023</div>
+        <h3>The problem becomes personal</h3>
+        <p>Working in air cargo, we watched a forwarder lose a client because a last-minute charter couldn't be arranged fast enough. The tools simply didn't exist to connect the right people in time.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2024</div>
+        <h3>AeroDefined is founded</h3>
+        <p>Three co-founders — backgrounds in aviation, logistics, and technology — come together with one goal: build the marketplace the industry actually needs.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">2025</div>
+        <h3>Platform goes live</h3>
+        <p>After months of development and conversations with operators across Europe, AeroDefined launches its first version. Cargo booking, brokerage, charter, and RFS — all in one place.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-year">Now</div>
+        <h3>Growing the network</h3>
+        <p>We're onboarding airlines, GSSAs, forwarders, and handlers across Europe and the Middle East. Every new operator makes the marketplace more valuable for everyone on it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section section--alt">
+  <div class="wrap">
+    <span class="sec-label">The team</span>
+    <h2 class="sec-h">Three founders, one mission.</h2>
+    <p class="sec-p">We're a small team with deep roots in aviation and logistics — close enough to the problems to know exactly what needs to be built.</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">S</div>
+        <div class="team-name">Seppe</div>
+        <div class="team-role">Co-founder & CEO</div>
+        <div class="team-bio">Aviation & logistics background. Drives product vision and operator relationships across Belgium and the Netherlands.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">Co</div>
+        <div class="team-name">Co-founder</div>
+        <div class="team-role">Co-founder & COO</div>
+        <div class="team-bio">Operations and business development. Deep network in European freight forwarding and ground handling.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">Co</div>
+        <div class="team-name">Co-founder</div>
+        <div class="team-role">Co-founder & CTO</div>
+        <div class="team-bio">Technology and platform architecture. Building the infrastructure that powers the marketplace.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <div class="wrap">
+    <h2>Ready to join the network?</h2>
+    <p>Whether you're an airline, forwarder, handler, or shipper — there's a place for you on AeroDefined.</p>
+    <div class="cta-btns">
+      <a href="/register.html" class="btn-gold" style="padding:12px 26px;border-radius:7px;font-family:'Sora',sans-serif;font-weight:700">Create free account →</a>
+      <a href="/contact.html" style="padding:11px 24px;border-radius:7px;border:1px solid rgba(255,255,255,.2);color:var(--white);font-size:.9rem">Talk to us first</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="/index.html" class="nav-logo" style="display:flex;align-items:center;gap:9px">
+          <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="AeroDefined" style="height:30px;border-radius:5px" onerror="this.style.display='none'"/>
+          <span class="nav-logo-text">Aero<span>Defined</span></span>
+        </a>
+        <p class="footer-brand-text">Your gateway to the world of aviation. From ground to sky we connect it all. 🇧🇪 Antwerp</p>
+      </div>
+      <div class="footer-col"><h5>Platform</h5><a href="/search.html">Search</a><a href="/marketplace.html">Marketplace</a><a href="/rfq.html">Post RFQ</a><a href="/pricing.html">Pricing</a></div>
+      <div class="footer-col"><h5>Company</h5><a href="/about.html">About</a><a href="/how-it-works.html">How it works</a><a href="/contact.html">Contact</a></div>
+      <div class="footer-col"><h5>Legal</h5><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/cookies.html">Cookies</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="yr"></span> AeroDefined BV. All rights reserved.</p>
+      <p>Made in Belgium 🇧🇪</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+}, {passive:true});
+</script>
+</body>
+</html>

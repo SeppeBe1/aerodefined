@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data:;"/>
+<title>Create account — AeroDefined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:#071924;color:#dde8f4;
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  -webkit-font-smoothing:antialiased;
+}
+a{text-decoration:none;color:inherit}
+:root{
+  --navy:#071924;--marine:#0D1F3D;--marine-card:#152d4a;
+  --slate:#475B7C;--gold:#FFB703;--gold-dark:#D4AF37;
+  --white:#fff;--text:#dde8f4;--text-2:#7f9ab5;--text-3:#3f5570;
+  --red:#ff4444;--green:#00c060;
+}
+
+/* LEFT — same brand panel as login */
+.auth-brand{
+  background:var(--marine);
+  border-right:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  padding:3rem;position:relative;overflow:hidden;
+}
+.auth-brand::before{
+  content:'';position:absolute;top:-100px;right:-100px;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,183,3,.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.brand-logo{display:flex;align-items:center;gap:10px}
+.brand-logo img{height:36px;width:auto;border-radius:6px}
+.brand-logo-text{font-family:'Sora',sans-serif;font-size:1.15rem;font-weight:700;color:var(--white);letter-spacing:-.02em}
+.brand-logo-text span{color:var(--gold)}
+.brand-content{flex:1;display:flex;flex-direction:column;justify-content:center;padding:2rem 0}
+.brand-tagline{font-family:'Sora',sans-serif;font-size:clamp(1.6rem,2.5vw,2.2rem);font-weight:700;color:var(--white);letter-spacing:-.03em;line-height:1.15;margin-bottom:1rem}
+.brand-tagline span{color:var(--gold)}
+.brand-sub{font-size:.92rem;color:var(--text-2);line-height:1.7;max-width:340px}
+
+/* Benefits list */
+.brand-benefits{margin-top:2rem;display:flex;flex-direction:column;gap:.75rem}
+.brand-benefit{display:flex;align-items:center;gap:.75rem;font-size:.85rem;color:var(--text-2)}
+.benefit-check{
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(255,183,3,.12);
+  border:1px solid rgba(255,183,3,.25);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.benefit-check svg{width:10px;height:10px;stroke:var(--gold);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* RIGHT — form */
+.auth-form-panel{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:3rem clamp(1.5rem,5vw,4rem);
+  background:var(--navy);overflow-y:auto;
+}
+.auth-form-wrap{width:100%;max-width:420px}
+.auth-title{font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:.35rem;letter-spacing:-.02em}
+.auth-sub{font-size:.875rem;color:var(--text-2);margin-bottom:1.75rem}
+.auth-sub a{color:var(--gold-dark);border-bottom:1px solid transparent;transition:.18s}
+.auth-sub a:hover{border-bottom-color:var(--gold-dark)}
+.auth-alert{display:none;padding:10px 14px;border-radius:6px;font-size:.82rem;margin-bottom:1rem;align-items:center;gap:8px}
+.auth-alert.error{display:flex;background:rgba(255,68,68,.1);border:1px solid rgba(255,68,68,.25);color:#ff8080}
+.auth-alert.success{display:flex;background:rgba(0,192,96,.1);border:1px solid rgba(0,192,96,.25);color:#60e0a0}
+
+/* Role selector */
+.role-label{font-size:.72rem;font-weight:600;color:var(--text-2);letter-spacing:.07em;text-transform:uppercase;margin-bottom:.6rem;display:block}
+.role-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:8px;margin-bottom:1rem;
+}
+.role-option{
+  border:1.5px solid rgba(255,255,255,.1);
+  border-radius:8px;padding:10px 12px;
+  cursor:pointer;transition:border-color .18s,background .18s;
+  display:flex;align-items:center;gap:10px;
+}
+.role-option input[type="radio"]{display:none}
+.role-option:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.2)}
+.role-option.selected{
+  border-color:var(--gold);
+  background:rgba(255,183,3,.06);
+}
+.role-name{font-size:.82rem;font-weight:500;color:var(--text)}
+.role-desc{font-size:.7rem;color:var(--text-3);margin-top:1px}
+
+/* Form fields */
+.form{display:flex;flex-direction:column;gap:.85rem}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.form-group{display:flex;flex-direction:column;gap:.38rem}
+.form-label{font-size:.72rem;font-weight:600;color:var(--text-2);letter-spacing:.07em;text-transform:uppercase}
+.form-input{
+  height:44px;padding:0 14px;
+  border:1.5px solid rgba(255,255,255,.1);border-radius:7px;
+  background:rgba(255,255,255,.04);color:var(--white);
+  font-size:.875rem;font-family:'DM Sans',sans-serif;
+  outline:none;transition:border-color .18s,box-shadow .18s,background .18s;
+}
+.form-input::placeholder{color:var(--text-3)}
+.form-input:focus{border-color:var(--gold);background:rgba(255,183,3,.04);box-shadow:0 0 0 3px rgba(255,183,3,.1)}
+.form-input.error{border-color:var(--red);box-shadow:0 0 0 3px rgba(255,68,68,.1)}
+.field-error{font-size:.72rem;color:#ff8080;display:none;align-items:center;gap:4px}
+.field-error.show{display:flex}
+
+/* Password strength */
+.pw-wrap{position:relative}
+.pw-wrap .form-input{padding-right:44px}
+.pw-toggle{position:absolute;right:0;top:0;bottom:0;width:44px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:var(--text-3);transition:color .18s}
+.pw-toggle:hover{color:var(--text-2)}
+.pw-toggle svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pw-strength{display:flex;gap:4px;margin-top:6px}
+.pw-bar{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.08);transition:background .3s}
+.pw-bar.weak{background:var(--red)}
+.pw-bar.fair{background:#f59e0b}
+.pw-bar.good{background:#3b82f6}
+.pw-bar.strong{background:var(--green)}
+.pw-hint{font-size:.7rem;color:var(--text-3);margin-top:4px}
+
+/* Checkbox */
+.checkbox-wrap{display:flex;align-items:flex-start;gap:.6rem;cursor:pointer}
+.checkbox-wrap input{margin-top:2px;accent-color:var(--gold);cursor:pointer}
+.checkbox-label{font-size:.8rem;color:var(--text-2);line-height:1.5}
+.checkbox-label a{color:var(--gold-dark)}
+
+/* Submit */
+.btn-submit{
+  height:46px;width:100%;
+  background:var(--gold);color:var(--navy);
+  border:none;border-radius:7px;
+  font-family:'Sora',sans-serif;font-size:.9rem;font-weight:700;
+  cursor:pointer;transition:background .18s,transform .15s,box-shadow .18s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:.25rem;
+}
+.btn-submit:hover:not(:disabled){background:#e6a400;transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,183,3,.3)}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed}
+.btn-submit .spinner{display:none;width:16px;height:16px;border:2px solid rgba(7,25,36,.3);border-top-color:var(--navy);border-radius:50%;animation:spin .7s linear infinite}
+.btn-submit.loading .btn-text{display:none}
+.btn-submit.loading .spinner{display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:768px){
+  body{grid-template-columns:1fr}
+  .auth-brand{display:none}
+  .auth-form-panel{padding:2.5rem 1.5rem}
+  .form-row-2{grid-template-columns:1fr}
+  .role-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- LEFT brand -->
+<div class="auth-brand">
+  <div class="brand-logo">
+    <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="AeroDefined" onerror="this.style.display='none'"/>
+    <span class="brand-logo-text">Aero<span>Defined</span></span>
+  </div>
+  <div class="brand-content">
+    <h1 class="brand-tagline">Join the aviation<br>marketplace built<br>for <span>real operators</span>.</h1>
+    <p class="brand-sub">Free to join. No lock-in contracts. Start connecting with airlines, forwarders, and handlers today.</p>
+    <div class="brand-benefits">
+      <div class="brand-benefit"><div class="benefit-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></div>Free to sign up — pay only on transactions</div>
+      <div class="brand-benefit"><div class="benefit-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></div>Access to 480+ operators in 62 countries</div>
+      <div class="brand-benefit"><div class="benefit-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></div>Real-time quotes, no phone calls needed</div>
+      <div class="brand-benefit"><div class="benefit-check"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3"/></svg></div>Digital AWBs and documents included</div>
+    </div>
+  </div>
+  <div style="font-size:.72rem;color:var(--text-3)">© 2025 AeroDefined BV · 🇧🇪 Antwerp</div>
+</div>
+
+<!-- RIGHT form -->
+<div class="auth-form-panel">
+  <div class="auth-form-wrap">
+
+    <h2 class="auth-title">Create your account</h2>
+    <p class="auth-sub">Already have an account? <a href="/login.html">Log in</a></p>
+
+    <div class="auth-alert" id="authAlert" role="alert" aria-live="polite"></div>
+
+    <form class="form" id="registerForm" novalidate autocomplete="on">
+
+      <!-- Role selector -->
+      <div>
+        <span class="role-label">I am a</span>
+        <div class="role-grid" id="roleGrid">
+          <label class="role-option selected">
+            <input type="radio" name="role" value="forwarder" checked/>
+            <div><div class="role-name">Freight forwarder</div><div class="role-desc">Book & manage cargo</div></div>
+          </label>
+          <label class="role-option">
+            <input type="radio" name="role" value="airline"/>
+            <div><div class="role-name">Airline / GSSA</div><div class="role-desc">Publish capacity</div></div>
+          </label>
+          <label class="role-option">
+            <input type="radio" name="role" value="charter"/>
+            <div><div class="role-name">Charter operator</div><div class="role-desc">Offer charters</div></div>
+          </label>
+          <label class="role-option">
+            <input type="radio" name="role" value="shipper"/>
+            <div><div class="role-name">Shipper</div><div class="role-desc">Send cargo</div></div>
+          </label>
+          <label class="role-option">
+            <input type="radio" name="role" value="handler"/>
+            <div><div class="role-name">Handler / MRO</div><div class="role-desc">Ground services</div></div>
+          </label>
+          <label class="role-option">
+            <input type="radio" name="role" value="trucker"/>
+            <div><div class="role-name">Trucking / RFS</div><div class="role-desc">Road feeder</div></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Name row -->
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label" for="firstName">First name</label>
+          <input class="form-input" type="text" id="firstName" name="firstName" placeholder="Jan" autocomplete="given-name" maxlength="50" required/>
+          <span class="field-error" id="firstNameError">First name is required.</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="lastName">Last name</label>
+          <input class="form-input" type="text" id="lastName" name="lastName" placeholder="De Vries" autocomplete="family-name" maxlength="50" required/>
+          <span class="field-error" id="lastNameError">Last name is required.</span>
+        </div>
+      </div>
+
+      <!-- Company -->
+      <div class="form-group">
+        <label class="form-label" for="company">Company name</label>
+        <input class="form-input" type="text" id="company" name="company" placeholder="Your company" autocomplete="organization" maxlength="100" required/>
+        <span class="field-error" id="companyError">Company name is required.</span>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label class="form-label" for="email">Work email</label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="you@company.com" autocomplete="email" maxlength="254" required/>
+        <span class="field-error" id="emailError">Please enter a valid email address.</span>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <div class="pw-wrap">
+          <input class="form-input" type="password" id="password" name="password" placeholder="Min. 8 characters" autocomplete="new-password" maxlength="128" required/>
+          <button type="button" class="pw-toggle" id="pwToggle" aria-label="Show password" tabindex="-1">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="pw-strength" id="pwStrength">
+          <div class="pw-bar" id="bar1"></div>
+          <div class="pw-bar" id="bar2"></div>
+          <div class="pw-bar" id="bar3"></div>
+          <div class="pw-bar" id="bar4"></div>
+        </div>
+        <div class="pw-hint" id="pwHint">Use 8+ characters with uppercase, lowercase and numbers.</div>
+        <span class="field-error" id="pwError">Password must be at least 8 characters with upper, lower and a number.</span>
+      </div>
+
+      <!-- Terms -->
+      <div class="form-group">
+        <label class="checkbox-wrap">
+          <input type="checkbox" id="terms" name="terms" required/>
+          <span class="checkbox-label">I agree to the <a href="/terms.html" target="_blank">Terms of Service</a> and <a href="/privacy.html" target="_blank">Privacy Policy</a></span>
+        </label>
+        <span class="field-error" id="termsError">You must accept the terms to continue.</span>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">
+        <span class="btn-text">Create account</span>
+        <div class="spinner"></div>
+      </button>
+
+    </form>
+  </div>
+</div>
+
+<script>
+const Security = {
+  escapeHTML(str) {
+    if (typeof str !== 'string') return '';
+    return str
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#x27;').replace(/\//g,'&#x2F;');
+  },
+  sanitizeInput(str) {
+    if (typeof str !== 'string') return '';
+    return str.replace(/['"`;\\]/g,'').replace(/<[^>]*>/g,'')
+      .replace(/javascript:/gi,'').replace(/on\w+\s*=/gi,'').trim().slice(0,500);
+  },
+  isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
+  },
+  isStrongPassword(pw) {
+    return pw.length >= 8 && /[A-Z]/.test(pw) && /[a-z]/.test(pw) && /[0-9]/.test(pw);
+  },
+  attempts: 0, lastAttempt: 0,
+  checkRate() {
+    const now = Date.now();
+    if (now - this.lastAttempt > 15*60*1000) this.attempts = 0;
+    this.lastAttempt = now; this.attempts++;
+    return this.attempts <= 5;
+  }
+};
+
+// Role selector
+document.querySelectorAll('.role-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('.role-option').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+  });
+});
+
+// Password toggle
+const pwEl = document.getElementById('password');
+document.getElementById('pwToggle').addEventListener('click', () => {
+  pwEl.type = pwEl.type === 'text' ? 'password' : 'text';
+});
+
+// Password strength meter
+pwEl.addEventListener('input', () => {
+  const pw = pwEl.value;
+  let score = 0;
+  if (pw.length >= 8) score++;
+  if (/[A-Z]/.test(pw)) score++;
+  if (/[0-9]/.test(pw)) score++;
+  if (/[^A-Za-z0-9]/.test(pw)) score++;
+
+  const bars = ['bar1','bar2','bar3','bar4'];
+  const levels = ['weak','fair','good','strong'];
+  const hints = ['Too short','Add uppercase & numbers','Add a special character','Strong password ✓'];
+
+  bars.forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.className = 'pw-bar' + (i < score ? ' ' + levels[score - 1] : '');
+  });
+  document.getElementById('pwHint').textContent = pw.length ? hints[Math.max(0, score-1)] : 'Use 8+ characters with uppercase, lowercase and numbers.';
+});
+
+// Field error helpers
+function setError(inputId, errorId, show) {
+  const input = document.getElementById(inputId);
+  const error = document.getElementById(errorId);
+  if (input) input.classList.toggle('error', show);
+  if (error) error.classList.toggle('show', show);
+}
+function showAlert(msg, type='error') {
+  const el = document.getElementById('authAlert');
+  el.textContent = Security.escapeHTML(msg);
+  el.className = 'auth-alert ' + type;
+}
+
+// Submit
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  if (!Security.checkRate()) {
+    showAlert('Too many attempts. Please wait before trying again.');
+    return;
+  }
+
+  // Collect & sanitize all inputs
+  const firstName = Security.sanitizeInput(document.getElementById('firstName').value);
+  const lastName  = Security.sanitizeInput(document.getElementById('lastName').value);
+  const company   = Security.sanitizeInput(document.getElementById('company').value);
+  const email     = Security.sanitizeInput(document.getElementById('email').value);
+  const password  = pwEl.value;
+  const role      = document.querySelector('input[name="role"]:checked')?.value || 'forwarder';
+  const terms     = document.getElementById('terms').checked;
+
+  // Validate
+  let valid = true;
+  if (!firstName) { setError('firstName','firstNameError',true); valid=false; }
+  if (!lastName)  { setError('lastName','lastNameError',true);  valid=false; }
+  if (!company)   { setError('company','companyError',true);    valid=false; }
+  if (!Security.isValidEmail(email)) { setError('email','emailError',true); valid=false; }
+  if (!Security.isStrongPassword(password)) { setError('password','pwError',true); valid=false; }
+  if (!terms) { setError('terms','termsError',true); valid=false; }
+  if (!valid) return;
+
+  const btn = document.getElementById('submitBtn');
+  btn.classList.add('loading'); btn.disabled = true;
+
+  try {
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json','X-Requested-With':'XMLHttpRequest' },
+      body: JSON.stringify({ firstName, lastName, company, email, password, role }),
+      credentials: 'same-origin',
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok) {
+      showAlert('Account created! Redirecting…','success');
+      setTimeout(() => window.location.href = '/dashboard.html', 1200);
+    } else {
+      showAlert(data.message || 'Registration failed. Please try again.');
+      btn.classList.remove('loading'); btn.disabled = false;
+    }
+  } catch {
+    showAlert('Connection error. Please try again.');
+    btn.classList.remove('loading'); btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="Log in to AeroDefined — Air Cargo Marketplace"/>
+<!-- CSP header — also set server-side -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; img-src 'self' data:;"/>
+<title>Log in — AeroDefined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;height:100%}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:#071924;color:#dde8f4;
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  -webkit-font-smoothing:antialiased;
+}
+a{text-decoration:none;color:inherit}
+:root{
+  --navy:#071924;--marine:#0D1F3D;--marine-card:#152d4a;
+  --slate:#475B7C;--gold:#FFB703;--gold-dark:#D4AF37;
+  --white:#fff;--text:#dde8f4;--text-2:#7f9ab5;--text-3:#3f5570;
+  --red:#ff4444;--green:#00c060;
+}
+
+/* ── LEFT PANEL — brand side ── */
+.auth-brand{
+  background:var(--marine);
+  border-right:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  padding:3rem;
+  position:relative;overflow:hidden;
+}
+.auth-brand::before{
+  content:'';position:absolute;
+  top:-100px;right:-100px;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,183,3,.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.brand-logo{display:flex;align-items:center;gap:10px}
+.brand-logo img{height:36px;width:auto;border-radius:6px}
+.brand-logo-text{
+  font-family:'Sora',sans-serif;font-size:1.15rem;font-weight:700;
+  color:var(--white);letter-spacing:-.02em;
+}
+.brand-logo-text span{color:var(--gold)}
+
+.brand-content{flex:1;display:flex;flex-direction:column;justify-content:center;padding:2rem 0}
+.brand-tagline{
+  font-family:'Sora',sans-serif;
+  font-size:clamp(1.6rem,2.5vw,2.2rem);
+  font-weight:700;color:var(--white);
+  letter-spacing:-.03em;line-height:1.15;
+  margin-bottom:1rem;
+}
+.brand-tagline span{color:var(--gold)}
+.brand-sub{font-size:.92rem;color:var(--text-2);line-height:1.7;max-width:340px}
+
+/* Testimonial */
+.brand-quote{
+  border-top:1px solid rgba(255,255,255,.07);
+  padding-top:1.5rem;
+}
+.brand-quote blockquote{
+  font-size:.88rem;color:var(--text-2);
+  line-height:1.65;font-style:italic;margin-bottom:.75rem;
+}
+.brand-quote cite{
+  font-size:.75rem;color:var(--text-3);font-style:normal;
+  display:flex;align-items:center;gap:.5rem;
+}
+.brand-quote cite::before{
+  content:'';width:20px;height:1px;background:var(--gold-dark);
+}
+
+/* ── RIGHT PANEL — form side ── */
+.auth-form-panel{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:3rem clamp(1.5rem,6vw,5rem);
+  background:var(--navy);
+}
+.auth-form-wrap{width:100%;max-width:400px}
+
+.auth-title{
+  font-family:'Sora',sans-serif;
+  font-size:1.6rem;font-weight:700;
+  color:var(--white);margin-bottom:.35rem;letter-spacing:-.02em;
+}
+.auth-sub{font-size:.875rem;color:var(--text-2);margin-bottom:2rem}
+.auth-sub a{color:var(--gold-dark);border-bottom:1px solid transparent;transition:.18s}
+.auth-sub a:hover{border-bottom-color:var(--gold-dark)}
+
+/* Alert banner */
+.auth-alert{
+  display:none;
+  padding:10px 14px;border-radius:6px;
+  font-size:.82rem;margin-bottom:1rem;
+  align-items:center;gap:8px;
+}
+.auth-alert.error{display:flex;background:rgba(255,68,68,.1);border:1px solid rgba(255,68,68,.25);color:#ff8080}
+.auth-alert.success{display:flex;background:rgba(0,192,96,.1);border:1px solid rgba(0,192,96,.25);color:#60e0a0}
+
+/* Form */
+.form{display:flex;flex-direction:column;gap:1rem}
+.form-group{display:flex;flex-direction:column;gap:.4rem}
+.form-label{
+  font-size:.72rem;font-weight:600;
+  color:var(--text-2);letter-spacing:.07em;text-transform:uppercase;
+}
+.form-input{
+  height:44px;padding:0 14px;
+  border:1.5px solid rgba(255,255,255,.1);
+  border-radius:7px;
+  background:rgba(255,255,255,.04);
+  color:var(--white);font-size:.9rem;
+  font-family:'DM Sans',sans-serif;
+  outline:none;
+  transition:border-color .18s,box-shadow .18s,background .18s;
+}
+.form-input::placeholder{color:var(--text-3)}
+.form-input:focus{
+  border-color:var(--gold);
+  background:rgba(255,183,3,.04);
+  box-shadow:0 0 0 3px rgba(255,183,3,.1);
+}
+.form-input.error{border-color:var(--red);box-shadow:0 0 0 3px rgba(255,68,68,.1)}
+.form-input.valid{border-color:var(--green)}
+.field-error{
+  font-size:.75rem;color:#ff8080;
+  display:none;align-items:center;gap:4px;
+}
+.field-error.show{display:flex}
+
+/* Password wrapper */
+.pw-wrap{position:relative}
+.pw-wrap .form-input{padding-right:44px}
+.pw-toggle{
+  position:absolute;right:0;top:0;bottom:0;
+  width:44px;display:flex;align-items:center;justify-content:center;
+  background:none;border:none;cursor:pointer;
+  color:var(--text-3);transition:color .18s;
+}
+.pw-toggle:hover{color:var(--text-2)}
+.pw-toggle svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* Forgot link */
+.form-row{display:flex;align-items:center;justify-content:space-between}
+.form-link{font-size:.78rem;color:var(--text-2);transition:.18s}
+.form-link:hover{color:var(--gold-dark)}
+
+/* Submit button */
+.btn-submit{
+  height:46px;width:100%;
+  background:var(--gold);color:var(--navy);
+  border:none;border-radius:7px;
+  font-family:'Sora',sans-serif;font-size:.9rem;font-weight:700;
+  cursor:pointer;transition:background .18s,transform .15s,box-shadow .18s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:.5rem;
+  position:relative;overflow:hidden;
+}
+.btn-submit:hover:not(:disabled){background:#e6a400;transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,183,3,.3)}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed}
+.btn-submit .spinner{
+  display:none;
+  width:16px;height:16px;border:2px solid rgba(7,25,36,.3);
+  border-top-color:var(--navy);border-radius:50%;
+  animation:spin .7s linear infinite;
+}
+.btn-submit.loading .btn-text{display:none}
+.btn-submit.loading .spinner{display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Divider */
+.auth-divider{
+  display:flex;align-items:center;gap:.75rem;
+  margin:.25rem 0;color:var(--text-3);font-size:.78rem;
+}
+.auth-divider::before,.auth-divider::after{
+  content:'';flex:1;height:1px;background:rgba(255,255,255,.07);
+}
+
+/* OAuth buttons */
+.btn-oauth{
+  height:44px;width:100%;
+  background:rgba(255,255,255,.04);
+  border:1.5px solid rgba(255,255,255,.1);
+  border-radius:7px;
+  color:var(--text);font-size:.87rem;font-weight:500;
+  cursor:pointer;transition:background .18s,border-color .18s;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  font-family:'DM Sans',sans-serif;
+}
+.btn-oauth:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2)}
+.btn-oauth img{width:18px;height:18px}
+
+/* Rate limit warning */
+.rate-warning{
+  display:none;
+  font-size:.78rem;color:#ff8080;text-align:center;
+  padding:.5rem;background:rgba(255,68,68,.08);border-radius:6px;
+}
+.rate-warning.show{display:block}
+
+/* Footer note */
+.auth-terms{
+  margin-top:1.5rem;font-size:.72rem;
+  color:var(--text-3);text-align:center;line-height:1.6;
+}
+.auth-terms a{color:var(--text-2);border-bottom:1px solid rgba(255,255,255,.15)}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  body{grid-template-columns:1fr}
+  .auth-brand{display:none}
+  .auth-form-panel{padding:2.5rem 1.5rem;justify-content:flex-start;padding-top:3rem}
+  .auth-form-wrap{max-width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- LEFT: Brand panel -->
+<div class="auth-brand">
+  <div class="brand-logo">
+    <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="AeroDefined" onerror="this.style.display='none'"/>
+    <span class="brand-logo-text">Aero<span>Defined</span></span>
+  </div>
+
+  <div class="brand-content">
+    <h1 class="brand-tagline">
+      The global marketplace<br>for <span>air cargo</span><br>&amp; logistics.
+    </h1>
+    <p class="brand-sub">
+      Connect with airlines, freight forwarders, handlers, and charter operators — all in one platform built for the aviation industry.
+    </p>
+  </div>
+
+  <div class="brand-quote">
+    <blockquote>"AeroDefined cut our booking time from 3 days to 4 hours. It's the tool this industry has been missing."</blockquote>
+    <cite>Head of Cargo Operations, European Regional Carrier</cite>
+  </div>
+</div>
+
+<!-- RIGHT: Form panel -->
+<div class="auth-form-panel">
+  <div class="auth-form-wrap">
+
+    <h2 class="auth-title">Welcome back</h2>
+    <p class="auth-sub">Don't have an account? <a href="/register.html">Sign up free</a></p>
+
+    <!-- Alert -->
+    <div class="auth-alert" id="authAlert" role="alert" aria-live="polite"></div>
+
+    <!-- Rate limit warning -->
+    <div class="rate-warning" id="rateWarning">
+      Too many login attempts. Please wait a few minutes before trying again.
+    </div>
+
+    <form class="form" id="loginForm" novalidate autocomplete="on">
+
+      <!-- Email -->
+      <div class="form-group">
+        <label class="form-label" for="email">Email address</label>
+        <input
+          class="form-input" type="email" id="email" name="email"
+          placeholder="you@company.com"
+          autocomplete="email"
+          maxlength="254"
+          required
+        />
+        <span class="field-error" id="emailError" role="alert">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M6 3.5v3M6 8h.01" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Please enter a valid email address.
+        </span>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <div class="form-row">
+          <label class="form-label" for="password">Password</label>
+          <a href="/forgot-password.html" class="form-link">Forgot password?</a>
+        </div>
+        <div class="pw-wrap">
+          <input
+            class="form-input" type="password" id="password" name="password"
+            placeholder="Your password"
+            autocomplete="current-password"
+            maxlength="128"
+            required
+          />
+          <button type="button" class="pw-toggle" id="pwToggle" aria-label="Show password" tabindex="-1">
+            <svg id="eyeIcon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <span class="field-error" id="pwError" role="alert">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M6 3.5v3M6 8h.01" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Password is required.
+        </span>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="btn-submit" id="submitBtn">
+        <span class="btn-text">Log in</span>
+        <div class="spinner"></div>
+      </button>
+
+      <!-- Divider -->
+      <div class="auth-divider">or continue with</div>
+
+      <!-- Google OAuth -->
+      <button type="button" class="btn-oauth" onclick="handleOAuth('google')">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        Continue with Google
+      </button>
+
+    </form>
+
+    <p class="auth-terms">
+      By logging in, you agree to our <a href="/terms.html">Terms of Service</a>
+      and <a href="/privacy.html">Privacy Policy</a>.
+    </p>
+
+  </div>
+</div>
+
+<script>
+// ── Security utilities ────────────────────────────────────
+const Security = {
+  escapeHTML(str) {
+    if (typeof str !== 'string') return '';
+    return str
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/\//g, '&#x2F;');
+  },
+  sanitizeInput(str) {
+    if (typeof str !== 'string') return '';
+    return str
+      .replace(/['"`;\\]/g, '').replace(/<[^>]*>/g, '')
+      .replace(/javascript:/gi, '').replace(/on\w+\s*=/gi, '')
+      .trim().slice(0, 500);
+  },
+  isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
+  },
+  // Client-side rate limiting (server MUST also enforce)
+  attempts: 0, lastAttempt: 0,
+  checkRate() {
+    const now = Date.now();
+    if (now - this.lastAttempt > 15 * 60 * 1000) this.attempts = 0;
+    this.lastAttempt = now;
+    this.attempts++;
+    return this.attempts <= 5;
+  }
+};
+
+// ── DOM refs ──────────────────────────────────────────────
+const form     = document.getElementById('loginForm');
+const emailEl  = document.getElementById('email');
+const pwEl     = document.getElementById('password');
+const submitEl = document.getElementById('submitBtn');
+const alertEl  = document.getElementById('authAlert');
+const rateEl   = document.getElementById('rateWarning');
+
+// ── Show/hide error ───────────────────────────────────────
+function showFieldError(inputEl, errorEl, show) {
+  inputEl.classList.toggle('error', show);
+  errorEl.classList.toggle('show', show);
+}
+function showAlert(msg, type = 'error') {
+  // Use textContent — never innerHTML with user data
+  alertEl.textContent = Security.escapeHTML(msg);
+  alertEl.className = 'auth-alert ' + type;
+}
+function clearAlert() {
+  alertEl.className = 'auth-alert';
+  alertEl.textContent = '';
+}
+
+// ── Real-time validation ──────────────────────────────────
+emailEl.addEventListener('blur', () => {
+  const val = Security.sanitizeInput(emailEl.value);
+  showFieldError(emailEl, document.getElementById('emailError'), !Security.isValidEmail(val));
+});
+pwEl.addEventListener('input', () => {
+  if (pwEl.classList.contains('error') && pwEl.value.length > 0)
+    showFieldError(pwEl, document.getElementById('pwError'), false);
+});
+
+// ── Password toggle ───────────────────────────────────────
+document.getElementById('pwToggle').addEventListener('click', () => {
+  const isText = pwEl.type === 'text';
+  pwEl.type = isText ? 'password' : 'text';
+  document.getElementById('eyeIcon').innerHTML = isText
+    ? '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>'
+    : '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24M1 1l22 22"/>';
+});
+
+// ── Form submit ───────────────────────────────────────────
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  clearAlert();
+
+  // Rate limit check
+  if (!Security.checkRate()) {
+    rateEl.classList.add('show');
+    submitEl.disabled = true;
+    return;
+  }
+
+  // Sanitize inputs — NEVER trust raw input
+  const email    = Security.sanitizeInput(emailEl.value);
+  const password = pwEl.value; // password: sanitize less aggressively, just trim
+
+  // Validate
+  let valid = true;
+  if (!Security.isValidEmail(email)) {
+    showFieldError(emailEl, document.getElementById('emailError'), true);
+    valid = false;
+  }
+  if (!password || password.length < 1) {
+    showFieldError(pwEl, document.getElementById('pwError'), true);
+    valid = false;
+  }
+  if (!valid) return;
+
+  // Loading state
+  submitEl.classList.add('loading');
+  submitEl.disabled = true;
+
+  try {
+    // POST to your backend — never build SQL from these values client-side
+    // Your backend must use parameterized queries (e.g. mongoose, pg, etc.)
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest', // CSRF basic defense
+      },
+      body: JSON.stringify({ email, password }),
+      credentials: 'same-origin',
+    });
+
+    const data = await res.json().catch(() => ({}));
+
+    if (res.ok) {
+      showAlert('Login successful. Redirecting…', 'success');
+      setTimeout(() => window.location.href = '/dashboard.html', 1000);
+    } else {
+      // Generic error message — never reveal if email exists or not
+      showAlert(data.message || 'Invalid credentials. Please try again.');
+      submitEl.classList.remove('loading');
+      submitEl.disabled = false;
+    }
+  } catch {
+    showAlert('Connection error. Please try again.');
+    submitEl.classList.remove('loading');
+    submitEl.disabled = false;
+  }
+});
+
+function handleOAuth(provider) {
+  // Redirect to backend OAuth handler
+  window.location.href = `/api/auth/${provider}`;
+}
+</script>
+</body>
+</html>

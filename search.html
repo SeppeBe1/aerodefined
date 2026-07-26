@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Search — AeroDefined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;height:100%}
+body{font-family:'DM Sans',sans-serif;background:#071924;color:#dde8f4;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{cursor:pointer;border:none;background:none;font:inherit}
+:root{
+  --navy:#071924;--marine:#0D1F3D;--marine-mid:#0f2338;--marine-card:#152d4a;
+  --slate:#475B7C;--gold:#FFB703;--gold-dark:#D4AF37;
+  --white:#fff;--text:#dde8f4;--text-2:#7f9ab5;--text-3:#3f5570;
+  --green:#00c060;--red:#ff4444;
+  --mono:'JetBrains Mono',monospace;
+}
+.wrap{max-width:1180px;margin-inline:auto;padding-inline:clamp(1.25rem,5vw,3.5rem)}
+
+/* ── NAV (reused from main) ── */
+.nav{
+  height:64px;background:rgba(7,25,36,.96);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(16px);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.nav-logo{display:flex;align-items:center;gap:9px}
+.nav-logo img{height:32px;width:auto;border-radius:5px}
+.nav-logo-text{font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:700;color:var(--white);letter-spacing:-.02em}
+.nav-logo-text span{color:var(--gold)}
+.nav-back{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.82rem;color:var(--text-2);
+  padding:6px 12px;border-radius:6px;
+  border:1px solid rgba(255,255,255,.1);
+  transition:border-color .18s,color .18s;
+}
+.nav-back:hover{color:var(--white);border-color:rgba(255,255,255,.25)}
+.nav-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── SEARCH HEADER ── */
+.search-header{
+  background:var(--marine);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  padding:2rem 0;
+}
+.search-header-top{
+  display:flex;align-items:center;gap:1rem;
+  margin-bottom:1.25rem;flex-wrap:wrap;
+}
+.search-title{
+  font-family:'Sora',sans-serif;
+  font-size:1.05rem;font-weight:600;color:var(--white);
+}
+.search-count{
+  font-family:var(--mono);font-size:.75rem;
+  color:var(--text-3);padding:3px 8px;
+  background:rgba(255,255,255,.05);border-radius:4px;
+}
+
+/* Main search bar */
+.search-bar{
+  display:flex;gap:8px;align-items:stretch;
+  background:rgba(255,255,255,.04);
+  border:1.5px solid rgba(255,255,255,.1);
+  border-radius:10px;padding:6px;
+  transition:border-color .18s;
+}
+.search-bar:focus-within{border-color:var(--gold)}
+.search-bar-icon{
+  display:flex;align-items:center;padding:0 10px;
+  color:var(--text-3);flex-shrink:0;
+}
+.search-bar-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.search-input{
+  flex:1;background:none;border:none;outline:none;
+  color:var(--white);font-size:.95rem;font-family:'DM Sans',sans-serif;
+  padding:6px 0;
+}
+.search-input::placeholder{color:var(--text-3)}
+.search-btn{
+  background:var(--gold);color:var(--navy);
+  padding:8px 20px;border-radius:7px;
+  font-family:'Sora',sans-serif;font-size:.85rem;font-weight:700;
+  transition:background .18s;white-space:nowrap;
+}
+.search-btn:hover{background:#e6a400}
+
+/* Service type tabs */
+.search-types{
+  display:flex;gap:4px;margin-top:1rem;
+  overflow-x:auto;scrollbar-width:none;
+}
+.search-types::-webkit-scrollbar{display:none}
+.type-tab{
+  padding:6px 14px;border-radius:6px;
+  font-size:.8rem;font-weight:500;
+  color:var(--text-2);white-space:nowrap;
+  border:1px solid transparent;
+  transition:background .18s,color .18s,border-color .18s;
+}
+.type-tab:hover{background:rgba(255,255,255,.05);color:var(--white)}
+.type-tab.on{
+  background:rgba(255,183,3,.1);
+  border-color:rgba(255,183,3,.25);
+  color:var(--gold);
+}
+
+/* ── LAYOUT: filters + results ── */
+.search-body{
+  display:grid;
+  grid-template-columns:240px 1fr;
+  gap:2rem;
+  padding-block:2rem;
+  align-items:start;
+}
+
+/* ── FILTERS PANEL ── */
+.filters{
+  background:var(--marine);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;
+  overflow:hidden;
+  position:sticky;top:80px;
+}
+.filters-head{
+  padding:16px 18px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.filters-title{font-family:'Sora',sans-serif;font-size:.85rem;font-weight:600;color:var(--white)}
+.filters-clear{font-size:.72rem;color:var(--gold-dark);transition:.18s}
+.filters-clear:hover{color:var(--gold)}
+.filter-group{padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.06)}
+.filter-group:last-child{border-bottom:none}
+.filter-group-label{
+  font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-3);margin-bottom:10px;
+}
+/* Checkbox filters */
+.filter-check{display:flex;align-items:center;justify-content:space-between;padding:4px 0;cursor:pointer}
+.filter-check label{
+  display:flex;align-items:center;gap:8px;
+  font-size:.82rem;color:var(--text-2);cursor:pointer;
+  transition:color .18s;
+}
+.filter-check:hover label{color:var(--white)}
+.filter-check input{accent-color:var(--gold)}
+.filter-badge{
+  font-family:var(--mono);font-size:.65rem;
+  color:var(--text-3);
+}
+/* Range slider */
+.range-labels{display:flex;justify-content:space-between;font-size:.72rem;color:var(--text-3);margin-top:6px}
+input[type="range"]{
+  width:100%;accent-color:var(--gold);
+  margin-top:8px;cursor:pointer;
+}
+
+/* ── RESULTS ── */
+.results-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1rem;flex-wrap:wrap;gap:.75rem;
+}
+.results-info{font-size:.82rem;color:var(--text-2)}
+.results-info strong{color:var(--white)}
+.sort-wrap{display:flex;align-items:center;gap:.5rem}
+.sort-label{font-size:.78rem;color:var(--text-3)}
+.sort-select{
+  background:var(--marine);border:1px solid rgba(255,255,255,.1);
+  border-radius:6px;padding:5px 10px;
+  color:var(--text);font-size:.8rem;font-family:'DM Sans',sans-serif;
+  outline:none;cursor:pointer;
+  transition:border-color .18s;
+}
+.sort-select:focus{border-color:var(--gold)}
+
+/* Result cards */
+.result-card{
+  background:var(--marine);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;padding:20px 22px;
+  margin-bottom:10px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:1rem;
+  align-items:center;
+  transition:border-color .18s,background .18s;
+}
+.result-card:hover{
+  border-color:rgba(255,183,3,.2);
+  background:var(--marine-card);
+}
+.result-card.featured{
+  border-color:rgba(255,183,3,.25);
+  position:relative;overflow:hidden;
+}
+.result-card.featured::before{
+  content:'Featured';
+  position:absolute;top:0;right:0;
+  background:var(--gold);color:var(--navy);
+  font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 10px;border-radius:0 12px 0 6px;
+}
+
+.result-main{}
+.result-route{
+  display:flex;align-items:center;gap:.75rem;
+  margin-bottom:.5rem;
+}
+.result-airport{
+  font-family:'Sora',sans-serif;
+  font-size:1.25rem;font-weight:700;
+  color:var(--white);letter-spacing:-.01em;
+}
+.result-arrow{color:var(--text-3);display:flex;align-items:center}
+.result-arrow svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.result-airline{
+  font-size:.78rem;color:var(--text-2);margin-bottom:.35rem;
+}
+.result-tags{display:flex;gap:6px;flex-wrap:wrap}
+.rtag{
+  font-size:.63rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+  padding:2px 7px;border-radius:3px;
+}
+.rtag-blue{background:rgba(30,110,240,.12);color:#6bb3ff}
+.rtag-gold{background:rgba(255,183,3,.1);color:var(--gold-dark)}
+.rtag-green{background:rgba(0,192,96,.1);color:#60e0a0}
+.rtag-slate{background:rgba(71,91,124,.15);color:#90a8c0}
+
+.result-right{text-align:right}
+.result-price{
+  font-family:'Sora',sans-serif;
+  font-size:1.3rem;font-weight:700;
+  color:var(--gold);letter-spacing:-.02em;
+  margin-bottom:2px;
+}
+.result-price-sub{font-size:.72rem;color:var(--text-3);margin-bottom:.6rem}
+.result-cap{font-size:.75rem;color:var(--text-2);margin-bottom:.75rem}
+.btn-book{
+  background:var(--gold);color:var(--navy);
+  padding:8px 18px;border-radius:6px;
+  font-family:'Sora',sans-serif;font-size:.78rem;font-weight:700;
+  transition:background .18s,transform .15s;
+  white-space:nowrap;display:inline-block;
+}
+.btn-book:hover{background:#e6a400;transform:translateY(-1px)}
+.btn-quote{
+  background:transparent;color:var(--text-2);
+  border:1px solid rgba(255,255,255,.1);
+  padding:7px 14px;border-radius:6px;
+  font-size:.78rem;font-weight:500;
+  transition:border-color .18s,color .18s;
+  white-space:nowrap;display:inline-block;margin-left:6px;
+}
+.btn-quote:hover{border-color:rgba(255,255,255,.25);color:var(--white)}
+
+/* Empty state */
+.empty-state{
+  text-align:center;padding:4rem 2rem;
+  color:var(--text-2);
+}
+.empty-state h3{font-family:'Sora',sans-serif;font-size:1.1rem;color:var(--white);margin-bottom:.5rem}
+.empty-state p{font-size:.875rem;line-height:1.6}
+
+/* Loading skeleton */
+.skeleton{background:linear-gradient(90deg,var(--marine) 25%,var(--marine-card) 50%,var(--marine) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel-card{height:96px;border-radius:12px;margin-bottom:10px}
+
+/* Pagination */
+.pagination{
+  display:flex;align-items:center;justify-content:center;
+  gap:4px;margin-top:1.5rem;
+}
+.page-btn{
+  width:34px;height:34px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.82rem;color:var(--text-2);
+  border:1px solid rgba(255,255,255,.08);
+  transition:background .18s,border-color .18s,color .18s;
+}
+.page-btn:hover,.page-btn.on{background:rgba(255,183,3,.1);border-color:rgba(255,183,3,.25);color:var(--gold)}
+
+/* Responsive */
+@media(max-width:840px){
+  .search-body{grid-template-columns:1fr}
+  .filters{position:static;display:none}
+  .filters.open{display:block}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="AeroDefined" onerror="this.style.display='none'"/>
+      <span class="nav-logo-text">Aero<span>Defined</span></span>
+    </a>
+    <a href="/" class="nav-back">
+      <svg viewBox="0 0 14 14"><path d="M8 2L3 7l5 5"/><path d="M3 7h9"/></svg>
+      Back
+    </a>
+  </div>
+</nav>
+
+<!-- SEARCH HEADER -->
+<div class="search-header">
+  <div class="wrap">
+    <div class="search-header-top">
+      <span class="search-title">Search results</span>
+      <span class="search-count" id="resultCount">24 results</span>
+    </div>
+
+    <!-- Main search bar -->
+    <div class="search-bar">
+      <div class="search-bar-icon">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </div>
+      <input
+        class="search-input"
+        type="text"
+        id="mainSearch"
+        placeholder="Search routes, airlines, services…"
+        autocomplete="off"
+        maxlength="100"
+        aria-label="Search"
+      />
+      <button class="search-btn" onclick="doSearch()">Search</button>
+    </div>
+
+    <!-- Service type tabs -->
+    <div class="search-types">
+      <button class="type-tab on" onclick="setType(this,'all')">All services</button>
+      <button class="type-tab" onclick="setType(this,'cargo')">Cargo booking</button>
+      <button class="type-tab" onclick="setType(this,'charter')">Charter & ACMI</button>
+      <button class="type-tab" onclick="setType(this,'rfs')">Road feeder</button>
+      <button class="type-tab" onclick="setType(this,'uld')">ULD leasing</button>
+      <button class="type-tab" onclick="setType(this,'brokerage')">Brokerage</button>
+      <button class="type-tab" onclick="setType(this,'compliance')">Customs</button>
+    </div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="wrap">
+  <div class="search-body">
+
+    <!-- FILTERS -->
+    <aside class="filters" id="filtersPanel">
+      <div class="filters-head">
+        <span class="filters-title">Filters</span>
+        <button class="filters-clear" onclick="clearFilters()">Clear all</button>
+      </div>
+
+      <!-- Origin -->
+      <div class="filter-group">
+        <div class="filter-group-label">Origin region</div>
+        <div class="filter-check"><label><input type="checkbox" name="origin" value="eur"/> Western Europe</label><span class="filter-badge">142</span></div>
+        <div class="filter-check"><label><input type="checkbox" name="origin" value="mea"/> Middle East</label><span class="filter-badge">58</span></div>
+        <div class="filter-check"><label><input type="checkbox" name="origin" value="apa"/> Asia Pacific</label><span class="filter-badge">94</span></div>
+        <div class="filter-check"><label><input type="checkbox" name="origin" value="nam"/> North America</label><span class="filter-badge">72</span></div>
+      </div>
+
+      <!-- Commodity -->
+      <div class="filter-group">
+        <div class="filter-group-label">Commodity type</div>
+        <div class="filter-check"><label><input type="checkbox" name="commodity" value="general"/> General cargo</label></div>
+        <div class="filter-check"><label><input type="checkbox" name="commodity" value="dg"/> Dangerous goods</label></div>
+        <div class="filter-check"><label><input type="checkbox" name="commodity" value="pharma"/> Pharma / GDP</label></div>
+        <div class="filter-check"><label><input type="checkbox" name="commodity" value="perishable"/> Perishables</label></div>
+        <div class="filter-check"><label><input type="checkbox" name="commodity" value="oversized"/> Oversized / heavy</label></div>
+      </div>
+
+      <!-- Weight range -->
+      <div class="filter-group">
+        <div class="filter-group-label">Max weight</div>
+        <input type="range" id="weightRange" min="100" max="100000" value="50000" step="100" oninput="updateWeight(this.value)"/>
+        <div class="range-labels"><span>100 kg</span><span id="weightLabel">50,000 kg</span></div>
+      </div>
+
+      <!-- Departure -->
+      <div class="filter-group">
+        <div class="filter-group-label">Departure window</div>
+        <div class="filter-check"><label><input type="radio" name="dep" value="today" checked/> Today</label></div>
+        <div class="filter-check"><label><input type="radio" name="dep" value="week"/> This week</label></div>
+        <div class="filter-check"><label><input type="radio" name="dep" value="month"/> This month</label></div>
+        <div class="filter-check"><label><input type="radio" name="dep" value="any"/> Any date</label></div>
+      </div>
+
+      <!-- Verified only -->
+      <div class="filter-group">
+        <div class="filter-group-label">Provider</div>
+        <div class="filter-check"><label><input type="checkbox" name="verified" value="1"/> Verified suppliers only</label></div>
+        <div class="filter-check"><label><input type="checkbox" name="instant" value="1"/> Instant booking</label></div>
+      </div>
+    </aside>
+
+    <!-- RESULTS -->
+    <main>
+      <div class="results-header">
+        <span class="results-info"><strong id="resultCountInline">24</strong> results for "<span id="queryDisplay">cargo</span>"</span>
+        <div class="sort-wrap">
+          <span class="sort-label">Sort by</span>
+          <select class="sort-select" onchange="sortResults(this.value)">
+            <option value="relevance">Relevance</option>
+            <option value="price_asc">Price: low to high</option>
+            <option value="price_desc">Price: high to low</option>
+            <option value="departure">Earliest departure</option>
+            <option value="capacity">Most capacity</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Skeleton loaders (shown during search) -->
+      <div id="skeletons" style="display:none">
+        <div class="skel-card skeleton"></div>
+        <div class="skel-card skeleton"></div>
+        <div class="skel-card skeleton"></div>
+      </div>
+
+      <!-- Results list -->
+      <div id="resultsList">
+
+        <div class="result-card featured">
+          <div class="result-main">
+            <div class="result-route">
+              <span class="result-airport">AMS</span>
+              <div class="result-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+              <span class="result-airport">JFK</span>
+              <span style="font-size:.75rem;color:var(--text-3);margin-left:.25rem">· 8h 45m</span>
+            </div>
+            <div class="result-airline">Corendon Dutch Airlines · B767F · Daily</div>
+            <div class="result-tags">
+              <span class="rtag rtag-blue">Freighter</span>
+              <span class="rtag rtag-green">Instant booking</span>
+              <span class="rtag rtag-gold">e-AWB</span>
+            </div>
+          </div>
+          <div class="result-right">
+            <div class="result-price">€2.40</div>
+            <div class="result-price-sub">per kg</div>
+            <div class="result-cap">Up to 45,000 kg available</div>
+            <a href="#" class="btn-book">Book now</a>
+            <a href="#" class="btn-quote">Get quote</a>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-main">
+            <div class="result-route">
+              <span class="result-airport">BRU</span>
+              <div class="result-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+              <span class="result-airport">DXB</span>
+              <span style="font-size:.75rem;color:var(--text-3);margin-left:.25rem">· 6h 10m</span>
+            </div>
+            <div class="result-airline">Emirates SkyCargo · B777F · 4x weekly</div>
+            <div class="result-tags">
+              <span class="rtag rtag-blue">Belly &amp; freighter</span>
+              <span class="rtag rtag-gold">DG accepted</span>
+              <span class="rtag rtag-slate">Pharma</span>
+            </div>
+          </div>
+          <div class="result-right">
+            <div class="result-price">€3.10</div>
+            <div class="result-price-sub">per kg</div>
+            <div class="result-cap">Up to 12,000 kg available</div>
+            <a href="#" class="btn-book">Book now</a>
+            <a href="#" class="btn-quote">Get quote</a>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-main">
+            <div class="result-route">
+              <span class="result-airport">CDG</span>
+              <div class="result-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+              <span class="result-airport">PVG</span>
+              <span style="font-size:.75rem;color:var(--text-3);margin-left:.25rem">· 11h 20m</span>
+            </div>
+            <div class="result-airline">Air France Cargo · B777F · 6x weekly</div>
+            <div class="result-tags">
+              <span class="rtag rtag-blue">Freighter</span>
+              <span class="rtag rtag-gold">Perishables</span>
+            </div>
+          </div>
+          <div class="result-right">
+            <div class="result-price">€4.80</div>
+            <div class="result-price-sub">per kg</div>
+            <div class="result-cap">Up to 60,000 kg available</div>
+            <a href="#" class="btn-book">Book now</a>
+            <a href="#" class="btn-quote">Get quote</a>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-main">
+            <div class="result-route">
+              <span class="result-airport">FRA</span>
+              <div class="result-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+              <span class="result-airport">ORD</span>
+              <span style="font-size:.75rem;color:var(--text-3);margin-left:.25rem">· 9h 05m</span>
+            </div>
+            <div class="result-airline">Lufthansa Cargo · MD11F · 5x weekly</div>
+            <div class="result-tags">
+              <span class="rtag rtag-blue">Freighter</span>
+              <span class="rtag rtag-green">Instant booking</span>
+            </div>
+          </div>
+          <div class="result-right">
+            <div class="result-price">€2.95</div>
+            <div class="result-price-sub">per kg</div>
+            <div class="result-cap">Up to 28,000 kg available</div>
+            <a href="#" class="btn-book">Book now</a>
+            <a href="#" class="btn-quote">Get quote</a>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-main">
+            <div class="result-route">
+              <span class="result-airport">LHR</span>
+              <div class="result-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+              <span class="result-airport">SIN</span>
+              <span style="font-size:.75rem;color:var(--text-3);margin-left:.25rem">· 13h 00m</span>
+            </div>
+            <div class="result-airline">Singapore Airlines Cargo · B747F · Daily</div>
+            <div class="result-tags">
+              <span class="rtag rtag-blue">Freighter</span>
+              <span class="rtag rtag-slate">DG Class 1-9</span>
+              <span class="rtag rtag-gold">e-AWB</span>
+            </div>
+          </div>
+          <div class="result-right">
+            <div class="result-price">€5.20</div>
+            <div class="result-price-sub">per kg</div>
+            <div class="result-cap">Up to 80,000 kg available</div>
+            <a href="#" class="btn-book">Book now</a>
+            <a href="#" class="btn-quote">Get quote</a>
+          </div>
+        </div>
+
+      </div><!-- /resultsList -->
+
+      <!-- Empty state (hidden) -->
+      <div class="empty-state" id="emptyState" style="display:none">
+        <h3>No results found</h3>
+        <p>Try adjusting your search or filters. You can also post an RFQ and let providers come to you.</p>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <button class="page-btn on">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <span style="color:var(--text-3);padding:0 4px">…</span>
+        <button class="page-btn">8</button>
+        <button class="page-btn" aria-label="Next">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l5 5-5 5"/></svg>
+        </button>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+// Security utilities
+const Security = {
+  sanitizeSearch(q) {
+    if (typeof q !== 'string') return '';
+    return q
+      .replace(/[<>"'`;\\]/g, '')
+      .replace(/javascript:/gi, '')
+      .replace(/on\w+\s*=/gi, '')
+      .trim()
+      .slice(0, 100);
+  },
+  escapeHTML(str) {
+    if (typeof str !== 'string') return '';
+    return str
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
+  }
+};
+
+// Init from URL params (safe)
+const params = new URLSearchParams(window.location.search);
+const rawQ = params.get('q') || 'cargo';
+const safeQ = Security.sanitizeSearch(rawQ);
+
+document.getElementById('mainSearch').value = safeQ;
+// Use textContent — never innerHTML with user data
+document.getElementById('queryDisplay').textContent = safeQ;
+
+// Search
+function doSearch() {
+  const raw = document.getElementById('mainSearch').value;
+  const q = Security.sanitizeSearch(raw);
+  if (!q) return;
+
+  showSkeletons(true);
+  // Update URL safely
+  const url = new URL(window.location);
+  url.searchParams.set('q', q);
+  window.history.replaceState({}, '', url);
+
+  // In production: fetch from your API with the sanitized query
+  // e.g. fetch(`/api/search?q=${encodeURIComponent(q)}&type=${currentType}`)
+  // Server must use parameterized queries — never string-interpolate q into SQL/Mongo
+
+  // Demo: simulate loading
+  setTimeout(() => {
+    showSkeletons(false);
+    // Update display — always use textContent, never innerHTML
+    document.getElementById('queryDisplay').textContent = q;
+  }, 800);
+}
+
+// Enter key triggers search
+document.getElementById('mainSearch').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+});
+
+// Prevent XSS in input — strip dangerous chars on input
+document.getElementById('mainSearch').addEventListener('input', function() {
+  const clean = Security.sanitizeSearch(this.value);
+  if (this.value !== clean) this.value = clean;
+});
+
+function showSkeletons(show) {
+  document.getElementById('skeletons').style.display = show ? 'block' : 'none';
+  document.getElementById('resultsList').style.display = show ? 'none' : 'block';
+}
+
+let currentType = 'all';
+function setType(el, type) {
+  document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  currentType = type;
+  doSearch();
+}
+
+function sortResults(val) {
+  // In production: re-fetch from API with sort param
+  console.log('Sort by:', val);
+}
+
+function updateWeight(val) {
+  document.getElementById('weightLabel').textContent = Number(val).toLocaleString() + ' kg';
+}
+
+function clearFilters() {
+  document.querySelectorAll('.filters input[type="checkbox"]').forEach(cb => cb.checked = false);
+  document.querySelectorAll('.filters input[type="radio"]').forEach((rb, i) => rb.checked = i === 0);
+  document.getElementById('weightRange').value = 50000;
+  document.getElementById('weightLabel').textContent = '50,000 kg';
+  doSearch();
+}
+</script>
+</body>
+</html>

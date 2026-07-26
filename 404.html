@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Page not found — AeroDefined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'DM Sans',sans-serif;background:#071924;color:#dde8f4;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:2rem}
+:root{--navy:#071924;--marine:#0D1F3D;--gold:#FFB703;--gold-dark:#D4AF37;--white:#fff;--text-2:#7f9ab5;--text-3:#3a5068}
+
+.logo{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:3rem;text-decoration:none}
+.logo img{height:36px;border-radius:6px}
+.logo-text{font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:700;color:var(--white);letter-spacing:-.02em}
+.logo-text span{color:var(--gold)}
+
+.code{
+  font-family:'Sora',sans-serif;
+  font-size:clamp(6rem,18vw,10rem);
+  font-weight:800;
+  color:rgba(255,183,3,.08);
+  letter-spacing:-.06em;
+  line-height:1;
+  margin-bottom:1rem;
+}
+h1{font-family:'Sora',sans-serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:700;color:var(--white);margin-bottom:.6rem;letter-spacing:-.025em}
+p{font-size:.97rem;color:var(--text-2);max-width:400px;line-height:1.7;margin-bottom:2.5rem}
+
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-gold{background:var(--gold);color:var(--navy);padding:11px 24px;border-radius:7px;font-family:'Sora',sans-serif;font-size:.875rem;font-weight:700;text-decoration:none;transition:background .18s}
+.btn-gold:hover{background:var(--gold-dark)}
+.btn-outline{border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.7);padding:10px 22px;border-radius:7px;font-size:.875rem;text-decoration:none;transition:all .18s}
+.btn-outline:hover{border-color:rgba(255,255,255,.4);color:var(--white)}
+
+.quick-links{margin-top:3rem;display:flex;gap:1.5rem;flex-wrap:wrap;justify-content:center}
+.quick-link{font-size:.82rem;color:var(--text-3);text-decoration:none;transition:color .18s;display:flex;align-items:center;gap:4px}
+.quick-link:hover{color:var(--gold-dark)}
+.quick-link::before{content:'→';color:var(--gold-dark);font-size:.75rem}
+</style>
+</head>
+<body>
+<a href="/index.html" class="logo">
+  <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="AeroDefined" onerror="this.style.display='none'"/>
+  <span class="logo-text">Aero<span>Defined</span></span>
+</a>
+
+<div class="code">404</div>
+<h1>This route doesn't exist.</h1>
+<p>The page you're looking for has been moved, renamed, or never existed. Let's get you back on course.</p>
+
+<div class="actions">
+  <a href="/index.html" class="btn-gold">Back to homepage →</a>
+  <a href="/search.html" class="btn-outline">Search the marketplace</a>
+</div>
+
+<div class="quick-links">
+  <a href="/how-it-works.html" class="quick-link">How it works</a>
+  <a href="/pricing.html" class="quick-link">Pricing</a>
+  <a href="/register.html" class="quick-link">Create account</a>
+  <a href="/contact.html" class="quick-link">Contact support</a>
+</div>
+</body>
+</html>
