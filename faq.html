@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>FAQ — AeroDefined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/src/css/variables.css"/>
+<link rel="stylesheet" href="/src/css/global.css"/>
+<link rel="stylesheet" href="/src/css/navbar.css"/>
+<link rel="stylesheet" href="/src/css/footer.css"/>
+<link rel="stylesheet" href="/src/css/page.css"/>
+<style>
+.faq-cats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2.5rem}
+.faq-cat-btn{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);font-size:.8rem;font-weight:500;color:var(--text-2);cursor:pointer;transition:var(--t);font-family:inherit}
+.faq-cat-btn:hover,.faq-cat-btn.active{border-color:var(--gold);background:rgba(255,183,3,.1);color:var(--white)}
+.faq-section{margin-bottom:3rem}
+.faq-section-title{font-family:'Sora',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid rgba(255,183,3,.15)}
+.faq-cta{background:var(--marine);border:1px solid rgba(255,183,3,.2);border-radius:14px;padding:2.5rem;text-align:center;margin-top:2rem}
+.faq-cta h3{font-family:'Sora',sans-serif;font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:.5rem}
+.faq-cta p{font-size:.9rem;color:var(--text-2);margin-bottom:1.5rem}
+</style>
+</head>
+<body>
+<nav class="nav" id="navbar">
+  <div class="wrap nav-inner">
+    <a href="/index.html" class="nav-logo">
+      <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="AeroDefined" onerror="this.style.display='none'"/>
+      <span class="nav-logo-text">Aero<span>Defined</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/marketplace.html" class="nav-link">Marketplace</a></li>
+      <li><a href="/how-it-works.html" class="nav-link">How it works</a></li>
+      <li><a href="/pricing.html" class="nav-link">Pricing</a></li>
+      <li class="nav-dd">
+        <a href="#" class="nav-link" style="display:inline-flex;align-items:center;gap:4px">Company
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="nav-dd-panel">
+          <a href="/about.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg><span><strong>About us</strong>Our story and mission</span></a>
+          <a href="/contact.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span><strong>Contact</strong>Talk to our team</span></a>
+          <a href="/faq.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg><span><strong>FAQ</strong>Common questions</span></a>
+          <a href="/rfq.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span><strong>Post an RFQ</strong>Get quotes fast</span></a>
+        </div>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <a href="/login.html" class="btn btn-ghost btn-sm">Log in</a>
+      <a href="/register.html" class="btn btn-gold btn-sm">Create account</a>
+    </div>
+    <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="mobile-menu">
+    <div class="nav-mobile-inner">
+      <a href="/marketplace.html">Marketplace</a>
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/about.html">About us</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/rfq.html">Post an RFQ</a>
+      <div class="nav-mobile-btns">
+        <a href="/login.html" class="btn btn-outline">Log in</a>
+        <a href="/register.html" class="btn btn-gold">Create account</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<section class="page-hero page-hero-center">
+  <div class="wrap">
+    <span class="hero-label">FAQ</span>
+    <h1 class="hero-h">Frequently asked <em>questions.</em></h1>
+    <p class="hero-sub">Everything you need to know about AeroDefined. Can't find what you're looking for? <a href="/contact.html" style="color:var(--gold-dark)">Contact us</a>.</p>
+  </div>
+</section>
+
+<section style="padding-block:4.5rem;background:var(--navy)">
+  <div class="wrap" style="max-width:800px">
+    <div class="faq-cats">
+      <button class="faq-cat-btn active" onclick="filterFaq(this,'all')">All questions</button>
+      <button class="faq-cat-btn" onclick="filterFaq(this,'general')">General</button>
+      <button class="faq-cat-btn" onclick="filterFaq(this,'pricing')">Pricing</button>
+      <button class="faq-cat-btn" onclick="filterFaq(this,'sellers')">For sellers</button>
+      <button class="faq-cat-btn" onclick="filterFaq(this,'buyers')">For buyers</button>
+    </div>
+
+    <div class="faq-section" data-cat="general">
+      <div class="faq-section-title">General</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">What is AeroDefined?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">AeroDefined is a B2B aviation marketplace connecting airlines, operators, MRO shops and logistics providers with buyers, freight forwarders and shippers on one verified platform. Browse, contact and trade assets and services directly.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Who uses AeroDefined?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">Both sides of the aviation supply chain: sellers include airlines, aircraft lessors, MRO providers, engine traders, cargo operators and logistics companies. Buyers include freight forwarders, charter brokers, importers/exporters, customs brokers and road feeder operators.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Where is AeroDefined based?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">We're headquartered in Antwerp, Belgium, with operations across Western Europe. The platform is live across Belgium, Netherlands, Germany, the UAE and beyond.</div></div></div>
+    </div>
+
+    <div class="faq-section" data-cat="pricing">
+      <div class="faq-section-title">Pricing &amp; commission</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Is AeroDefined free to use?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">Browsing, searching and contacting sellers is completely free. You only pay a small commission (2% for free accounts, 1.5% for Premium) when a deal is successfully completed. No upfront costs for buyers.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">How much does Premium cost?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">Premium is €149 per month, billed monthly. It includes unlimited listings, inbound RFQs, reduced 1.5% commission, verified seller badge, analytics and access to featured placement slots.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Can I cancel my Premium subscription?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">Yes, at any time. Monthly billing — cancel from your account dashboard. No minimum term, no cancellation fees. Premium features remain active until the end of the paid period.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">What is featured placement?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">Premium accounts can boost a listing to the "Featured" row — gold-bordered cards at the top of every search and category page. Maximum 3 featured slots per category at any time, first-come first-served, changeable from your dashboard.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Do you offer Enterprise pricing?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">Yes. Enterprise includes everything in Premium plus volume-capped commission, API/ERP integration, a dedicated account manager, SLA guarantees and custom contract terms. <a href="/contact.html" style="color:var(--gold-dark)">Contact us</a> to discuss.</div></div></div>
+    </div>
+
+    <div class="faq-section" data-cat="sellers">
+      <div class="faq-section-title">For sellers &amp; operators</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">How do I list an asset or service?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">Create a Premium account, then use the "Post listing" button in your dashboard. Fill in details — category, description, photos, specs and pricing — and your listing goes live within minutes after a quick verification check.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">How many listings can I post?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">Premium accounts can post unlimited listings across all categories — aircraft, engines, parts, MRO services, cargo capacity, leasing, RFS and more. Free accounts cannot post listings.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">What does the Verified badge mean?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">The green "Verified" badge means we've confirmed your company identity, VAT registration and aviation operator credentials. Verified sellers receive significantly more enquiries as buyers trust verified listings more.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">How do I receive inbound RFQs?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">Premium accounts receive inbound RFQs directly to their dashboard. When a buyer posts an RFQ matching your categories, you'll get a notification and can respond with a quote directly on the platform.</div></div></div>
+    </div>
+
+    <div class="faq-section" data-cat="buyers">
+      <div class="faq-section-title">For buyers &amp; forwarders</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">How do I find what I'm looking for?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">Use the search bar on the homepage or marketplace to search by aircraft type, engine model, route or part number. Filter by category, region and seller type in the sidebar. Or post an RFQ and receive quotes from verified sellers directly.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">What is an RFQ?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">RFQ stands for Request for Quotation. Describe what you need — asset type, specs, timeline, budget — and post it. Verified sellers matching your requirements respond with quotes directly.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">How do I contact a seller?</span><div class="faq-chevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div><div class="faq-a"><div class="faq-a-inner">Click "Contact seller" on any listing. You'll need a free account (takes under 2 minutes). Once logged in, send messages directly — no phone calls, no broker required.</div></div></div>
+    </div>
+
+    <div class="faq-cta">
+      <h3>Still have questions?</h3>
+      <p>Our team is happy to walk you through the platform or answer any specific questions.</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <a href="/contact.html" class="btn btn-gold">Contact us →</a>
+        <a href="/register.html" class="btn btn-outline">Create free account</a>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/index.html" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;text-decoration:none">
+          <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="" style="height:30px;border-radius:5px" onerror="this.style.display='none'"/>
+          <span class="nav-logo-text">Aero<span>Defined</span></span>
+        </a>
+        <p class="footer-tagline">Your gateway to the world of aviation.<br><em>"From ground to sky we connect it all"</em></p>
+        <div class="footer-socials">
+          <a href="#" class="footer-soc">in</a>
+          <a href="#" class="footer-soc">𝕏</a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Marketplace</h5><a href="/marketplace.html?cat=aircraft-sale">Aircraft buy &amp; sale</a><a href="/marketplace.html?cat=aircraft-lease">Aircraft leasing</a><a href="/marketplace.html?cat=charter">Charter</a><a href="/marketplace.html?cat=mro">MRO</a><a href="/marketplace.html?cat=engines">Engines</a><a href="/marketplace.html?cat=cargo">Cargo</a></div>
+      <div class="footer-col"><h5>Company</h5><a href="/about.html">About us</a><a href="/how-it-works.html">How it works</a><a href="/pricing.html">Pricing</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a></div>
+      <div class="footer-col"><h5>Legal</h5><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/cookies.html">Cookies</a><a href="/gdpr.html">GDPR</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span class="yr"></span> AeroDefined BV. All rights reserved.</p>
+      <div class="footer-bottom-links"><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/cookies.html">Cookies</a></div>
+      <p>🇧🇪 Antwerp · 🇳🇱 Amsterdam</p>
+    </div>
+  </div>
+</footer>
+<script src="/src/js/navbar.js"></script>
+<script>document.querySelectorAll(".yr").forEach(e=>e.textContent=new Date().getFullYear())</script>
+<script>
+function toggleFaq(el){
+  const item=el.parentElement;
+  const wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!wasOpen)item.classList.add('open');
+}
+function filterFaq(btn,cat){
+  document.querySelectorAll('.faq-cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.faq-section').forEach(s=>{
+    s.style.display=(cat==='all'||s.dataset.cat===cat)?'block':'none';
+  });
+}
+</script>
+</body>
+</html>

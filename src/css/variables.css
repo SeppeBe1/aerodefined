@@ -1,65 +1,29 @@
-/* ============================================================
-   CARGOPLACE — Design Tokens v2
-   Bold & energetic. Marine + electric blue + amber.
-   ============================================================ */
+/* ─────────────────────────────────────────
+   AeroDefined — Design tokens
+   Import first in every page
+───────────────────────────────────────── */
 :root {
-  /* ── Core palette ──────────────────────────── */
-  --marine-950: #020912;
-  --marine-900: #050f1f;
-  --marine-800: #091729;
-  --marine-700: #0d2240;
+  /* Colours */
+  --navy:        #071924;
+  --marine:      #0D1F3D;
+  --marine-mid:  #0f2338;
+  --marine-card: #152d4a;
+  --slate:       #475B7C;
+  --gold:        #FFB703;
+  --gold-dim:    #d99e00;
+  --gold-dark:   #D4AF37;
+  --gold-glow:   rgba(255,183,3,.14);
+  --white:       #fff;
+  --text:        #dde8f4;
+  --text-2:      #7f9ab5;
+  --text-3:      #3f5570;
+  --green:       #00c060;
+  --red:         #ff4040;
 
-  --blue:       #0057FF;   /* electric — one accent, used with restraint */
-  --blue-dim:   #0047d4;
-  --blue-glow:  rgba(0, 87, 255, 0.18);
-
-  --amber:      #FF6B00;   /* CTA urgency — used ONLY on primary button */
-  --amber-dim:  #e05e00;
-
-  --white:      #ffffff;
-  --off-white:  #f4f6f9;
-  --n-700:      #3a4a5c;
-  --n-500:      #6b7d93;
-  --n-300:      #a8b8c8;
-  --n-150:      #dde4ec;
-  --n-50:       #f7f9fb;
-
-  /* ── Status ────────────────────────────────── */
-  --green:      #00c060;
-  --red:        #ff3b3b;
-
-  /* ── Type ──────────────────────────────────── */
-  --font-display: 'Bricolage Grotesque', 'DM Sans', sans-serif;
-  --font-body:    'Inter', system-ui, sans-serif;
-
-  /* ── Spacing ───────────────────────────────── */
-  --sp-1:  0.25rem;
-  --sp-2:  0.5rem;
-  --sp-3:  0.75rem;
-  --sp-4:  1rem;
-  --sp-5:  1.25rem;
-  --sp-6:  1.5rem;
-  --sp-8:  2rem;
-  --sp-10: 2.5rem;
-  --sp-12: 3rem;
-  --sp-16: 4rem;
-  --sp-20: 5rem;
-  --sp-24: 6rem;
-
-  /* ── Radii ─────────────────────────────────── */
-  --r-sm:   5px;
-  --r-md:   10px;
-  --r-lg:   16px;
-  --r-full: 9999px;
-
-  /* ── Layout ────────────────────────────────── */
-  --max-w:    1200px;
-  --pad:      clamp(1.25rem, 5vw, 3.5rem);
-  --nav-h:    62px;
-
-  /* ── Motion ────────────────────────────────── */
-  --t-fast:   140ms ease;
-  --t-base:   220ms ease;
-  --t-slow:   380ms ease;
-  --t-spring: 320ms cubic-bezier(0.34, 1.5, 0.64, 1);
+  /* Layout */
+  --pad:   clamp(1.25rem,5vw,3.5rem);
+  --nav-h: 64px;
+  --max-w: 1440px;
+  --r:     8px;
+  --t:     .2s ease;
 }

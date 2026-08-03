@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Marketplace — AeroDefined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/src/css/variables.css"/>
+<link rel="stylesheet" href="/src/css/global.css"/>
+<link rel="stylesheet" href="/src/css/navbar.css"/>
+<link rel="stylesheet" href="/src/css/footer.css"/>
+<link rel="stylesheet" href="/src/css/page.css"/>
+<style>
+/* Marketplace-specific only */
+.mkt-header{padding-top:calc(var(--nav-h) + 1.75rem);padding-bottom:1.5rem;background:var(--marine);border-bottom:1px solid rgba(255,255,255,.06);position:sticky;top:0;z-index:90;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.mkt-search-row{display:flex;gap:8px;align-items:center}
+.mkt-btn{background:var(--gold);color:var(--navy);border:none;border-radius:6px;padding:9px 22px;font-family:'Sora',sans-serif;font-size:.875rem;font-weight:700;cursor:pointer;transition:background .18s;white-space:nowrap}
+.mkt-btn:hover{background:var(--gold-dim)}
+.mkt-body{display:grid;grid-template-columns:210px 1fr;gap:2rem;padding-block:2rem;align-items:start}
+.filters{background:var(--marine);border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;position:sticky;top:calc(var(--nav-h) + 200px)}
+.filters-head{padding:13px 15px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between}
+.filters-title{font-family:'Sora',sans-serif;font-size:.85rem;font-weight:600;color:var(--white)}
+.filters-clear{font-size:.72rem;color:var(--gold-dark);cursor:pointer;transition:var(--t);background:none;border:none;font-family:inherit}
+.filters-clear:hover{color:var(--gold)}
+.filter-group{padding:13px 15px;border-bottom:1px solid rgba(255,255,255,.06)}
+.filter-group:last-child{border-bottom:none}
+.filter-label{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);margin-bottom:8px}
+.filter-opt{display:flex;align-items:center;justify-content:space-between;padding:3px 0}
+.filter-opt label{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--text-2);cursor:pointer;transition:color .18s}
+.filter-opt:hover label{color:var(--white)}
+.filter-opt input{accent-color:var(--gold)}
+.filter-count{font-size:.65rem;color:var(--text-3)}
+.results-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:.5rem}
+.results-count{font-size:.85rem;color:var(--text-2)}
+.results-count strong{color:var(--white)}
+.sort-sel{background:var(--marine);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:5px 10px;color:var(--text);font-size:.78rem;font-family:'DM Sans',sans-serif;outline:none;cursor:pointer}
+.feat-strip{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.feat-strip::after{content:'';flex:1;height:1px;background:rgba(255,183,3,.18)}
+.pc-cat{font-size:.59rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dark)}
+.pc-title{font-family:'Sora',sans-serif;font-size:.92rem;font-weight:700;color:var(--white);line-height:1.3}
+.pc-meta{display:flex;gap:.6rem;flex-wrap:wrap}
+.pc-meta span{font-size:.72rem;color:var(--text-2);display:flex;align-items:center;gap:3px}
+.pc-meta svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;color:var(--text-3)}
+.pc-price{font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:800;color:var(--gold);margin-top:auto}
+.pc-price small{font-size:.68rem;font-weight:400;color:var(--text-2)}
+.pc-seller{font-size:.7rem;color:var(--text-3)}
+.pc-seller strong{color:var(--text-2)}
+/* marketplace: sidebar takes 210px so 3 cols fits better than 4 */
+.mkt-body .listing-grid { grid-template-columns:repeat(3,1fr) }
+@media(max-width:960px){.mkt-body{grid-template-columns:1fr}.filters{display:none}.listing-grid{grid-template-columns:repeat(2,1fr)}.premium-row{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<nav class="nav" id="navbar">
+  <div class="wrap nav-inner">
+    <a href="/index.html" class="nav-logo">
+      <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="AeroDefined" onerror="this.style.display='none'"/>
+      <span class="nav-logo-text">Aero<span>Defined</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/marketplace.html" class="nav-link">Marketplace</a></li>
+      <li><a href="/how-it-works.html" class="nav-link">How it works</a></li>
+      <li><a href="/pricing.html" class="nav-link">Pricing</a></li>
+      <li class="nav-dd">
+        <a href="#" class="nav-link" style="display:inline-flex;align-items:center;gap:4px">Company
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="nav-dd-panel">
+          <a href="/about.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg><span><strong>About us</strong>Our story and mission</span></a>
+          <a href="/contact.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span><strong>Contact</strong>Talk to our team</span></a>
+          <a href="/faq.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg><span><strong>FAQ</strong>Common questions</span></a>
+          <a href="/rfq.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span><strong>Post an RFQ</strong>Get quotes fast</span></a>
+        </div>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <a href="/login.html" class="btn btn-ghost btn-sm">Log in</a>
+      <a href="/register.html" class="btn btn-gold btn-sm">Create account</a>
+    </div>
+    <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="mobile-menu">
+    <div class="nav-mobile-inner">
+      <a href="/marketplace.html">Marketplace</a>
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/about.html">About us</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/rfq.html">Post an RFQ</a>
+      <div class="nav-mobile-btns">
+        <a href="/login.html" class="btn btn-outline">Log in</a>
+        <a href="/register.html" class="btn btn-gold">Create account</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="mkt-header">
+  <div class="wrap">
+    <div class="mkt-search-row">
+      <div class="search-box" style="flex:1">
+        <div class="search-box-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+        <input type="text" id="mktSearch" placeholder="Aircraft type, engine, part number, route…"/>
+        <div class="search-box-div"></div>
+        <select id="mktCat">
+          <option value="">All categories</option>
+          <option value="aircraft-sale">Aircraft buy &amp; sale</option>
+          <option value="aircraft-lease">Aircraft leasing</option>
+          <option value="charter">Charter</option>
+          <option value="mro">MRO services</option>
+          <option value="parts">Aircraft parts</option>
+          <option value="engines">Engines &amp; APUs</option>
+          <option value="landing-gear">Landing gear</option>
+          <option value="cargo">Cargo capacity</option>
+          <option value="uld">ULD leasing</option>
+          <option value="rfs">Road feeder</option>
+          <option value="compliance">Customs</option>
+        </select>
+        <button class="mkt-btn" onclick="doSearch()">Search</button>
+      </div>
+    </div>
+    <div class="cat-pills" style="margin-top:.9rem">
+      <button class="cat-pill active" onclick="filterCat(this,'')">All</button>
+      <button class="cat-pill" onclick="filterCat(this,'aircraft-sale')">Aircraft buy &amp; sale</button>
+      <button class="cat-pill" onclick="filterCat(this,'aircraft-lease')">Leasing</button>
+      <button class="cat-pill" onclick="filterCat(this,'charter')">Charter</button>
+      <button class="cat-pill" onclick="filterCat(this,'mro')">MRO</button>
+      <button class="cat-pill" onclick="filterCat(this,'parts')">Parts</button>
+      <button class="cat-pill" onclick="filterCat(this,'engines')">Engines</button>
+      <button class="cat-pill" onclick="filterCat(this,'cargo')">Cargo</button>
+      <button class="cat-pill" onclick="filterCat(this,'rfs')">RFS</button>
+    </div>
+  </div>
+</div>
+<div style="background:var(--navy);min-height:80vh;padding-bottom:4rem">
+  <div class="wrap">
+    <div class="mkt-body">
+      <aside class="filters">
+        <div class="filters-head"><span class="filters-title">Filters</span><button class="filters-clear" onclick="clearFilters()">Clear all</button></div>
+        <div class="filter-group">
+          <div class="filter-label">Category</div>
+          <div class="filter-opt"><label><input type="checkbox"/> Aircraft for sale</label><span class="filter-count">142</span></div>
+          <div class="filter-opt"><label><input type="checkbox"/> Aircraft leasing</label><span class="filter-count">67</span></div>
+          <div class="filter-opt"><label><input type="checkbox"/> Charter flights</label><span class="filter-count">89</span></div>
+          <div class="filter-opt"><label><input type="checkbox"/> MRO services</label><span class="filter-count">54</span></div>
+          <div class="filter-opt"><label><input type="checkbox"/> Aircraft parts</label><span class="filter-count">318</span></div>
+          <div class="filter-opt"><label><input type="checkbox"/> Engines &amp; APUs</label><span class="filter-count">76</span></div>
+          <div class="filter-opt"><label><input type="checkbox"/> Cargo capacity</label><span class="filter-count">204</span></div>
+        </div>
+        <div class="filter-group">
+          <div class="filter-label">Region</div>
+          <div class="filter-opt"><label><input type="checkbox"/> Western Europe</label><span class="filter-count">284</span></div>
+          <div class="filter-opt"><label><input type="checkbox"/> Middle East</label><span class="filter-count">96</span></div>
+          <div class="filter-opt"><label><input type="checkbox"/> Asia Pacific</label><span class="filter-count">78</span></div>
+          <div class="filter-opt"><label><input type="checkbox"/> North America</label><span class="filter-count">52</span></div>
+        </div>
+        <div class="filter-group">
+          <div class="filter-label">Seller type</div>
+          <div class="filter-opt"><label><input type="checkbox"/> Verified only</label></div>
+          <div class="filter-opt"><label><input type="checkbox"/> Direct from operator</label></div>
+          <div class="filter-opt"><label><input type="checkbox"/> Featured listings</label></div>
+        </div>
+      </aside>
+      <main>
+        <div class="results-head">
+          <span class="results-count"><strong>950</strong> listings</span>
+          <div style="display:flex;align-items:center;gap:.5rem">
+            <span style="font-size:.75rem;color:var(--text-3)">Sort by</span>
+            <select class="sort-sel"><option>Newest first</option><option>Price: low to high</option><option>Price: high to low</option><option>Featured first</option></select>
+          </div>
+        </div>
+        <div class="feat-strip">Featured listings</div>
+        <div class="premium-row">
+          <a href="/listing.html?id=1" class="premium-card"><div class="pc-cat">Aircraft for sale</div><div class="pc-title">Boeing 737-800 — C-check complete, immediate delivery</div><div class="pc-meta"><span><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Brussels, BE</span><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2009 · 42,000 FH</span></div><div class="pc-price">€18.5M <small>asking</small></div><div class="pc-seller"><strong>BelAir Assets BV</strong> <span class="vb">Verified</span></div></a>
+          <a href="/listing.html?id=2" class="premium-card"><div class="pc-cat">Engine for sale</div><div class="pc-title">CFM56-7B27 — Low cycles, ready for installation</div><div class="pc-meta"><span><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Amsterdam, NL</span><span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>8,200 cycles left</span></div><div class="pc-price">€4.2M <small>negotiable</small></div><div class="pc-seller"><strong>NordTech Aviation</strong> <span class="vb">Verified</span></div></a>
+          <a href="/listing.html?id=3" class="premium-card"><div class="pc-cat">Charter flight</div><div class="pc-title">B747-400F full charter — AMS–DXB–PVG, Q3 available</div><div class="pc-meta"><span><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>AMS → DXB → PVG</span><span>100t payload</span></div><div class="pc-price">On request</div><div class="pc-seller"><strong>AirBridge Charter</strong> <span class="vb">Verified</span></div></a>
+        </div>
+        <div class="listing-grid">
+          <a href="/listing.html?id=10" class="listing-card"><div class="lc-img" style="background-image:url('/src/assets/images/dummy.jpg')"><span class="lc-badge b-new">New</span></div><div class="lc-body"><div class="lc-cat">Aircraft for sale</div><div class="lc-title">Airbus A320-200 — 2012, 54,000 FH</div><div class="lc-meta">Paris, France</div><div class="lc-price">€14.8M <small>asking</small></div></div><div class="lc-seller"><strong>EuroFleet Assets</strong><span class="vb">Verified</span></div></a>
+          <a href="/listing.html?id=11" class="listing-card"><div class="lc-img" style="background-image:url('/src/assets/images/dummy.jpg')"><span class="lc-badge b-hot">Hot</span></div><div class="lc-body"><div class="lc-cat">MRO services</div><div class="lc-title">Full C-check A320 family, 3–5 weeks TAT</div><div class="lc-meta">Frankfurt, Germany</div><div class="lc-price">From €680K</div></div><div class="lc-seller"><strong>TechCare GmbH</strong><span class="vb">Verified</span></div></a>
+          <a href="/listing.html?id=12" class="listing-card"><div class="lc-img" style="background-image:url('/src/assets/images/dummy.jpg')"></div><div class="lc-body"><div class="lc-cat">Aircraft parts</div><div class="lc-title">APU GTCP131-9B — Serviceable, with tag</div><div class="lc-meta">Antwerp, Belgium</div><div class="lc-price">€320K</div></div><div class="lc-seller"><strong>AvParts BV</strong></div></a>
+          <a href="/listing.html?id=13" class="listing-card"><div class="lc-img" style="background-image:url('/src/assets/images/dummy.jpg')"><span class="lc-badge b-lease">Leasing</span></div><div class="lc-body"><div class="lc-cat">Aircraft leasing</div><div class="lc-title">ATR 72-600 ACMI lease, 3–12 months</div><div class="lc-meta">Liège, Belgium</div><div class="lc-price">€180K <small>/ month</small></div></div><div class="lc-seller"><strong>RegioLease SA</strong><span class="vb">Verified</span></div></a>
+          <a href="/listing.html?id=14" class="listing-card"><div class="lc-img" style="background-image:url('/src/assets/images/dummy.jpg')"></div><div class="lc-body"><div class="lc-cat">Cargo capacity</div><div class="lc-title">AMS–JFK B767F, 3x weekly, DG accepted</div><div class="lc-meta">Amsterdam → New York</div><div class="lc-price">€2.40 <small>/ kg</small></div></div><div class="lc-seller"><strong>Corendon Cargo</strong><span class="vb">Verified</span></div></a>
+          <a href="/listing.html?id=15" class="listing-card"><div class="lc-img" style="background-image:url('/src/assets/images/dummy.jpg')"></div><div class="lc-body"><div class="lc-cat">Engines</div><div class="lc-title">V2527-A5 — 4,100 CSN, full QEC kit</div><div class="lc-meta">Hamburg, Germany</div><div class="lc-price">€6.1M</div></div><div class="lc-seller"><strong>Skytech Engines</strong></div></a>
+          <a href="/listing.html?id=16" class="listing-card"><div class="lc-img" style="background-image:url('/src/assets/images/dummy.jpg')"></div><div class="lc-body"><div class="lc-cat">Road feeder / RFS</div><div class="lc-title">BRU–FRA daily RFS — ADR certified, tracked</div><div class="lc-meta">Brussels → Frankfurt</div><div class="lc-price">€1.20 <small>/ kg</small></div></div><div class="lc-seller"><strong>FastFeeder BV</strong><span class="vb">Verified</span></div></a>
+          <a href="/listing.html?id=17" class="listing-card"><div class="lc-img" style="background-image:url('/src/assets/images/dummy.jpg')"><span class="lc-badge b-new">New</span></div><div class="lc-body"><div class="lc-cat">Customs &amp; compliance</div><div class="lc-title">EU customs broker — DG, CITES, pharma</div><div class="lc-meta">Antwerp, Belgium</div><div class="lc-price">From €950 <small>/ shipment</small></div></div><div class="lc-seller"><strong>ClearDocs NV</strong><span class="vb">Verified</span></div></a>
+          <a href="/listing.html?id=18" class="listing-card"><div class="lc-img" style="background-image:url('/src/assets/images/dummy.jpg')"><span class="lc-badge b-hot">Hot</span></div><div class="lc-body"><div class="lc-cat">Aircraft for sale</div><div class="lc-title">Boeing 737-700 — 2006, fresh docs, stored</div><div class="lc-meta">Amsterdam, Netherlands</div><div class="lc-price">€9.2M <small>asking</small></div></div><div class="lc-seller"><strong>NordFleet BV</strong><span class="vb">Verified</span></div></a>
+        </div>
+        <div class="pagination">
+          <button class="pg-btn active">1</button><button class="pg-btn">2</button><button class="pg-btn">3</button>
+          <span style="color:var(--text-3);padding:0 4px">…</span>
+          <button class="pg-btn">24</button><button class="pg-btn">›</button>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/index.html" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;text-decoration:none">
+          <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="" style="height:30px;border-radius:5px" onerror="this.style.display='none'"/>
+          <span class="nav-logo-text">Aero<span>Defined</span></span>
+        </a>
+        <p class="footer-tagline">Your gateway to the world of aviation.<br><em>"From ground to sky we connect it all"</em></p>
+        <div class="footer-socials">
+          <a href="#" class="footer-soc">in</a>
+          <a href="#" class="footer-soc">𝕏</a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Marketplace</h5><a href="/marketplace.html?cat=aircraft-sale">Aircraft buy &amp; sale</a><a href="/marketplace.html?cat=aircraft-lease">Aircraft leasing</a><a href="/marketplace.html?cat=charter">Charter</a><a href="/marketplace.html?cat=mro">MRO</a><a href="/marketplace.html?cat=engines">Engines</a><a href="/marketplace.html?cat=cargo">Cargo</a></div>
+      <div class="footer-col"><h5>Company</h5><a href="/about.html">About us</a><a href="/how-it-works.html">How it works</a><a href="/pricing.html">Pricing</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a></div>
+      <div class="footer-col"><h5>Legal</h5><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/cookies.html">Cookies</a><a href="/gdpr.html">GDPR</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span class="yr"></span> AeroDefined BV. All rights reserved.</p>
+      <div class="footer-bottom-links"><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/cookies.html">Cookies</a></div>
+      <p>🇧🇪 Antwerp · 🇳🇱 Amsterdam</p>
+    </div>
+  </div>
+</footer>
+<script src="/src/js/navbar.js"></script>
+<script>document.querySelectorAll(".yr").forEach(e=>e.textContent=new Date().getFullYear())</script>
+<script>
+const san=s=>String(s).replace(/[<>"'`;\\/]/g,'').trim().slice(0,100);
+function doSearch(){const q=san(document.getElementById('mktSearch').value),cat=document.getElementById('mktCat').value,p=new URLSearchParams(window.location.search);if(q)p.set('q',q);if(cat)p.set('cat',cat);window.history.replaceState({},'','/marketplace.html?'+p.toString())}
+document.getElementById('mktSearch').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});
+function filterCat(el,cat){document.querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active'));el.classList.add('active');document.getElementById('mktCat').value=cat}
+function clearFilters(){document.querySelectorAll('.filters input').forEach(i=>i.checked=false)}
+const p=new URLSearchParams(window.location.search);
+if(p.get('q'))document.getElementById('mktSearch').value=san(p.get('q'));
+if(p.get('cat')){document.getElementById('mktCat').value=p.get('cat');document.querySelectorAll('.cat-pill').forEach(el=>{el.classList.toggle('active',el.getAttribute('onclick')?.includes("'"+p.get('cat')+"'"))})}
+</script>
+</body>
+</html>

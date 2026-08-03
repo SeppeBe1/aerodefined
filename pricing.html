@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Pricing — AeroDefined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/src/css/variables.css"/>
+<link rel="stylesheet" href="/src/css/global.css"/>
+<link rel="stylesheet" href="/src/css/navbar.css"/>
+<link rel="stylesheet" href="/src/css/footer.css"/>
+<link rel="stylesheet" href="/src/css/page.css"/>
+<style>
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1020px;margin:0 auto}
+.plan{background:var(--marine);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:2rem 1.75rem;position:relative;transition:border-color var(--t),transform var(--t);display:flex;flex-direction:column}
+.plan:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.15)}
+.plan.featured{border-color:rgba(255,183,3,.3);background:linear-gradient(160deg,#152d4a 0%,#0f2338 100%)}
+.plan-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--navy);font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 14px;border-radius:0 0 8px 8px;white-space:nowrap}
+.plan-lbl{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-2);margin-bottom:.3rem}
+.plan-name{font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:800;color:var(--white);margin-bottom:.35rem}
+.plan-desc{font-size:.83rem;color:var(--text-2);line-height:1.55;margin-bottom:1.5rem}
+.plan-price{font-family:'Sora',sans-serif;font-size:2.5rem;font-weight:800;color:var(--gold);letter-spacing:-.04em;line-height:1;margin-bottom:1.75rem;display:flex;align-items:baseline;gap:5px}
+.plan-price sub{font-size:.82rem;font-weight:400;color:var(--text-2);letter-spacing:0}
+.plan-price.free-c{color:var(--white)}
+.plan-feats{margin-bottom:1.75rem;flex:1;list-style:none;padding:0}
+.plan-feat{font-size:.84rem;color:var(--text);padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:8px}
+.plan-feat:last-child{border-bottom:none}
+.plan-feat.off{color:var(--text-3)}
+.fcheck{width:15px;height:15px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.fcheck svg{width:13px;height:13px;stroke:var(--gold);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.plan-feat.off .fcheck svg{stroke:var(--text-3)}
+.plan-btn{width:100%;justify-content:center;padding:12px;font-size:.9rem;margin-top:auto}
+.boost-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.boost-feats{display:flex;flex-direction:column;gap:.75rem;margin-top:1.25rem}
+.boost-feat{display:flex;align-items:flex-start;gap:.75rem;font-size:.88rem;color:var(--text-2)}
+.boost-feat::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:6px}
+.boost-card{background:var(--marine);border:1.5px solid rgba(255,183,3,.3);border-radius:14px;padding:2rem}
+.boost-card-lbl{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.boost-card-lbl::before,.boost-card-lbl::after{content:'';flex:1;height:1px;background:rgba(255,183,3,.2)}
+.slots{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.25rem}
+.slot{background:var(--marine-card);border:1.5px dashed rgba(255,183,3,.25);border-radius:8px;padding:.9rem .75rem;font-size:.75rem;color:var(--text-3);text-align:center}
+.slot.filled{border-style:solid;border-color:rgba(255,183,3,.4);background:linear-gradient(135deg,#152d4a,#0f2338);color:var(--text-2)}
+.slot-name{font-weight:600;color:var(--white);font-size:.8rem;margin-bottom:2px}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.faq-q-s{font-family:'Sora',sans-serif;font-size:.92rem;font-weight:600;color:var(--white);margin-bottom:.4rem}
+.faq-a-s{font-size:.83rem;color:var(--text-2);line-height:1.65}
+@media(max-width:860px){.pricing-grid{grid-template-columns:1fr}.boost-inner{grid-template-columns:1fr}.faq-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="nav" id="navbar">
+  <div class="wrap nav-inner">
+    <a href="/index.html" class="nav-logo">
+      <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="AeroDefined" onerror="this.style.display='none'"/>
+      <span class="nav-logo-text">Aero<span>Defined</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/marketplace.html" class="nav-link">Marketplace</a></li>
+      <li><a href="/how-it-works.html" class="nav-link">How it works</a></li>
+      <li><a href="/pricing.html" class="nav-link">Pricing</a></li>
+      <li class="nav-dd">
+        <a href="#" class="nav-link" style="display:inline-flex;align-items:center;gap:4px">Company
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="nav-dd-panel">
+          <a href="/about.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg><span><strong>About us</strong>Our story and mission</span></a>
+          <a href="/contact.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span><strong>Contact</strong>Talk to our team</span></a>
+          <a href="/faq.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg><span><strong>FAQ</strong>Common questions</span></a>
+          <a href="/rfq.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span><strong>Post an RFQ</strong>Get quotes fast</span></a>
+        </div>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <a href="/login.html" class="btn btn-ghost btn-sm">Log in</a>
+      <a href="/register.html" class="btn btn-gold btn-sm">Create account</a>
+    </div>
+    <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="mobile-menu">
+    <div class="nav-mobile-inner">
+      <a href="/marketplace.html">Marketplace</a>
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/about.html">About us</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/rfq.html">Post an RFQ</a>
+      <div class="nav-mobile-btns">
+        <a href="/login.html" class="btn btn-outline">Log in</a>
+        <a href="/register.html" class="btn btn-gold">Create account</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<section class="page-hero page-hero-center">
+  <div class="wrap">
+    <span class="hero-label">Pricing</span>
+    <h1 class="hero-h">Simple. Transparent. <em>Fair.</em></h1>
+    <p class="hero-sub">Free to browse and contact. Upgrade to Premium to list assets and get featured placement at the top of the marketplace.</p>
+  </div>
+</section>
+
+<section style="padding-block:5rem;background:var(--navy)">
+  <div class="wrap">
+    <div class="pricing-grid">
+      <div class="plan">
+        <div class="plan-lbl">For buyers</div>
+        <div class="plan-name">Free</div>
+        <div class="plan-desc">Browse, search and contact verified sellers at zero cost.</div>
+        <div class="plan-price free-c">€0 <sub>always</sub></div>
+        <ul class="plan-feats">
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>Unlimited searches</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>Contact any seller directly</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>Post unlimited RFQs</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>Save favourites</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>2% commission on deals</li>
+          <li class="plan-feat off"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M2 2l9 9M11 2l-9 9"/></svg></div>Cannot post listings</li>
+          <li class="plan-feat off"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M2 2l9 9M11 2l-9 9"/></svg></div>No featured placement</li>
+        </ul>
+        <a href="/register.html" class="btn btn-outline plan-btn">Create free account</a>
+      </div>
+      <div class="plan featured">
+        <div class="plan-badge">Most popular</div>
+        <div class="plan-lbl">For sellers &amp; operators</div>
+        <div class="plan-name">Premium</div>
+        <div class="plan-desc">List your assets, receive inbound RFQs and boost listings to the top.</div>
+        <div class="plan-price">€149 <sub>/ month</sub></div>
+        <ul class="plan-feats">
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>Everything in Free</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>Unlimited listings</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>Receive inbound RFQs</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>1.5% commission (reduced)</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>Verified seller badge</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>Analytics dashboard</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>Featured placement available</li>
+        </ul>
+        <a href="/register.html?plan=premium" class="btn btn-gold plan-btn">Start Premium →</a>
+      </div>
+      <div class="plan">
+        <div class="plan-lbl">For large operators</div>
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-desc">Volume pricing, API access and a dedicated account manager.</div>
+        <div class="plan-price" style="font-size:1.75rem;color:var(--white)">Custom <sub>pricing</sub></div>
+        <ul class="plan-feats">
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>Everything in Premium</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>Volume-capped commission</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>API / ERP integration</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>Dedicated account manager</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>SLA guarantees</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>White-label options</li>
+          <li class="plan-feat"><div class="fcheck"><svg viewBox="0 0 13 13"><path d="M1.5 6.5l3 3 7-7"/></svg></div>Custom contract terms</li>
+        </ul>
+        <a href="/contact.html" class="btn btn-outline plan-btn">Contact us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-block:4.5rem;background:var(--marine-mid)">
+  <div class="wrap">
+    <div class="boost-inner">
+      <div>
+        <span class="eyebrow">Premium placement</span>
+        <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--white);margin-bottom:.75rem">Put your listing at the top.</h2>
+        <p style="font-size:.95rem;color:var(--text-2);line-height:1.75">Premium accounts can boost specific listings to appear in the featured row — the first thing every buyer sees on every search and category page.</p>
+        <div class="boost-feats">
+          <div class="boost-feat">Featured row appears above all regular listings</div>
+          <div class="boost-feat">Visible to all visitors — including non-logged-in users</div>
+          <div class="boost-feat">Gold border + FEATURED badge builds instant trust</div>
+          <div class="boost-feat">Change your featured listing anytime from your dashboard</div>
+          <div class="boost-feat">Max 3 featured slots per category — limited availability</div>
+        </div>
+      </div>
+      <div class="boost-card">
+        <div class="boost-card-lbl">Featured slots — Aircraft for sale</div>
+        <div class="slots">
+          <div class="slot filled"><div class="slot-name">Boeing 737-800</div>BelAir Assets BV</div>
+          <div class="slot filled"><div class="slot-name">A320-200 2012</div>EuroFleet Assets</div>
+          <div class="slot" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,183,3,.4)" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Available
+          </div>
+        </div>
+        <p style="font-size:.82rem;color:var(--gold-dark);font-weight:600;text-align:center">1 slot open in this category →</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-block:4rem;background:var(--navy)">
+  <div class="wrap">
+    <h2 style="font-size:clamp(1.5rem,2.5vw,2rem);font-weight:700;color:var(--white);margin-bottom:.4rem">Common questions</h2>
+    <p style="font-size:.95rem;color:var(--text-2);margin-bottom:2rem">More? See the <a href="/faq.html" style="color:var(--gold-dark)">full FAQ</a>.</p>
+    <div class="faq-grid">
+      <div style="border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:1.1rem"><div class="faq-q-s">Is it really free to browse?</div><div class="faq-a-s">Searching, viewing listings and contacting sellers is completely free. We earn only when a deal closes.</div></div>
+      <div style="border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:1.1rem"><div class="faq-q-s">What is the commission?</div><div class="faq-a-s">Free accounts pay 2% on completed deals. Premium pays 1.5%. Enterprise negotiates a volume cap.</div></div>
+      <div style="border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:1.1rem"><div class="faq-q-s">Can I cancel Premium anytime?</div><div class="faq-a-s">Yes — monthly billing, cancel from your dashboard at any time. No minimum term or cancellation fees.</div></div>
+      <div style="border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:1.1rem"><div class="faq-q-s">How many listings can I post?</div><div class="faq-a-s">Free accounts cannot post listings. Premium accounts post unlimited listings across all categories.</div></div>
+    </div>
+  </div>
+</section>
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/index.html" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;text-decoration:none">
+          <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="" style="height:30px;border-radius:5px" onerror="this.style.display='none'"/>
+          <span class="nav-logo-text">Aero<span>Defined</span></span>
+        </a>
+        <p class="footer-tagline">Your gateway to the world of aviation.<br><em>"From ground to sky we connect it all"</em></p>
+        <div class="footer-socials">
+          <a href="#" class="footer-soc">in</a>
+          <a href="#" class="footer-soc">𝕏</a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Marketplace</h5><a href="/marketplace.html?cat=aircraft-sale">Aircraft buy &amp; sale</a><a href="/marketplace.html?cat=aircraft-lease">Aircraft leasing</a><a href="/marketplace.html?cat=charter">Charter</a><a href="/marketplace.html?cat=mro">MRO</a><a href="/marketplace.html?cat=engines">Engines</a><a href="/marketplace.html?cat=cargo">Cargo</a></div>
+      <div class="footer-col"><h5>Company</h5><a href="/about.html">About us</a><a href="/how-it-works.html">How it works</a><a href="/pricing.html">Pricing</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a></div>
+      <div class="footer-col"><h5>Legal</h5><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/cookies.html">Cookies</a><a href="/gdpr.html">GDPR</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span class="yr"></span> AeroDefined BV. All rights reserved.</p>
+      <div class="footer-bottom-links"><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/cookies.html">Cookies</a></div>
+      <p>🇧🇪 Antwerp · 🇳🇱 Amsterdam</p>
+    </div>
+  </div>
+</footer>
+<script src="/src/js/navbar.js"></script>
+<script>document.querySelectorAll(".yr").forEach(e=>e.textContent=new Date().getFullYear())</script>
+</body>
+</html>

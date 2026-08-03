@@ -3,359 +3,175 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<meta name="description" content="How AeroDefined works — book cargo, post capacity, or request quotes in minutes."/>
 <title>How it works — AeroDefined</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/src/css/variables.css"/>
+<link rel="stylesheet" href="/src/css/global.css"/>
+<link rel="stylesheet" href="/src/css/navbar.css"/>
+<link rel="stylesheet" href="/src/css/footer.css"/>
+<link rel="stylesheet" href="/src/css/page.css"/>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px;scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:#071924;color:#dde8f4;-webkit-font-smoothing:antialiased}
-img,svg{display:block;max-width:100%}
-a{text-decoration:none;color:inherit}
-ul{list-style:none}
-button{cursor:pointer;border:none;background:none;font:inherit}
-h1,h2,h3,h4{font-family:'Sora',sans-serif;line-height:1.1;letter-spacing:-.025em}
-:root{
-  --navy:#071924;--marine:#0D1F3D;--marine-mid:#0f2338;--marine-card:#152d4a;
-  --slate:#475B7C;--gold:#FFB703;--gold-dark:#D4AF37;
-  --white:#fff;--text:#dde8f4;--text-2:#7f9ab5;--text-3:#3a5068;
-  --pad:clamp(1.25rem,5vw,3.5rem);--nav-h:64px;--max-w:1180px;--r:8px;--t:.2s ease;
-}
-.wrap{width:100%;max-width:var(--max-w);margin-inline:auto;padding-inline:var(--pad)}
-
-/* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);background:rgba(7,25,36,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);transition:background .3s,box-shadow .3s}
-.nav.scrolled{background:rgba(7,25,36,.98);box-shadow:0 4px 30px rgba(0,0,0,.5)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:100%}
-.nav-logo{display:flex;align-items:center;gap:10px}
-.nav-logo img{height:34px;width:auto;border-radius:5px}
-.nav-logo-text{font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:700;color:var(--white);letter-spacing:-.02em}
-.nav-logo-text span{color:var(--gold)}
-.nav-links{display:flex;align-items:center;gap:2px}
-.nav-link{padding:7px 13px;border-radius:6px;font-size:.875rem;color:rgba(255,255,255,.65);transition:var(--t)}
-.nav-link:hover,.nav-link.active{color:var(--white);background:rgba(255,255,255,.07)}
-.nav-actions{display:flex;align-items:center;gap:8px}
-.btn-ghost{background:transparent;color:rgba(255,255,255,.7);padding:7px 16px;border-radius:6px;font-size:.875rem;font-weight:500;transition:var(--t)}
-.btn-ghost:hover{color:var(--white);background:rgba(255,255,255,.06)}
-.btn-gold{background:var(--gold);color:var(--navy);padding:8px 18px;border-radius:6px;font-family:'Sora',sans-serif;font-size:.875rem;font-weight:700;transition:var(--t)}
-.btn-gold:hover{background:var(--gold-dark)}
-@media(max-width:860px){.nav-links{display:none}}
-
-/* PAGE HERO */
-.page-hero{padding-top:calc(var(--nav-h) + 4.5rem);padding-bottom:4.5rem;background:var(--marine);border-bottom:1px solid rgba(255,255,255,.06);text-align:center;position:relative;overflow:hidden}
-.page-hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(255,183,3,.05) 0%,transparent 65%);pointer-events:none}
-.hero-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem;display:block}
-.hero-h{font-size:clamp(2rem,4.5vw,3.4rem);font-weight:800;color:var(--white);margin-bottom:1.1rem}
-.hero-sub{font-size:1rem;color:var(--text-2);max-width:520px;margin:0 auto;line-height:1.75}
-
-/* TOGGLE: buyer / seller */
-.mode-toggle{display:flex;gap:4px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:4px;width:fit-content;margin:2.5rem auto 0}
-.mode-btn{padding:8px 22px;border-radius:5px;font-family:'Sora',sans-serif;font-size:.85rem;font-weight:600;color:var(--text-2);transition:var(--t);cursor:pointer}
-.mode-btn.active{background:var(--gold);color:var(--navy)}
-
-/* STEPS */
-.steps-section{padding-block:5rem}
-.steps-section.alt{background:var(--marine-mid)}
-
-.steps-header{text-align:center;margin-bottom:3.5rem}
-.steps-label{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;display:block}
-.steps-h{font-size:clamp(1.7rem,3vw,2.4rem);font-weight:700;color:var(--white)}
-
-.steps-track{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  position:relative;
-}
-.steps-track::before{
-  content:'';position:absolute;
-  top:2rem;left:2.5rem;right:2.5rem;height:1px;
-  background:linear-gradient(90deg,var(--gold),rgba(255,183,3,.2));
-  z-index:0;
-}
-.step{padding:0 1.5rem;position:relative;z-index:1}
-.step-circle{
-  width:40px;height:40px;border-radius:50%;
-  background:var(--marine-card);border:1.5px solid rgba(255,183,3,.3);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Sora',sans-serif;font-size:.9rem;font-weight:700;color:var(--gold);
-  margin-bottom:1.25rem;
-}
-.step h3{font-size:.97rem;font-weight:600;color:var(--white);margin-bottom:.5rem}
-.step p{font-size:.82rem;color:var(--text-2);line-height:1.65}
-.step-detail{
-  margin-top:.75rem;font-size:.78rem;color:var(--text-3);
-  display:flex;align-items:center;gap:.4rem;
-}
-.step-detail::before{content:'→';color:var(--gold-dark)}
-
-/* FEATURES GRID */
-.features-section{padding-block:5rem}
-.features-h{font-size:clamp(1.7rem,3vw,2.4rem);font-weight:700;color:var(--white);margin-bottom:.6rem}
-.features-sub{font-size:.97rem;color:var(--text-2);line-height:1.7;max-width:500px;margin-bottom:3rem}
-.features-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-  gap:1px;background:rgba(255,255,255,.06);
-  border-radius:14px;overflow:hidden;
-}
-.feature-item{background:var(--marine);padding:2rem 1.75rem}
-.feature-num{font-family:'Sora',sans-serif;font-size:2.5rem;font-weight:800;color:rgba(255,183,3,.1);letter-spacing:-.05em;line-height:1;margin-bottom:.9rem}
-.feature-item h3{font-size:.97rem;font-weight:600;color:var(--white);margin-bottom:.45rem}
-.feature-item p{font-size:.83rem;color:var(--text-2);line-height:1.6}
-
-/* FAQ */
-.faq-section{padding-block:5rem;background:var(--marine-mid)}
-.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem}
-.faq-item{border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:1.25rem}
-.faq-q{font-family:'Sora',sans-serif;font-size:.95rem;font-weight:600;color:var(--white);margin-bottom:.5rem}
-.faq-a{font-size:.875rem;color:var(--text-2);line-height:1.7}
-
-/* CTA */
-.cta-band{background:linear-gradient(135deg,var(--marine) 0%,var(--marine-card) 100%);border-top:1px solid rgba(255,183,3,.1);border-bottom:1px solid rgba(255,183,3,.1);padding:4rem 0;text-align:center}
-.cta-band h2{font-size:clamp(1.6rem,3vw,2.2rem);color:var(--white);margin-bottom:.75rem}
-.cta-band p{color:var(--text-2);max-width:440px;margin:0 auto 2rem;font-size:.97rem;line-height:1.7}
-.cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-
-/* FOOTER */
-.footer{background:var(--navy);padding-top:3.5rem;padding-bottom:2rem;border-top:1px solid rgba(255,255,255,.05)}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem}
-.footer-brand-text{font-size:.82rem;color:rgba(255,255,255,.35);line-height:1.7;max-width:240px;margin-top:.75rem}
-.footer-col h5{font-family:'Sora',sans-serif;font-size:.65rem;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem}
-.footer-col a{display:block;font-size:.82rem;color:rgba(255,255,255,.35);margin-bottom:.5rem;transition:color var(--t)}
-.footer-col a:hover{color:var(--white)}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:1.25rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
-.footer-bottom p{font-size:.75rem;color:rgba(255,255,255,.22)}
-
-@media(max-width:760px){.faq-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.steps-track::before{display:none}}
+/* How it works specific */
+.hiw-toggle{display:flex;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:4px;width:fit-content;margin:0 auto 3.5rem}
+.hiw-tab{padding:9px 28px;border-radius:5px;font-family:'Sora',sans-serif;font-size:.875rem;font-weight:600;color:var(--text-2);transition:var(--t);cursor:pointer;border:none;background:none}
+.hiw-tab.active{background:var(--gold);color:var(--navy)}
+.steps-panel{display:none}
+.steps-panel.active{display:block}
+.steps{display:flex;flex-direction:column;max-width:800px;margin:0 auto}
+.step{display:grid;grid-template-columns:80px 1fr;gap:1.5rem;padding:2.5rem 0;border-bottom:1px solid rgba(255,255,255,.06);align-items:start}
+.step:last-child{border-bottom:none}
+.step-num{font-family:'Sora',sans-serif;font-size:3.5rem;font-weight:800;color:rgba(255,183,3,.15);letter-spacing:-.05em;line-height:1;text-align:right}
+.step-tag{display:inline-block;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,183,3,.1);border:1px solid rgba(255,183,3,.2);color:var(--gold-dark);padding:3px 9px;border-radius:4px;margin-bottom:.6rem}
+.step-body h3{font-family:'Sora',sans-serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:.5rem}
+.step-body p{font-size:.92rem;color:var(--text-2);line-height:1.75}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:2.5rem}
+.why-card{background:var(--marine);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:1.75rem 1.5rem;transition:border-color var(--t)}
+.why-card:hover{border-color:rgba(255,183,3,.2)}
+.why-icon{width:44px;height:44px;border-radius:10px;background:rgba(255,183,3,.08);border:1px solid rgba(255,183,3,.15);display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.why-icon svg{width:20px;height:20px;stroke:var(--gold-dark);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.why-card h3{font-family:'Sora',sans-serif;font-size:.97rem;font-weight:600;color:var(--white);margin-bottom:.4rem}
+.why-card p{font-size:.82rem;color:var(--text-2);line-height:1.65}
+@media(max-width:680px){.step{grid-template-columns:50px 1fr}.step-num{font-size:2.5rem}.why-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
-<nav class="nav" id="nav">
+<nav class="nav" id="navbar">
   <div class="wrap nav-inner">
     <a href="/index.html" class="nav-logo">
       <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="AeroDefined" onerror="this.style.display='none'"/>
       <span class="nav-logo-text">Aero<span>Defined</span></span>
     </a>
-    <div class="nav-links">
-      <a href="/search.html" class="nav-link">Search</a>
-      <a href="/marketplace.html" class="nav-link">Marketplace</a>
-      <a href="/how-it-works.html" class="nav-link active">How it works</a>
-      <a href="/pricing.html" class="nav-link">Pricing</a>
-      <a href="/about.html" class="nav-link">About</a>
-    </div>
+    <ul class="nav-links">
+      <li><a href="/marketplace.html" class="nav-link">Marketplace</a></li>
+      <li><a href="/how-it-works.html" class="nav-link">How it works</a></li>
+      <li><a href="/pricing.html" class="nav-link">Pricing</a></li>
+      <li class="nav-dd">
+        <a href="#" class="nav-link" style="display:inline-flex;align-items:center;gap:4px">Company
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="nav-dd-panel">
+          <a href="/about.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg><span><strong>About us</strong>Our story and mission</span></a>
+          <a href="/contact.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span><strong>Contact</strong>Talk to our team</span></a>
+          <a href="/faq.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg><span><strong>FAQ</strong>Common questions</span></a>
+          <a href="/rfq.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span><strong>Post an RFQ</strong>Get quotes fast</span></a>
+        </div>
+      </li>
+    </ul>
     <div class="nav-actions">
-      <a href="/login.html" class="btn-ghost">Log in</a>
-      <a href="/register.html" class="btn-gold">Get started</a>
+      <a href="/login.html" class="btn btn-ghost btn-sm">Log in</a>
+      <a href="/register.html" class="btn btn-gold btn-sm">Create account</a>
+    </div>
+    <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="mobile-menu">
+    <div class="nav-mobile-inner">
+      <a href="/marketplace.html">Marketplace</a>
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/about.html">About us</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/faq.html">FAQ</a>
+      <a href="/rfq.html">Post an RFQ</a>
+      <div class="nav-mobile-btns">
+        <a href="/login.html" class="btn btn-outline">Log in</a>
+        <a href="/register.html" class="btn btn-gold">Create account</a>
+      </div>
     </div>
   </div>
 </nav>
-
-<!-- HERO -->
-<section class="page-hero">
+<section class="page-hero page-hero-center">
   <div class="wrap">
     <span class="hero-label">How it works</span>
-    <h1 class="hero-h">From search to signed booking<br>in under 24 hours.</h1>
-    <p class="hero-sub">AeroDefined is a two-sided marketplace. Whether you need cargo capacity or you're offering it — the process is the same: fast, digital, and without the phone tag.</p>
-    <div class="mode-toggle">
-      <button class="mode-btn active" id="btnBuyer" onclick="setMode('buyer')">I need cargo capacity</button>
-      <button class="mode-btn" id="btnSeller" onclick="setMode('seller')">I offer capacity</button>
-    </div>
+    <h1 class="hero-h">Connect. Trade. <em>Close.</em></h1>
+    <p class="hero-sub">AeroDefined connects aviation operators and logistics partners — whether you're buying an aircraft or booking cargo capacity.</p>
   </div>
 </section>
 
-<!-- BUYER STEPS -->
-<section class="steps-section" id="buyerSteps">
+<section style="padding-block:5rem;background:var(--navy)">
   <div class="wrap">
-    <div class="steps-header">
-      <span class="steps-label">For buyers — forwarders, shippers, importers</span>
-      <h2 class="steps-h">Book cargo capacity in 4 steps</h2>
+    <div style="text-align:center">
+      <div class="hiw-toggle">
+        <button class="hiw-tab active" onclick="showTab('buyer',this)">I'm a buyer / forwarder</button>
+        <button class="hiw-tab" onclick="showTab('seller',this)">I'm a seller / operator</button>
+      </div>
     </div>
-    <div class="steps-track">
-      <div class="step">
-        <div class="step-circle">1</div>
-        <h3>Create your account</h3>
-        <p>Sign up free. No IATA number required for shippers. Forwarders verify with their IATA code — takes 5 minutes.</p>
-        <div class="step-detail">Free, no credit card needed</div>
+
+    <div class="steps-panel active" id="tab-buyer">
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div class="step-body"><div class="step-tag">Free</div><h3>Create your free account</h3><p>Sign up in under 2 minutes. No credit card required. Free accounts search, browse and contact any seller — paying nothing upfront.</p></div></div>
+        <div class="step"><div class="step-num">02</div><div class="step-body"><div class="step-tag">Search</div><h3>Search or post an RFQ</h3><p>Find exactly what you need by aircraft type, engine model, route or part number. Or post an RFQ and let verified sellers come to you with quotes.</p></div></div>
+        <div class="step"><div class="step-num">03</div><div class="step-body"><div class="step-tag">Connect</div><h3>Contact sellers directly</h3><p>Send enquiries directly — no intermediaries. All communication stays on the platform, keeping your deal history organised and auditable.</p></div></div>
+        <div class="step"><div class="step-num">04</div><div class="step-body"><div class="step-tag">2% commission</div><h3>Close the deal</h3><p>Negotiate and manage documents digitally. AeroDefined charges a small 2% commission only on completed transactions — nothing until a deal is done.</p></div></div>
       </div>
-      <div class="step">
-        <div class="step-circle">2</div>
-        <h3>Search or post an RFQ</h3>
-        <p>Search live cargo capacity by route, date, and commodity. Or post an RFQ and let providers come to you with quotes.</p>
-        <div class="step-detail">Results in seconds</div>
-      </div>
-      <div class="step">
-        <div class="step-circle">3</div>
-        <h3>Compare & negotiate</h3>
-        <p>See rates, capacity, certifications, and provider ratings side by side. Message providers directly inside the platform.</p>
-        <div class="step-detail">No phone calls required</div>
-      </div>
-      <div class="step">
-        <div class="step-circle">4</div>
-        <h3>Book & get your AWB</h3>
-        <p>Confirm the booking digitally. Your e-AWB and cargo documents are generated and emailed automatically.</p>
-        <div class="step-detail">Documents in your inbox</div>
+    </div>
+
+    <div class="steps-panel" id="tab-seller">
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div class="step-body"><div class="step-tag">Premium — €149/mo</div><h3>Create a Premium account</h3><p>Upgrade to Premium to start listing your assets. Includes unlimited listings, inbound RFQs, verified badge, analytics and featured placement access.</p></div></div>
+        <div class="step"><div class="step-num">02</div><div class="step-body"><div class="step-tag">List</div><h3>Post your listings</h3><p>Create detailed listings for aircraft, engines, parts, cargo capacity, MRO services or logistics offerings. Add photos, specs and pricing — live within minutes.</p></div></div>
+        <div class="step"><div class="step-num">03</div><div class="step-body"><div class="step-tag">Featured</div><h3>Boost to the top (optional)</h3><p>Push a listing to the featured row — gold-bordered cards at the top of every search and category page. Max 3 featured per category, first-come first-served.</p></div></div>
+        <div class="step"><div class="step-num">04</div><div class="step-body"><div class="step-tag">1.5% commission</div><h3>Receive leads and close deals</h3><p>Get inbound enquiries and RFQs directly in your dashboard. Manage conversations, share documents and close deals — just 1.5% commission on completed transactions.</p></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SELLER STEPS -->
-<section class="steps-section alt" id="sellerSteps" style="display:none">
+<section style="padding-block:4rem;background:var(--marine-mid)">
   <div class="wrap">
-    <div class="steps-header">
-      <span class="steps-label">For providers — airlines, GSSAs, handlers, brokers</span>
-      <h2 class="steps-h">Start receiving bookings in 4 steps</h2>
-    </div>
-    <div class="steps-track">
-      <div class="step">
-        <div class="step-circle">1</div>
-        <h3>Create your provider profile</h3>
-        <p>Register as a Business account. Upload your certifications — IATA code, operator certificate, or handler license.</p>
-        <div class="step-detail">Verified badge on your profile</div>
-      </div>
-      <div class="step">
-        <div class="step-circle">2</div>
-        <h3>List your capacity</h3>
-        <p>Publish your routes, aircraft types, available capacity, rates, and commodity restrictions. Update in real time.</p>
-        <div class="step-detail">Goes live immediately</div>
-      </div>
-      <div class="step">
-        <div class="step-circle">3</div>
-        <h3>Receive inbound RFQs</h3>
-        <p>Qualified buyers send you RFQs directly. Respond with quotes, negotiate terms, and manage everything in your dashboard.</p>
-        <div class="step-detail">Email + platform notifications</div>
-      </div>
-      <div class="step">
-        <div class="step-circle">4</div>
-        <h3>Confirm & get paid</h3>
-        <p>Accept the booking, generate the AWB, and receive payment via the platform. Commission only on completed deals.</p>
-        <div class="step-detail">1.5% commission — no monthly fee</div>
-      </div>
+    <span class="eyebrow">Why AeroDefined</span>
+    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--white)">Built for aviation professionals.</h2>
+    <div class="why-grid">
+      <div class="why-card"><div class="why-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9S3 16.97 3 12 7.03 3 12 3s9 4.03 9 9z"/></svg></div><h3>Verified operators only</h3><p>Every seller goes through identity and company verification before receiving the Verified badge. No anonymous listings.</p></div>
+      <div class="why-card"><div class="why-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div><h3>Direct — no brokers</h3><p>Buyers and sellers connect directly. No mandatory intermediaries, no opaque markups. You control the negotiation.</p></div>
+      <div class="why-card"><div class="why-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><h3>From search to deal in days</h3><p>With 900+ active listings and instant messaging, most transactions move from first contact to signed terms within days, not weeks.</p></div>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section class="features-section">
+<div style="padding-block:4.5rem;text-align:center;background:var(--navy);border-top:1px solid rgba(255,183,3,.08)">
   <div class="wrap">
-    <h2 class="features-h">Everything included, no extras to buy.</h2>
-    <p class="features-sub">Every account — buyer or seller — gets access to these features from day one.</p>
-    <div class="features-grid">
-      <div class="feature-item">
-        <div class="feature-num">01</div>
-        <h3>e-AWB generation</h3>
-        <p>Airway bills generated automatically on booking confirmation. Compliant with IATA CargoXML standards.</p>
-      </div>
-      <div class="feature-item">
-        <div class="feature-num">02</div>
-        <h3>Real-time messaging</h3>
-        <p>Communicate with counterparties inside the platform. Full conversation history, attached documents included.</p>
-      </div>
-      <div class="feature-item">
-        <div class="feature-num">03</div>
-        <h3>Cargo tracking</h3>
-        <p>Track shipment status across airlines and handlers. Share live tracking links directly with your end clients.</p>
-      </div>
-      <div class="feature-item">
-        <div class="feature-num">04</div>
-        <h3>Market rate data</h3>
-        <p>See spot rates and lane benchmarks. Know if you're paying fair market rate before you commit.</p>
-      </div>
-      <div class="feature-item">
-        <div class="feature-num">05</div>
-        <h3>RFQ management</h3>
-        <p>Post requests for quotes, manage incoming responses, and compare offers side by side in one screen.</p>
-      </div>
-      <div class="feature-item">
-        <div class="feature-num">06</div>
-        <h3>Provider verification</h3>
-        <p>Every provider is verified against their stated certifications before they can receive bookings.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq-section">
-  <div class="wrap">
-    <span class="steps-label">FAQ</span>
-    <h2 class="steps-h">Common questions</h2>
-    <div class="faq-grid">
-      <div class="faq-item">
-        <div class="faq-q">Do I need an IATA number to sign up?</div>
-        <div class="faq-a">No. Shippers and importers can sign up without any industry certifications. Freight forwarders and airlines verify their IATA credentials during onboarding.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">How does pricing work?</div>
-        <div class="faq-a">Joining is free. AeroDefined earns a small commission (1.5–2%) only on completed transactions. There are no monthly fees for buyers.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">How fast can I get a quote?</div>
-        <div class="faq-a">Search results are real-time for published capacity. For RFQs, most providers respond within 4–24 hours depending on the route and commodity.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Is my company data secure?</div>
-        <div class="faq-a">Yes. All data is encrypted in transit and at rest. We're GDPR compliant and never share your data with third parties without consent.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Can I use AeroDefined for DG cargo?</div>
-        <div class="faq-a">Yes. Providers list their DG capabilities and class authorizations on their profile. You can filter search results to show only DG-certified providers.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">What if a booking goes wrong?</div>
-        <div class="faq-a">Our support team is available to help mediate any disputes. All bookings are documented digitally, creating a clear audit trail for both parties.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<div class="cta-band">
-  <div class="wrap">
-    <h2>Ready to try it?</h2>
-    <p>Create a free account in 5 minutes and search live cargo capacity across Europe and beyond.</p>
-    <div class="cta-btns">
-      <a href="/register.html" class="btn-gold" style="padding:12px 26px;border-radius:7px;font-family:'Sora',sans-serif;font-weight:700">Create free account →</a>
-      <a href="/search.html" style="padding:11px 24px;border-radius:7px;border:1px solid rgba(255,255,255,.2);color:var(--white);font-size:.9rem">Browse marketplace</a>
+    <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--white);margin-bottom:.6rem">Ready to get started?</h2>
+    <p style="color:var(--text-2);max-width:400px;margin:0 auto 2rem;font-size:.97rem;line-height:1.7">Free to browse. Free to contact. List your assets with Premium.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="/login.html" class="btn btn-outline btn-lg">Log in</a>
+      <a href="/register.html" class="btn btn-gold btn-lg">Create account →</a>
     </div>
   </div>
 </div>
-
-<!-- FOOTER -->
 <footer class="footer">
   <div class="wrap">
     <div class="footer-grid">
-      <div>
-        <a href="/index.html" class="nav-logo" style="display:flex;align-items:center;gap:9px">
-          <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="AeroDefined" style="height:30px;border-radius:5px" onerror="this.style.display='none'"/>
+      <div class="footer-brand">
+        <a href="/index.html" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;text-decoration:none">
+          <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="" style="height:30px;border-radius:5px" onerror="this.style.display='none'"/>
           <span class="nav-logo-text">Aero<span>Defined</span></span>
         </a>
-        <p class="footer-brand-text">Your gateway to the world of aviation. From ground to sky we connect it all.</p>
+        <p class="footer-tagline">Your gateway to the world of aviation.<br><em>"From ground to sky we connect it all"</em></p>
+        <div class="footer-socials">
+          <a href="#" class="footer-soc">in</a>
+          <a href="#" class="footer-soc">𝕏</a>
+        </div>
       </div>
-      <div class="footer-col"><h5>Platform</h5><a href="/search.html">Search</a><a href="/marketplace.html">Marketplace</a><a href="/rfq.html">Post RFQ</a><a href="/pricing.html">Pricing</a></div>
-      <div class="footer-col"><h5>Company</h5><a href="/about.html">About</a><a href="/how-it-works.html">How it works</a><a href="/contact.html">Contact</a></div>
-      <div class="footer-col"><h5>Legal</h5><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/cookies.html">Cookies</a></div>
+      <div class="footer-col"><h5>Marketplace</h5><a href="/marketplace.html?cat=aircraft-sale">Aircraft buy &amp; sale</a><a href="/marketplace.html?cat=aircraft-lease">Aircraft leasing</a><a href="/marketplace.html?cat=charter">Charter</a><a href="/marketplace.html?cat=mro">MRO</a><a href="/marketplace.html?cat=engines">Engines</a><a href="/marketplace.html?cat=cargo">Cargo</a></div>
+      <div class="footer-col"><h5>Company</h5><a href="/about.html">About us</a><a href="/how-it-works.html">How it works</a><a href="/pricing.html">Pricing</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a></div>
+      <div class="footer-col"><h5>Legal</h5><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/cookies.html">Cookies</a><a href="/gdpr.html">GDPR</a></div>
     </div>
     <div class="footer-bottom">
-      <p>© <span id="yr"></span> AeroDefined BV. All rights reserved.</p>
-      <p>Made in Belgium 🇧🇪</p>
+      <p>© <span class="yr"></span> AeroDefined BV. All rights reserved.</p>
+      <div class="footer-bottom-links"><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/cookies.html">Cookies</a></div>
+      <p>🇧🇪 Antwerp · 🇳🇱 Amsterdam</p>
     </div>
   </div>
 </footer>
-
+<script src="/src/js/navbar.js"></script>
+<script>document.querySelectorAll(".yr").forEach(e=>e.textContent=new Date().getFullYear())</script>
 <script>
-document.getElementById('yr').textContent = new Date().getFullYear();
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
-}, {passive:true});
-
-function setMode(mode) {
-  const buyer = mode === 'buyer';
-  document.getElementById('buyerSteps').style.display  = buyer ? 'block' : 'none';
-  document.getElementById('sellerSteps').style.display = buyer ? 'none' : 'block';
-  document.getElementById('btnBuyer').classList.toggle('active', buyer);
-  document.getElementById('btnSeller').classList.toggle('active', !buyer);
+function showTab(id,btn){
+  document.querySelectorAll('.steps-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.hiw-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
 }
 </script>
 </body>
