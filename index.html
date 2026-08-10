@@ -113,13 +113,15 @@ h1,h2,h3,h4{font-family:'Sora',sans-serif;line-height:1.1;letter-spacing:-.025em
   z-index:1;
 }
 /* Slide 1 — freighter on tarmac */
-.slide-1{background-image:url('/src/assets/images/dummy.jpg');background-color:#0a1f38}
+.slide-1{background-image:url('/src/assets/images/airplane.jpg');background-color:#0a1f38}
 /* Slide 2 — cockpit / interior */
-.slide-2{background-image:url('/src/assets/images/dummy.jpg');background-color:#0d1f2d}
+.slide-2{background-image:url('/src/assets/images/cockpit.jpg');background-color:#0d1f2d}
 /* Slide 3 — engine close-up */
 .slide-3{background-image:url('/src/assets/images/dummy.jpg');background-color:#071924}
 /* Slide 4 — cargo loading */
-.slide-4{background-image:url('/src/assets/images/dummy.jpg');background-color:#0a2030}
+.slide-4{background-image:url('/src/assets/images/cargo.jpg');background-color:#0a2030}
+
+.slide-5{background-image:url('/src/assets/images/charter.jpg');background-color:#0a2030}
 
 .slide-content{
   position:relative;z-index:2;
@@ -403,8 +405,8 @@ h1,h2,h3,h4{font-family:'Sora',sans-serif;line-height:1.1;letter-spacing:-.025em
   <div class="slide slide-2" id="slide-1">
     <div class="slide-content wrap">
       <div class="slide-eyebrow">MRO &amp; maintenance</div>
-      <h1 class="slide-h">Certified MRO<br><em>on demand.</em></h1>
-      <p class="slide-sub">Find C-check, engine overhaul and component services from EASA-certified shops.</p>
+      <h1 class="slide-h">Certified MRO<br></h1>
+      <p class="slide-sub">Find C-check, engine overhaul and component services from EASA-certified & FAA shops.</p>
       <div class="slide-actions">
         <a href="/marketplace.html?cat=mro" class="btn btn-gold">Find MRO →</a>
         <a href="/rfq.html" class="btn btn-outline">Post an RFQ</a>
@@ -436,6 +438,18 @@ h1,h2,h3,h4{font-family:'Sora',sans-serif;line-height:1.1;letter-spacing:-.025em
     </div>
   </div>
 
+  <div class="slide slide-5" id="slide-4">
+  <div class="slide-content wrap">
+    <div class="slide-eyebrow">Charter flights</div>
+    <h1 class="slide-h">Full charter &amp;<br><em>ACMI on demand.</em></h1>
+    <p class="slide-sub">Narrow-body, wide-body or freighter — find charter capacity from verified operators across Europe and beyond.</p>
+    <div class="slide-actions">
+      <a href="/marketplace.html?cat=charter" class="btn btn-gold">Browse charter →</a>
+      <a href="/rfq.html" class="btn btn-outline">Post an RFQ</a>
+    </div>
+  </div>
+</div>
+
   <!-- Arrows -->
   <button class="slide-arrow slide-arrow-prev" onclick="moveSlide(-1)" aria-label="Previous slide">
     <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
@@ -450,6 +464,7 @@ h1,h2,h3,h4{font-family:'Sora',sans-serif;line-height:1.1;letter-spacing:-.025em
     <button class="slide-dot" onclick="goSlide(1)"></button>
     <button class="slide-dot" onclick="goSlide(2)"></button>
     <button class="slide-dot" onclick="goSlide(3)"></button>
+    <button class="slide-dot" onclick="goSlide(4)"></button>
   </div>
 
 
@@ -483,7 +498,7 @@ h1,h2,h3,h4{font-family:'Sora',sans-serif;line-height:1.1;letter-spacing:-.025em
       <button class="cat-pill active" onclick="filterCat(this,'')">All</button>
       <button class="cat-pill" onclick="filterCat(this,'aircraft-sale')">Aircraft buy &amp; sale</button>
       <button class="cat-pill" onclick="filterCat(this,'aircraft-lease')">Leasing</button>
-      <button class="cat-pill" onclick="filterCat(this,'charter')">Charter</button>
+      <a href="/charter.html" class="cat-pill">Charter</a>
       <button class="cat-pill" onclick="filterCat(this,'mro')">MRO</button>
       <button class="cat-pill" onclick="filterCat(this,'parts')">Parts</button>
       <button class="cat-pill" onclick="filterCat(this,'engines')">Engines</button>

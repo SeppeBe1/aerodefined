@@ -58,7 +58,7 @@ if (yrEl) yrEl.textContent = new Date().getFullYear();
 
 // ── Slideshow ─────────────────────────────
 let currentSlide = 0;
-const totalSlides = 4;
+const totalSlides = 5;
 let slideTimer;
 
 function goSlide(n) {

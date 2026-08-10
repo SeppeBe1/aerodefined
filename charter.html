@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Charter flights — AeroDefined</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/src/css/variables.css"/>
+<link rel="stylesheet" href="/src/css/global.css"/>
+<link rel="stylesheet" href="/src/css/navbar.css"/>
+<link rel="stylesheet" href="/src/css/footer.css"/>
+<link rel="stylesheet" href="/src/css/page.css"/>
+<style>
+/* ── CHARTER HERO ── */
+.charter-hero{
+  min-height:100vh;
+  padding-top:var(--nav-h);
+  background:var(--navy);
+  display:flex;align-items:center;
+  position:relative;overflow:hidden;
+}
+.charter-hero::before{
+  content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(to right, rgba(7,25,36,.95) 0%, rgba(7,25,36,.7) 60%, rgba(7,25,36,.4) 100%),
+    url('/src/assets/images/dummy.jpg') center/cover no-repeat;
+  z-index:0;
+}
+.charter-hero-inner{
+  position:relative;z-index:1;
+  width:100%;padding-block:5rem;
+}
+.charter-eyebrow{
+  font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.75rem;display:flex;align-items:center;gap:.6rem;
+}
+.charter-eyebrow::before{content:'';width:28px;height:1.5px;background:var(--gold);border-radius:2px}
+.charter-h{
+  font-size:clamp(2.4rem,5.5vw,4.2rem);font-weight:800;
+  color:var(--white);line-height:1.06;
+  margin-bottom:.75rem;max-width:640px;
+}
+.charter-h em{font-style:normal;color:var(--gold)}
+.charter-sub{
+  font-size:1rem;color:rgba(255,255,255,.7);
+  max-width:480px;line-height:1.75;margin-bottom:3rem;
+}
+
+/* ── BOOKING WIDGET ── */
+.charter-widget{
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;
+  padding:6px;
+  max-width:920px;
+}
+
+/* Trip type tabs */
+.widget-tabs{
+  display:flex;gap:4px;padding:6px 6px 0;
+  margin-bottom:6px;
+}
+.widget-tab{
+  padding:7px 20px;border-radius:8px;
+  font-family:'Sora',sans-serif;font-size:.8rem;font-weight:600;
+  color:rgba(255,255,255,.5);
+  cursor:pointer;transition:var(--t);border:none;background:none;
+}
+.widget-tab.active{
+  background:var(--gold);color:var(--navy);
+}
+.widget-tab:not(.active):hover{
+  color:var(--white);background:rgba(255,255,255,.08);
+}
+
+/* Main row */
+.widget-row{
+  display:grid;
+  grid-template-columns:1fr 1fr 160px 130px 120px auto;
+  gap:2px;
+  background:rgba(255,255,255,.06);
+  border-radius:10px;
+  overflow:hidden;
+  align-items:stretch;
+}
+.widget-field{
+  display:flex;flex-direction:column;
+  padding:12px 16px;
+  background:rgba(255,255,255,.04);
+  cursor:pointer;transition:background .18s;
+  position:relative;
+  border-right:1px solid rgba(255,255,255,.07);
+}
+.widget-field:last-of-type{border-right:none}
+.widget-field:hover{background:rgba(255,255,255,.08)}
+.widget-field:focus-within{background:rgba(255,183,3,.06)}
+.widget-field label{
+  font-size:.6rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-3);margin-bottom:4px;
+}
+.widget-field input,
+.widget-field select{
+  background:none;border:none;outline:none;
+  font-family:'DM Sans',sans-serif;
+  font-size:.92rem;font-weight:500;
+  color:var(--white);width:100%;
+  cursor:pointer;
+}
+.widget-field input::placeholder{color:rgba(255,255,255,.35)}
+.widget-field select option{background:var(--marine);color:var(--white)}
+.widget-field input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(.4)}
+
+/* Return date field — hidden when one-way */
+.widget-field.return-field{display:none}
+.trip-round .widget-field.return-field{display:flex}
+.trip-round .widget-row{grid-template-columns:1fr 1fr 160px 130px 130px 120px auto}
+
+/* Search button */
+.widget-search-btn{
+  background:var(--gold);color:var(--navy);
+  border:none;border-radius:0 9px 9px 0;
+  padding:0 28px;
+  font-family:'Sora',sans-serif;font-size:.92rem;font-weight:700;
+  cursor:pointer;transition:background .18s;
+  white-space:nowrap;flex-shrink:0;
+  display:flex;align-items:center;gap:8px;
+}
+.widget-search-btn:hover{background:var(--gold-dim)}
+.widget-search-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* divider between From/To */
+.widget-swap{
+  position:absolute;right:-14px;top:50%;transform:translateY(-50%);
+  width:26px;height:26px;border-radius:50%;
+  background:var(--marine-card);border:1px solid rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:2;transition:background .18s;
+  flex-shrink:0;
+}
+.widget-swap:hover{background:rgba(255,183,3,.15)}
+.widget-swap svg{width:12px;height:12px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── TRUST STRIP ── */
+.charter-trust{
+  display:flex;align-items:center;gap:2rem;
+  margin-top:2rem;flex-wrap:wrap;
+}
+.trust-item{
+  display:flex;align-items:center;gap:.5rem;
+  font-size:.8rem;color:rgba(255,255,255,.5);
+}
+.trust-item svg{width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── AIRCRAFT TYPES SECTION ── */
+.aircraft-section{padding-block:5rem;background:var(--marine-mid)}
+.aircraft-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:2rem}
+.aircraft-card{
+  background:var(--marine);border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;overflow:hidden;
+  transition:border-color var(--t),transform var(--t);
+  cursor:pointer;text-decoration:none;display:block;
+}
+.aircraft-card:hover{border-color:rgba(255,183,3,.3);transform:translateY(-3px)}
+.aircraft-img{
+  height:140px;background:var(--marine-card);
+  background-size:cover;background-position:center;
+  display:flex;align-items:flex-end;
+  padding:.75rem;
+}
+.aircraft-body{padding:1rem}
+.aircraft-type{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:.3rem}
+.aircraft-name{font-family:'Sora',sans-serif;font-size:.97rem;font-weight:600;color:var(--white);margin-bottom:.4rem}
+.aircraft-specs{font-size:.78rem;color:var(--text-2)}
+.aircraft-price{font-family:'Sora',sans-serif;font-size:.9rem;font-weight:700;color:var(--gold);margin-top:.6rem}
+
+/* ── HOW CHARTER WORKS ── */
+.charter-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);border-radius:14px;overflow:hidden;margin-top:2rem}
+.charter-step{background:var(--marine);padding:2rem 1.75rem}
+.charter-step-n{font-family:'Sora',sans-serif;font-size:2.5rem;font-weight:800;color:rgba(255,183,3,.15);letter-spacing:-.05em;line-height:1;margin-bottom:.75rem}
+.charter-step h3{font-family:'Sora',sans-serif;font-size:.97rem;font-weight:600;color:var(--white);margin-bottom:.4rem}
+.charter-step p{font-size:.82rem;color:var(--text-2);line-height:1.65}
+
+/* ── CTA ── */
+.charter-cta{padding-block:4.5rem;text-align:center;background:var(--navy);border-top:1px solid rgba(255,183,3,.08)}
+
+@media(max-width:1024px){.aircraft-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){
+  .widget-row{grid-template-columns:1fr 1fr;border-radius:10px}
+  .widget-field{border-right:none;border-bottom:1px solid rgba(255,255,255,.07)}
+  .widget-field:last-of-type{border-bottom:none}
+  .widget-search-btn{border-radius:0 0 9px 9px;justify-content:center;padding:14px}
+  .widget-row{grid-template-columns:1fr}
+  .charter-steps{grid-template-columns:1fr}
+  .aircraft-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:500px){.aircraft-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="navbar">
+  <div class="wrap nav-inner">
+    <a href="/index.html" class="nav-logo">
+      <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="AeroDefined" onerror="this.style.display='none'"/>
+      <span class="nav-logo-text">Aero<span>Defined</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/marketplace.html" class="nav-link">Marketplace</a></li>
+      <li><a href="/how-it-works.html" class="nav-link">How it works</a></li>
+      <li><a href="/pricing.html" class="nav-link">Pricing</a></li>
+      <li class="nav-dd">
+        <a href="#" class="nav-link" style="display:inline-flex;align-items:center;gap:4px">Company
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="nav-dd-panel">
+          <a href="/about.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg><span><strong>About us</strong>Our story and mission</span></a>
+          <a href="/contact.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span><strong>Contact</strong>Talk to our team</span></a>
+          <a href="/faq.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/></svg><span><strong>FAQ</strong>Common questions</span></a>
+          <a href="/rfq.html" class="nav-dd-item"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span><strong>Post an RFQ</strong>Get quotes fast</span></a>
+        </div>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <a href="/login.html" class="btn btn-ghost btn-sm">Log in</a>
+      <a href="/register.html" class="btn btn-gold btn-sm">Create account</a>
+    </div>
+    <button class="nav-burger" id="burger"><span></span><span></span><span></span></button>
+  </div>
+  <div class="nav-mobile" id="mobile-menu">
+    <div class="nav-mobile-inner">
+      <a href="/marketplace.html">Marketplace</a>
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/about.html">About us</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/faq.html">FAQ</a>
+      <div class="nav-mobile-btns">
+        <a href="/login.html" class="btn btn-outline">Log in</a>
+        <a href="/register.html" class="btn btn-gold">Create account</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="charter-hero">
+  <div class="wrap charter-hero-inner">
+    <div class="charter-eyebrow">Charter flights</div>
+    <h1 class="charter-h">Fly on your<br><em>own terms.</em></h1>
+    <p class="charter-sub">Book full charter, ACMI or cargo flights from verified operators. One-way, return or multi-leg — request a quote in minutes.</p>
+
+    <!-- BOOKING WIDGET -->
+    <div class="charter-widget" id="charterWidget">
+      <!-- Trip type tabs -->
+      <div class="widget-tabs">
+        <button class="widget-tab active" onclick="setTrip('oneway',this)">One way</button>
+        <button class="widget-tab" onclick="setTrip('round',this)">Round trip</button>
+        <button class="widget-tab" onclick="setTrip('multi',this)">Multi-leg</button>
+      </div>
+
+      <!-- Fields row -->
+      <div class="widget-row" id="widgetRow">
+
+        <div class="widget-field" style="position:relative">
+          <label>From</label>
+          <input type="text" id="wFrom" placeholder="Departure airport" autocomplete="off"/>
+          <button class="widget-swap" onclick="swapAirports()" title="Swap">
+            <svg viewBox="0 0 24 24"><path d="M7 16V4m0 0L3 8m4-4l4 4"/><path d="M17 8v12m0 0l4-4m-4 4l-4-4"/></svg>
+          </button>
+        </div>
+
+        <div class="widget-field">
+          <label>To</label>
+          <input type="text" id="wTo" placeholder="Arrival airport" autocomplete="off"/>
+        </div>
+
+        <div class="widget-field">
+          <label>Departure date</label>
+          <input type="date" id="wDate"/>
+        </div>
+
+        <div class="widget-field return-field" id="returnField">
+          <label>Return date</label>
+          <input type="date" id="wReturn"/>
+        </div>
+
+        <div class="widget-field">
+          <label>Passengers</label>
+          <input type="number" id="wPax" placeholder="0" min="1" max="500"/>
+        </div>
+
+        <div class="widget-field">
+          <label>Aircraft type</label>
+          <select id="wType">
+            <option value="">Any type</option>
+            <option value="turboprop">Turboprop</option>
+            <option value="light-jet">Light jet</option>
+            <option value="midsize-jet">Midsize jet</option>
+            <option value="heavy-jet">Heavy jet</option>
+            <option value="narrowbody">Narrowbody</option>
+            <option value="widebody">Widebody</option>
+            <option value="freighter">Freighter</option>
+          </select>
+        </div>
+
+        <button class="widget-search-btn" onclick="searchCharter()">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          Search
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Trust strip -->
+    <div class="charter-trust">
+      <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>Verified operators only</div>
+      <div class="trust-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Quotes within 4 hours</div>
+      <div class="trust-item"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>No hidden broker fees</div>
+      <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>EASA &amp; FAA certified</div>
+    </div>
+  </div>
+</section>
+
+<!-- AIRCRAFT TYPES -->
+<section class="aircraft-section">
+  <div class="wrap">
+    <span class="eyebrow">Aircraft types</span>
+    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--white)">Choose your aircraft.</h2>
+    <div class="aircraft-grid">
+
+      <a href="/marketplace.html?cat=charter&type=narrowbody" class="aircraft-card">
+        <div class="aircraft-img" style="background-image:url('/src/assets/images/dummy.jpg')"></div>
+        <div class="aircraft-body">
+          <div class="aircraft-type">Narrowbody</div>
+          <div class="aircraft-name">Boeing 737 / Airbus A320</div>
+          <div class="aircraft-specs">100–189 pax · up to 5,000 km range</div>
+          <div class="aircraft-price">From €28,000 / flight</div>
+        </div>
+      </a>
+
+      <a href="/marketplace.html?cat=charter&type=widebody" class="aircraft-card">
+        <div class="aircraft-img" style="background-image:url('/src/assets/images/dummy.jpg')"></div>
+        <div class="aircraft-body">
+          <div class="aircraft-type">Widebody</div>
+          <div class="aircraft-name">Boeing 767 / Airbus A330</div>
+          <div class="aircraft-specs">200–350 pax · intercontinental range</div>
+          <div class="aircraft-price">From €65,000 / flight</div>
+        </div>
+      </a>
+
+      <a href="/marketplace.html?cat=charter&type=freighter" class="aircraft-card">
+        <div class="aircraft-img" style="background-image:url('/src/assets/images/dummy.jpg')"></div>
+        <div class="aircraft-body">
+          <div class="aircraft-type">Freighter</div>
+          <div class="aircraft-name">B747F / B777F / A330F</div>
+          <div class="aircraft-specs">60–140t payload · global routes</div>
+          <div class="aircraft-price">On request</div>
+        </div>
+      </a>
+
+      <a href="/marketplace.html?cat=charter&type=turboprop" class="aircraft-card">
+        <div class="aircraft-img" style="background-image:url('/src/assets/images/dummy.jpg')"></div>
+        <div class="aircraft-body">
+          <div class="aircraft-type">Turboprop / Regional</div>
+          <div class="aircraft-name">ATR 72 / Dash 8</div>
+          <div class="aircraft-specs">50–78 pax · short-haul routes</div>
+          <div class="aircraft-price">From €12,000 / flight</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="padding-block:4.5rem;background:var(--navy)">
+  <div class="wrap">
+    <span class="eyebrow">How it works</span>
+    <h2 style="font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--white)">Charter in 3 steps.</h2>
+    <div class="charter-steps">
+      <div class="charter-step">
+        <div class="charter-step-n">01</div>
+        <h3>Submit your request</h3>
+        <p>Enter your route, dates, passenger count and aircraft preference. Takes under 2 minutes.</p>
+      </div>
+      <div class="charter-step">
+        <div class="charter-step-n">02</div>
+        <h3>Receive quotes</h3>
+        <p>Verified charter operators respond with tailored quotes — usually within 4 hours. Compare directly on the platform.</p>
+      </div>
+      <div class="charter-step">
+        <div class="charter-step-n">03</div>
+        <h3>Book &amp; fly</h3>
+        <p>Confirm your booking, sign digitally and manage all documents in your dashboard. No broker in between.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="charter-cta">
+  <div class="wrap">
+    <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--white);margin-bottom:.6rem">Ready to request a charter?</h2>
+    <p style="color:var(--text-2);max-width:420px;margin:0 auto 2rem;font-size:.97rem;line-height:1.7">Post an RFQ and receive quotes from verified operators within hours.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="/rfq.html" class="btn btn-gold btn-lg">Post an RFQ →</a>
+      <a href="/marketplace.html?cat=charter" class="btn btn-outline btn-lg">Browse charter listings</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/index.html" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;text-decoration:none">
+          <img src="/src/assets/images/AeroDefined_Logo.jpeg" alt="" style="height:30px;border-radius:5px" onerror="this.style.display='none'"/>
+          <span class="nav-logo-text">Aero<span>Defined</span></span>
+        </a>
+        <p class="footer-tagline">Your gateway to the world of aviation.<br><em>"From ground to sky we connect it all"</em></p>
+        <div class="footer-socials">
+          <a href="#" class="footer-soc">in</a>
+          <a href="#" class="footer-soc">𝕏</a>
+        </div>
+      </div>
+      <div class="footer-col"><h5>Marketplace</h5><a href="/marketplace.html?cat=aircraft-sale">Aircraft buy &amp; sale</a><a href="/marketplace.html?cat=charter">Charter flights</a><a href="/marketplace.html?cat=mro">MRO</a><a href="/marketplace.html?cat=cargo">Cargo</a></div>
+      <div class="footer-col"><h5>Company</h5><a href="/about.html">About us</a><a href="/how-it-works.html">How it works</a><a href="/pricing.html">Pricing</a><a href="/faq.html">FAQ</a><a href="/contact.html">Contact</a></div>
+      <div class="footer-col"><h5>Legal</h5><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/cookies.html">Cookies</a><a href="/gdpr.html">GDPR</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span class="yr"></span> AeroDefined BV. All rights reserved.</p>
+      <div class="footer-bottom-links"><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a></div>
+      <p>🇧🇪 Antwerp · 🇳🇱 Amsterdam</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/src/js/navbar.js"></script>
+<script>
+document.querySelectorAll('.yr').forEach(e=>e.textContent=new Date().getFullYear());
+
+// Trip type toggle
+function setTrip(type, btn) {
+  document.querySelectorAll('.widget-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const widget = document.getElementById('charterWidget');
+  widget.className = 'charter-widget trip-' + type;
+}
+
+// Swap airports
+function swapAirports() {
+  const from = document.getElementById('wFrom');
+  const to   = document.getElementById('wTo');
+  [from.value, to.value] = [to.value, from.value];
+}
+
+// Search → go to marketplace with filters
+function searchCharter() {
+  const san = s => String(s).replace(/[<>"'`;\\]/g,'').trim().slice(0,100);
+  const from = san(document.getElementById('wFrom').value);
+  const to   = san(document.getElementById('wTo').value);
+  const date = document.getElementById('wDate').value;
+  const pax  = document.getElementById('wPax').value;
+  const type = document.getElementById('wType').value;
+
+  const p = new URLSearchParams();
+  p.set('cat','charter');
+  if(from) p.set('from', from);
+  if(to)   p.set('to', to);
+  if(date) p.set('date', date);
+  if(pax)  p.set('pax', pax);
+  if(type) p.set('type', type);
+
+  window.location.href = '/marketplace.html?' + p.toString();
+}
+
+// Enter key on inputs
+document.querySelectorAll('.widget-field input').forEach(input => {
+  input.addEventListener('keydown', e => { if(e.key==='Enter') searchCharter() });
+});
+
+// Set today as min date
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('wDate').min = today;
+document.getElementById('wReturn').min = today;
+document.getElementById('wDate').addEventListener('change', function(){
+  document.getElementById('wReturn').min = this.value || today;
+});
+</script>
+</body>
+</html>
